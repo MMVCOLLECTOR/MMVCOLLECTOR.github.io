@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alejandro Ruiz - Tecladista Profesional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background-attachment: fixed;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 20px rgba(147, 112, 219, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(147, 112, 219, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(138, 43, 226, 0.3) 0%, transparent 50%);
+            animation: galaxyMove 20s ease-in-out infinite;
+        }
+
+        @keyframes galaxyMove {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(20px, 20px) scale(1.1); }
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 30px rgba(147, 112, 219, 0.8), 0 0 60px rgba(138, 43, 226, 0.4);
+            animation: logoGlow 3s ease-in-out infinite;
+            background: white;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(147, 112, 219, 0.8), 0 0 60px rgba(138, 43, 226, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 80px rgba(147, 112, 219, 0.6); }
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+
+        nav {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(147, 112, 219, 0.3);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #9370db;
+            text-shadow: 0 0 10px rgba(147, 112, 219, 0.8);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(147, 112, 219, 0.3);
+            border: 1px solid rgba(147, 112, 219, 0.2);
+        }
+
+        h2 {
+            color: #9370db;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #9370db;
+            padding-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(147, 112, 219, 0.5);
+        }
+
+        .servicios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .servicio {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #2e2e4d 100%);
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid rgba(147, 112, 219, 0.3);
+            color: white;
+        }
+
+        .servicio:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(147, 112, 219, 0.5);
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
+        .servicio h3 {
+            color: #ffd700;
+            margin-bottom: 1rem;
+        }
+
+        .experiencia-item {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(26, 26, 46, 0.8);
+            border-left: 4px solid #9370db;
+            border-radius: 4px;
+            color: white;
+        }
+
+        .experiencia-item h3 {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .experiencia-item p {
+            color: #d8d8d8;
+        }
+
+        .contacto-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contacto-card {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #9370db 0%, #8a2be2 50%, #4b0082 100%);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 15px rgba(147, 112, 219, 0.4);
+        }
+
+        .contacto-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .contacto-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .contacto-card a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .contacto-card a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            box-shadow: 0 -4px 20px rgba(147, 112, 219, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .servicios {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="pages\OrganoSagitario.html" alt="Logo" class="logo">
+        </div>
+        <h1>Emmanuel Ramiréz Cruz</h1>
+        <p>Tecladista | Organo Sagitario </p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#sobre-mi">Sobre Mí</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#experiencia">Experiencia</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="sobre-mi">
+            <h2>Sobre Mí</h2>
+            <p>Soy un tecladista profesional con más de 10 años de experiencia en la industria musical. Mi pasión por la música comenzó desde temprana edad, y me he especializado en diversos géneros musicales incluyendo jazz, rock, música latina y electrónica.</p>
+            <p style="margin-top: 1rem;">Mi enfoque combina técnica clásica con innovación moderna, utilizando tanto pianos acústicos como sintetizadores digitales para crear experiencias musicales únicas y memorables.</p>
+        </section>
+
+        <section id="servicios">
+            <h2>Servicios</h2>
+            <div class="servicios">
+                <div class="servicio">
+                    <h3>🎹 Eventos en Vivo</h3>
+                    <p>Presentaciones para bodas, eventos corporativos, fiestas privadas y celebraciones especiales.</p>
+                </div>
+                <div class="servicio">
+                    <h3>🎵 Sesiones de Estudio</h3>
+                    <p>Grabación profesional de teclados y piano para producciones musicales de diversos géneros.</p>
+                </div>
+                <div class="servicio">
+                    <h3>🎓 Clases Particulares</h3>
+                    <p>Enseñanza personalizada de piano y teclado para todos los niveles, presencial y online.</p>
+                </div>
+                <div class="servicio">
+                    <h3>🎼 Arreglos Musicales</h3>
+                    <p>Creación de arreglos y composiciones originales adaptadas a tus necesidades.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiencia">
+            <h2>Experiencia</h2>
+            <div class="experiencia-item">
+                <h3>Tecladista Principal - Banda "Los Sonidos del Alma"</h3>
+                <p>2018 - Presente | Presentaciones en festivales nacionales y giras por México</p>
+            </div>
+            <div class="experiencia-item">
+                <h3>Músico de Sesión - Estudios Armónica</h3>
+                <p>2015 - Presente | Grabación para diversos artistas y proyectos musicales</p>
+            </div>
+            <div class="experiencia-item">
+                <h3>Profesor de Piano - Escuela de Música Armonía</h3>
+                <p>2014 - 2020 | Enseñanza a estudiantes de todos los niveles</p>
+            </div>
+        </section>
+
+        <section id="contacto">
+            <h2>Contacto</h2>
+            <p>¿Interesado en trabajar juntos? Me encantaría escuchar sobre tu proyecto. Contáctame a través de cualquiera de los siguientes medios:</p>
+            
+            <div class="contacto-info">
+                <div class="contacto-card">
+                    <h3>📧 Email</h3>
+                    <a href="mailto:alejandro.ruiz@email.com">alejandro.ruiz@email.com</a>
+                </div>
+                <div class="contacto-card">
+                    <h3>📱 Teléfono</h3>
+                    <a href="tel:+525512345678">+52 55 1234 5678</a>
+                </div>
+                <div class="contacto-card">
+                    <h3>💼 WhatsApp</h3>
+                    <a href="https://wa.me/525512345678">Enviar mensaje</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Alejandro Ruiz - Tecladista Profesional. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
