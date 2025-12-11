@@ -46,6 +46,43 @@
             box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
         }
 
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-image {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: rgba(192, 192, 192, 0.1);
+            border: 2px solid var(--plateado);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            border-color: var(--blanco);
+            box-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
+        }
+
+        .logo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-placeholder {
+            color: var(--plateado);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
         .logo h1 {
             font-size: 3rem;
             font-weight: 900;
@@ -385,6 +422,14 @@
 <body>
     <div class="container">
         <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-image">
+                    <!-- Reemplaza el src con la URL de tu logo -->
+                    <img src="tu-logo.png" alt="MMV Logo" style="display: none;" onload="this.style.display='block'; this.parentElement.querySelector('.logo-placeholder').style.display='none';">
+                    <span class="logo-placeholder">LOGO</span>
+                </div>
+            </div>
+            
             <div class="logo">
                 <h1>MMV</h1>
                 <h2>COLLECTOR DESIGN</h2>
