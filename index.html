@@ -4,16 +4,390 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MMV COLLECTOR DESIGN</title>
-   <link rel="stylesheet" href="css/style.css"> </head>
-<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --negro: #0a0a0a;
+            --negro-suave: #1a1a1a;
+            --plateado: #c0c0c0;
+            --plateado-claro: #e8e8e8;
+            --blanco: #ffffff;
+            --acento: #3a3a3a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--negro) 0%, var(--negro-suave) 100%);
+            color: var(--plateado-claro);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(192, 192, 192, 0.1);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--blanco) 0%, var(--plateado) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 5px;
+            margin-bottom: 5px;
+        }
+
+        .logo h2 {
+            font-size: 0.9rem;
+            color: var(--plateado);
+            letter-spacing: 3px;
+            font-weight: 300;
+            border-top: 2px solid var(--plateado);
+            padding-top: 10px;
+        }
+
+        .menu {
+            margin-top: 60px;
+            flex-grow: 1;
+        }
+
+        .menu ul {
+            list-style: none;
+        }
+
+        .menu li {
+            margin: 25px 0;
+        }
+
+        .menu a {
+            color: var(--plateado);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 10px 0;
+            border-left: 3px solid transparent;
+            padding-left: 15px;
+        }
+
+        .menu a:hover,
+        .menu a.active {
+            color: var(--blanco);
+            border-left-color: var(--plateado);
+            transform: translateX(5px);
+        }
+
+        .footer-sidebar {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
+            font-size: 0.85rem;
+            color: var(--plateado);
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 280px;
+            flex-grow: 1;
+            padding: 60px 80px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 0;
+            border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .hero-section h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--blanco) 0%, var(--plateado) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            color: var(--plateado);
+            max-width: 700px;
+            line-height: 1.8;
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 100px 0;
+        }
+
+        .portfolio-section h2 {
+            font-size: 2.5rem;
+            color: var(--blanco);
+            letter-spacing: 5px;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .portfolio-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--plateado) 0%, transparent 100%);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .project-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--plateado);
+            box-shadow: 0 20px 50px rgba(192, 192, 192, 0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--acento) 0%, var(--negro-suave) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--plateado);
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            color: var(--blanco);
+            margin-bottom: 15px;
+        }
+
+        .project-content p {
+            color: var(--plateado);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(192, 192, 192, 0.1);
+            color: var(--plateado-claro);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(192, 192, 192, 0.2);
+        }
+
+        .btn-ver {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, var(--plateado) 0%, var(--blanco) 100%);
+            color: var(--negro);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-ver:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 100px 0;
+            max-width: 800px;
+        }
+
+        .about-section h2 {
+            font-size: 2.5rem;
+            color: var(--blanco);
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .about-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--plateado) 0%, transparent 100%);
+        }
+
+        .about-section p {
+            font-size: 1.2rem;
+            color: var(--plateado);
+            line-height: 2;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 0;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            color: var(--blanco);
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .contact-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--plateado) 0%, transparent 100%);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            background: rgba(26, 26, 26, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            border-color: var(--plateado);
+            transform: translateY(-5px);
+        }
+
+        .contact-item h3 {
+            color: var(--blanco);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .contact-item p {
+            color: var(--plateado);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid rgba(192, 192, 192, 0.1);
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 40px 20px;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
     <div class="container">
-        
         <aside class="sidebar">
             <div class="logo">
                 <h1>MMV</h1>
                 <h2>COLLECTOR DESIGN</h2>
-                
             </div>
             
             <nav class="menu">
@@ -24,35 +398,139 @@
                     <li><a href="#contacto">CONTACTO</a></li>
                 </ul>
             </nav>
-
+            
             <div class="footer-sidebar">
                 <p>&copy; 2025 MMV Design</p>
             </div>
         </aside>
 
         <main class="content">
-            
             <section id="inicio" class="hero-section">
                 <h1>Diseño que trasciende.</h1>
-                <p>Explora una colección curada de proyectos de diseño gráfico, web y branding.</p>
-                </section>
+                <p>Explora una colección curada de proyectos de diseño gráfico, web y branding que combinan elegancia minimalista con funcionalidad excepcional.</p>
+            </section>
             
-            <section id="portafolio" class="portfolio-grid">
+            <section id="portafolio" class="portfolio-section">
                 <h2>PORTAFOLIO</h2>
-                <div class="project-card">
-                    <div class="project-placeholder">Proyecto 1</div>
-                    <h3>Título del Proyecto</h3>
-                    <p>Diseño Gráfico, Branding.</p>
+                
+                <div class="portfolio-grid">
+                    <!-- Proyecto 1: Órgano Sagitario -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <span>ÓRGANO SAGITARIO</span>
+                        </div>
+                        <div class="project-content">
+                            <h3>Emmanuel Ramírez Cruz</h3>
+                            <p>Página web profesional para tecladista y proyecto musical "Órgano Sagitario". Diseño elegante y funcional con información de servicios, experiencia y contacto directo.</p>
+                            <div class="project-tags">
+                                <span class="tag">Diseño Web</span>
+                                <span class="tag">HTML/CSS</span>
+                                <span class="tag">Responsive</span>
+                            </div>
+                            <a href="https://mmvcollector.github.io/pages/OrganoSagitario.html" target="_blank" class="btn-ver">VER PROYECTO</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 2: Placeholder -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <span>PRÓXIMAMENTE</span>
+                        </div>
+                        <div class="project-content">
+                            <h3>Nuevo Proyecto</h3>
+                            <p>Un proyecto innovador está en desarrollo. Mantente atento para conocer más detalles pronto.</p>
+                            <div class="project-tags">
+                                <span class="tag">Branding</span>
+                                <span class="tag">Diseño Gráfico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 3: Placeholder -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <span>PRÓXIMAMENTE</span>
+                        </div>
+                        <div class="project-content">
+                            <h3>Nuevo Proyecto</h3>
+                            <p>Un proyecto innovador está en desarrollo. Mantente atento para conocer más detalles pronto.</p>
+                            <div class="project-tags">
+                                <span class="tag">Diseño UI/UX</span>
+                                <span class="tag">Web Design</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                </section>
+            </section>
             
             <section id="sobre-mi" class="about-section">
                 <h2>SOBRE MÍ</h2>
-                <p>Hola, soy [Tu Nombre] y me especializo en crear identidades visuales fuertes y diseños minimalistas con impacto.</p>
+                <p>Soy un diseñador especializado en crear identidades visuales impactantes y experiencias digitales memorables. Mi enfoque combina el minimalismo elegante con la funcionalidad moderna, creando diseños que no solo se ven bien, sino que también comunican efectivamente y resuelven problemas reales. Cada proyecto es una oportunidad para transformar ideas en realidades visuales que trascienden.</p>
             </section>
 
+            <section id="contacto" class="contact-section">
+                <h2>CONTACTO</h2>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p>contacto@mmvdesign.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Teléfono</h3>
+                        <p>954-312-5522</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Ubicación</h3>
+                        <p>Oaxaca, México</p>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
+    <script>
+        // Smooth scroll para los enlaces del menú
+        document.querySelectorAll('.menu a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Remover clase active de todos los enlaces
+                document.querySelectorAll('.menu a').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Agregar clase active al enlace clickeado
+                this.classList.add('active');
+                
+                // Scroll suave
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Detectar sección visible y actualizar menú activo
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const menuLinks = document.querySelectorAll('.menu a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
