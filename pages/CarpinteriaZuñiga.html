@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carpintería Zúñiga — Madera con Alma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400&family=Josefin+Sans:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wood-dark:    #0d0602;
+      --wood-mid:     #1e0d05;
+      --wood-warm:    #3a1605;
+      --wood-light:   #5e2808;
+      --wood-pale:    #7a3a10;
+      --gold:         #c9a84c;
+      --gold-bright:  #e8c96a;
+      --gold-dim:     #8a6f2e;
+      --green-neon:   #01ff01;
+      --cream:        #f5efe6;
+      --cream-dark:   #e8ddd0;
+      --ink:          #060301;
+      --grain-opacity: 0.04;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lora', serif;
+      background: var(--ink);
+      color: var(--cream);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ── */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      box-shadow: 0 0 14px var(--gold);
+      transition: transform 0.1s, background 0.2s;
+    }
+    .cursor-ring {
+      width: 32px; height: 32px;
+      border: 1px solid rgba(201,168,76,0.5);
+      border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: all 0.14s ease;
+    }
+
+    /* ── WOOD GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          92deg,
+          transparent 0px,
+          transparent 3px,
+          rgba(58,22,5,0.025) 3px,
+          rgba(58,22,5,0.025) 4px
+        ),
+        repeating-linear-gradient(
+          88deg,
+          transparent 0px,
+          transparent 7px,
+          rgba(30,13,5,0.02) 7px,
+          rgba(30,13,5,0.02) 8px
+        );
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 2; pointer-events: none; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ══════════════════════════════════
+       HEADER / HERO
+    ══════════════════════════════════ */
+    header {
+      position: relative; z-index: 10;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(30,13,5,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(13,6,2,0.8) 0%, transparent 50%),
+        linear-gradient(180deg, #060200 0%, #0d0602 40%, #060200 100%);
+    }
+
+    /* Animated wood rings */
+    .wood-rings {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.08);
+      animation: ringPulse 6s ease-in-out infinite;
+    }
+    .ring:nth-child(1) { width: 300px; height: 300px; animation-delay: 0s; border-color: rgba(201,168,76,0.12); }
+    .ring:nth-child(2) { width: 500px; height: 500px; animation-delay: 0.8s; }
+    .ring:nth-child(3) { width: 700px; height: 700px; animation-delay: 1.6s; }
+    .ring:nth-child(4) { width: 900px; height: 900px; animation-delay: 2.4s; border-color: rgba(1,255,1,0.03); }
+    .ring:nth-child(5) { width: 1100px; height: 1100px; animation-delay: 3.2s; }
+    @keyframes ringPulse {
+      0%,100% { transform: scale(1); opacity: 0.6; }
+      50%      { transform: scale(1.02); opacity: 1; }
+    }
+
+    /* Sawdust particles */
+    .sawdust { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .dust-particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--wood-light);
+      border-radius: 50%;
+      animation: dustFloat linear infinite;
+      opacity: 0;
+    }
+    @keyframes dustFloat {
+      0%   { transform: translateY(100vh) rotate(0deg) translateX(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-50px) rotate(720deg) translateX(40px); opacity: 0; }
+    }
+
+    /* Woodpecker SVG animated */
+    .woodpecker-wrap {
+      position: absolute;
+      top: 8%; right: 6%;
+      z-index: 5;
+      animation: birdBob 3s ease-in-out infinite;
+    }
+    @keyframes birdBob {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      30%     { transform: translateY(-6px) rotate(-3deg); }
+      60%     { transform: translateY(2px) rotate(2deg); }
+    }
+    .woodpecker-svg { width: 110px; filter: drop-shadow(0 4px 20px rgba(201,168,76,0.3)); }
+
+    /* Peck animation for beak */
+    .beak { transform-origin: 90% 50%; animation: peck 2.5s ease-in-out infinite; }
+    @keyframes peck {
+      0%,100% { transform: rotate(0deg); }
+      80%     { transform: rotate(0deg); }
+      85%     { transform: rotate(-18deg); }
+      90%     { transform: rotate(0deg); }
+      93%     { transform: rotate(-12deg); }
+      97%     { transform: rotate(0deg); }
+    }
+
+    /* HERO LOGO */
+    .hero-logo-wrap {
+      position: relative; z-index: 10;
+      margin-bottom: 2.5rem;
+      animation: logoFloat 7s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-12px); }
+    }
+    .hero-logo-frame {
+      position: relative;
+      width: 220px; height: 220px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    /* Decorative corner marks */
+    .corner {
+      position: absolute;
+      width: 24px; height: 24px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.7;
+    }
+    .corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+    .corner-tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+    .corner-bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+    .corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+    .hero-logo {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--gold-dim);
+      box-shadow:
+        0 0 0 8px rgba(13,6,2,0.8),
+        0 0 0 9px rgba(201,168,76,0.2),
+        0 0 50px rgba(201,168,76,0.3),
+        0 0 100px rgba(58,22,5,0.4);
+      background: radial-gradient(circle at 40% 35%, #1e0d05, #060200);
+    }
+    .hero-logo-fallback {
+      width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #1e0d05, #060200);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      border: 3px solid var(--gold-dim);
+      box-shadow: 0 0 50px rgba(201,168,76,0.3);
+    }
+
+    /* Rotating gold ring around logo */
+    .logo-orbit {
+      position: absolute; inset: -20px;
+      border-radius: 50%;
+      border: 1px dashed rgba(201,168,76,0.25);
+      animation: orbitSpin 30s linear infinite;
+    }
+    .logo-orbit::before {
+      content: '✦';
+      position: absolute; top: -8px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem; color: var(--gold); opacity: 0.8;
+    }
+    @keyframes orbitSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* HERO TEXT */
+    .hero-eyebrow {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 100; font-size: 0.8rem;
+      letter-spacing: 0.6em; text-transform: uppercase;
+      color: var(--gold); opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+      margin-bottom: 0.75rem;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+      margin-bottom: 0.5rem;
+    }
+    .h1-line1 {
+      display: block;
+      color: var(--cream);
+      text-shadow: 0 2px 30px rgba(0,0,0,0.8);
+    }
+    .h1-line2 {
+      display: block;
+      font-style: italic;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold), var(--wood-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 1.15em;
+    }
+
+    .hero-tagline {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(245,239,230,0.6);
+      letter-spacing: 0.05em;
+      margin: 1.5rem 0 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+    .hero-tagline em { color: var(--gold); font-style: normal; }
+
+    .hero-cta-wrap {
+      display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp 1s 1.2s forwards;
+    }
+    .btn-primary {
+      padding: 0.9rem 2.5rem;
+      background: linear-gradient(135deg, var(--gold), var(--wood-light));
+      color: var(--ink);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 400; font-size: 0.8rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: none;
+      border-radius: 2px;
+      transition: all 0.35s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%);
+      transition: transform 0.35s;
+    }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .btn-primary:hover { box-shadow: 0 8px 30px rgba(201,168,76,0.5); transform: translateY(-2px); }
+
+    .btn-ghost {
+      padding: 0.9rem 2.5rem;
+      background: transparent;
+      color: var(--gold);
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300; font-size: 0.8rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      text-decoration: none; border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 2px; cursor: none;
+      transition: all 0.35s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.08);
+      box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+      opacity: 0.45;
+    }
+    .scroll-hint span {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .scroll-arrow {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: arrowDrop 2s ease-in-out infinite;
+    }
+    @keyframes arrowDrop {
+      0%,100% { transform: scaleY(1) translateY(0); opacity: 1; }
+      50%      { transform: scaleY(0.8) translateY(8px); opacity: 0.5; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════════════════════
+       NAV
+    ══════════════════════════════════ */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(26,12,4,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      padding: 1.1rem 2rem;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; flex-wrap: wrap; }
+    nav a {
+      color: rgba(245,239,230,0.55);
+      text-decoration: none;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 300; font-size: 0.78rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      transition: color 0.3s;
+      position: relative; padding-bottom: 0.2rem;
+    }
+    nav a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width 0.3s;
+    }
+    nav a:hover { color: var(--gold); }
+    nav a:hover::after { width: 100%; }
+
+    /* ══════════════════════════════════
+       MAIN
+    ══════════════════════════════════ */
+    .container {
+      position: relative; z-index: 10;
+      max-width: 1100px; margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    section { margin-bottom: 9rem; position: relative; }
+
+    /* Section header */
+    .sec-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 100; font-size: 0.72rem;
+      letter-spacing: 0.55em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
+      display: block; margin-bottom: 0.6rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700; line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    h2 .italic { font-style: italic; color: var(--gold); }
+    .sec-divider {
+      width: 50px; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--wood-light));
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      padding: 3rem;
+      background: linear-gradient(135deg, rgba(30,13,5,0.25), rgba(13,6,2,0.4));
+      border: 1px solid rgba(201,168,76,0.12);
+      border-left: 4px solid var(--gold);
+      border-radius: 4px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .about-strip::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 40%; height: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0px, transparent 5px,
+        rgba(58,22,5,0.04) 5px, rgba(58,22,5,0.04) 6px
+      );
+    }
+    .about-text p {
+      font-size: 1.1rem; line-height: 1.9;
+      color: rgba(245,239,230,0.75);
+      margin-bottom: 1.2rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text em { color: var(--gold-bright); font-style: italic; }
+    .about-stat {
+      text-align: center; padding: 1.5rem 2rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      background: rgba(13,6,2,0.6);
+      min-width: 160px;
+    }
+    .about-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900;
+      color: var(--gold);
+      display: block; line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .about-stat-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245,239,230,0.5);
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .svc-card {
+      position: relative; overflow: hidden;
+      padding: 2.5rem 2rem;
+      background: rgba(13,6,2,0.5);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      cursor: default;
+      transition: all 0.4s cubic-bezier(0.23,1,0.32,1);
+    }
+    /* Wood grain stripe accent */
+    .svc-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+    .svc-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent 100%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .svc-card:hover::before { transform: scaleX(1); }
+    .svc-card:hover::after { opacity: 1; }
+    .svc-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.08);
+      background: rgba(30,13,5,0.25);
+    }
+
+    .svc-icon {
+      font-size: 2.4rem; margin-bottom: 1.2rem;
+      display: block; line-height: 1;
+      filter: drop-shadow(0 2px 8px rgba(201,168,76,0.3));
+      transition: transform 0.3s;
+    }
+    .svc-card:hover .svc-icon { transform: scale(1.1) rotate(-5deg); }
+
+    .svc-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--gold-bright); margin-bottom: 0.75rem;
+    }
+    .svc-card p {
+      font-size: 0.95rem; line-height: 1.7;
+      color: rgba(245,239,230,0.55);
+    }
+
+    /* Special card — helmet mounts with neon accent */
+    .svc-card.special {
+      border-color: rgba(1,255,1,0.15);
+    }
+    .svc-card.special::before {
+      background: linear-gradient(90deg, transparent, var(--green-neon), transparent);
+    }
+    .svc-card.special h3 { color: var(--green-neon); }
+    .svc-card.special:hover {
+      border-color: rgba(1,255,1,0.35);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px rgba(1,255,1,0.07);
+    }
+
+    /* ── GALLERY ── */
+    .gallery-intro {
+      font-size: 1.05rem; line-height: 1.8;
+      color: rgba(245,239,230,0.6);
+      max-width: 600px;
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+    .gallery-item {
+      position: relative; overflow: hidden;
+      border-radius: 3px;
+      background: rgba(13,6,2,0.8);
+      border: 1px solid rgba(201,168,76,0.08);
+      aspect-ratio: 1;
+      display: flex; align-items: center; justify-content: center;
+      cursor: default;
+      transition: all 0.4s;
+    }
+    .gallery-item.tall { grid-row: span 2; aspect-ratio: auto; }
+    .gallery-item.wide { grid-column: span 2; aspect-ratio: auto; min-height: 200px; }
+
+    .gallery-item:hover {
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      transform: scale(1.02);
+      z-index: 5;
+    }
+
+    .gallery-placeholder {
+      width: 100%; height: 100%; min-height: 180px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 0.75rem;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          rgba(30,13,5,0.1) 0px, rgba(30,13,5,0.1) 1px,
+          transparent 1px, transparent 12px
+        );
+      transition: all 0.4s;
+    }
+    .gallery-item:hover .gallery-placeholder {
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          rgba(201,168,76,0.08) 0px, rgba(201,168,76,0.08) 1px,
+          transparent 1px, transparent 12px
+        );
+    }
+
+    .gallery-ph-icon { font-size: 2.5rem; opacity: 0.35; }
+    .gallery-ph-label {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold); opacity: 0.4;
+    }
+
+    /* Gallery overlay */
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,12,4,0.85) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+      display: flex; align-items: flex-end; padding: 1.5rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--gold);
+    }
+
+    /* Gallery upload note */
+    .gallery-note {
+      margin-top: 1.5rem;
+      padding: 1rem 1.5rem;
+      background: rgba(1,255,1,0.04);
+      border: 1px dashed rgba(1,255,1,0.2);
+      border-radius: 4px;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: rgba(1,255,1,0.5);
+      text-align: center;
+    }
+
+    /* ── WOOD DIVIDER ── */
+    .wood-divider {
+      display: flex; align-items: center; gap: 1.5rem;
+      margin: 5rem 0;
+      opacity: 0.35;
+    }
+    .wd-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .wd-line:last-child {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .wd-center {
+      display: flex; align-items: center; gap: 0.75rem;
+      color: var(--gold); font-size: 0.8rem;
+    }
+
+    /* ── CONTACT ── */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info-block { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      padding: 1.5rem;
+      background: rgba(13,6,2,0.5);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+    .contact-item:hover {
+      border-color: rgba(201,168,76,0.3);
+      background: rgba(30,13,5,0.2);
+      transform: translateX(6px);
+    }
+    .contact-item-icon {
+      font-size: 1.8rem; flex-shrink: 0;
+      filter: drop-shadow(0 2px 8px rgba(201,168,76,0.3));
+    }
+    .contact-item-body h3 {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .contact-item-body a,
+    .contact-item-body p {
+      font-size: 1rem; line-height: 1.6;
+      color: rgba(245,239,230,0.65);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .contact-item-body a:hover { color: var(--gold); }
+
+    /* Contact visual side */
+    .contact-visual {
+      position: relative;
+      display: flex; flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-quote {
+      padding: 2.5rem;
+      background: linear-gradient(135deg, rgba(30,13,5,0.3), rgba(13,6,2,0.5));
+      border-left: 3px solid var(--gold);
+      border-radius: 4px;
+      position: relative;
+    }
+    .contact-quote::before {
+      content: '"';
+      position: absolute; top: -0.5rem; left: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; color: var(--gold); opacity: 0.3;
+      line-height: 1;
+    }
+    .contact-quote p {
+      font-family: 'Lora', serif; font-style: italic;
+      font-size: 1.15rem; line-height: 1.8;
+      color: rgba(245,239,230,0.7);
+    }
+    .contact-quote cite {
+      display: block; margin-top: 1rem;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold);
+      font-style: normal;
+    }
+
+    .contact-cta-card {
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--gold), var(--wood-light));
+      border-radius: 4px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      transition: all 0.35s;
+      box-shadow: 0 4px 20px rgba(201,168,76,0.25);
+    }
+    .contact-cta-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 35px rgba(201,168,76,0.4);
+    }
+    .contact-cta-card span {
+      display: block;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .contact-cta-card strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--ink);
+    }
+
+    /* ══════════════════════════════════
+       FOOTER
+    ══════════════════════════════════ */
+    footer {
+      position: relative; z-index: 10;
+      background: var(--ink);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .footer-bird { font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.6; }
+    .footer-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--gold); margin-bottom: 0.3rem;
+    }
+    footer p {
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.25em;
+      color: rgba(245,239,230,0.2); margin-top: 0.35rem;
+    }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: repeat(2,1fr); }
+      .about-strip { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-item.wide { grid-column: span 1; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.tall { grid-row: span 1; }
+      nav ul { gap: 1.5rem; }
+      .nav-brand { display: none; }
+      .woodpecker-wrap { top: 5%; right: 2%; }
+      .woodpecker-svg { width: 70px; }
+      header h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ══ HEADER ══ -->
+  <header>
+    <div class="wood-rings">
+      <div class="ring"></div><div class="ring"></div>
+      <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    </div>
+    <div class="sawdust" id="sawdust"></div>
+
+    <!-- Woodpecker -->
+    <div class="woodpecker-wrap" aria-hidden="true">
+      <svg class="woodpecker-svg" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Tree trunk -->
+        <rect x="78" y="20" width="22" height="115" rx="4" fill="#1a0a03" stroke="#1e0d05" stroke-width="1.5"/>
+        <!-- Trunk grain lines -->
+        <line x1="83" y1="30" x2="83" y2="120" stroke="#0d0602" stroke-width="0.8" opacity="0.7"/>
+        <line x1="90" y1="25" x2="90" y2="125" stroke="#0d0602" stroke-width="0.8" opacity="0.5"/>
+        <line x1="96" y1="30" x2="96" y2="118" stroke="#0d0602" stroke-width="0.8" opacity="0.4"/>
+        <!-- Hole in tree -->
+        <ellipse cx="89" cy="70" rx="7" ry="5" fill="#060200"/>
+        <!-- Body -->
+        <ellipse cx="58" cy="72" rx="22" ry="26" fill="#c0392b" transform="rotate(-10,58,72)"/>
+        <!-- Wing -->
+        <ellipse cx="55" cy="75" rx="16" ry="18" fill="#0d0602" transform="rotate(-15,55,75)"/>
+        <ellipse cx="55" cy="74" rx="12" ry="14" fill="#3d2810" transform="rotate(-15,55,74)"/>
+        <!-- White belly -->
+        <ellipse cx="62" cy="78" rx="9" ry="13" fill="#f0e6d3" transform="rotate(-8,62,78)"/>
+        <!-- Black stripe on face -->
+        <path d="M 44 58 Q 50 55 56 58 Q 52 65 44 63 Z" fill="#060200"/>
+        <!-- Head -->
+        <circle cx="46" cy="52" r="16" fill="#c0392b"/>
+        <!-- Red crest -->
+        <path d="M 38 40 Q 42 28 48 32 Q 44 38 46 44 Z" fill="#e74c3c"/>
+        <path d="M 42 38 Q 46 24 52 30 Q 47 36 48 42 Z" fill="#c0392b"/>
+        <!-- White face patch -->
+        <ellipse cx="50" cy="52" rx="7" ry="9" fill="#f0e6d3"/>
+        <!-- Eye -->
+        <circle cx="48" cy="49" r="4" fill="#f0e6d3"/>
+        <circle cx="49" cy="49" r="2.5" fill="#060200"/>
+        <circle cx="50" cy="48" r="0.8" fill="white"/>
+        <!-- Beak group (animated) -->
+        <g class="beak">
+          <path d="M 55 50 L 78 53 L 55 56 Z" fill="#c9a84c"/>
+          <path d="M 55 50 L 78 53 L 66 51 Z" fill="#e8c96a"/>
+        </g>
+        <!-- Feet -->
+        <line x1="68" y1="92" x2="80" y2="100" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="65" y1="96" x2="77" y2="104" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Toes -->
+        <line x1="80" y1="100" x2="85" y2="96" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="80" y1="100" x2="86" y2="102" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="77" y1="104" x2="83" y2="100" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="77" y1="104" x2="83" y2="107" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Gold dust sparks when pecking -->
+        <circle cx="76" cy="52" r="1.5" fill="#c9a84c" opacity="0.6" class="spark"/>
+        <circle cx="72" cy="48" r="1" fill="#e8c96a" opacity="0.4" class="spark"/>
+        <circle cx="74" cy="57" r="1.2" fill="#c9a84c" opacity="0.5" class="spark"/>
+      </svg>
+    </div>
+
+    <div class="hero-logo-wrap">
+      <div class="logo-orbit"></div>
+      <div class="hero-logo-frame">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        <img src="img/logo.png" alt="Carpintería Zúñiga" class="hero-logo"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="hero-logo-fallback" style="display:none">🪵</div>
+      </div>
+    </div>
+
+    <p class="hero-eyebrow">Artesanos de la Madera</p>
+    <h1>
+      <span class="h1-line1">Carpintería</span>
+      <span class="h1-line2">Zúñiga</span>
+    </h1>
+    <p class="hero-tagline">Donde cada <em>corte cuenta</em> una historia</p>
+    <div class="hero-cta-wrap">
+      <a href="#servicios" class="btn-primary">Ver Servicios</a>
+      <a href="#contacto" class="btn-ghost">Cotizar Proyecto</a>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Explorar</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </header>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">C · Zúñiga</a>
+      <ul>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN ══ -->
+  <div class="container">
+
+    <!-- NOSOTROS -->
+    <section id="nosotros">
+      <span class="sec-label">✦ Quiénes somos</span>
+      <h2>Madera con <span class="italic">alma</span></h2>
+      <div class="sec-divider"></div>
+      <div class="about-strip">
+        <div class="about-text">
+          <p>En <em>Carpintería Zúñiga</em> transformamos la madera en piezas que duran generaciones. Con años de experiencia artesanal, cada proyecto es tratado con el cuidado y la precisión que merece.</p>
+          <p>Trabajamos con las mejores maderas, combinando técnicas tradicionales con herramientas modernas para ofrecer resultados que <em>superan expectativas</em> — desde un mueble a medida hasta una instalación completa.</p>
+        </div>
+        <div class="about-stat">
+          <span class="about-stat-num">100%</span>
+          <span class="about-stat-label">Hecho a mano</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="wood-divider">
+      <div class="wd-line"></div>
+      <div class="wd-center">🪵 ✦ 🪵</div>
+      <div class="wd-line"></div>
+    </div>
+
+    <!-- SERVICIOS -->
+    <section id="servicios">
+      <span class="sec-label">✦ Lo que hacemos</span>
+      <h2>Nuestros <span class="italic">Servicios</span></h2>
+      <div class="sec-divider"></div>
+      <div class="services-grid">
+
+        <div class="svc-card">
+          <span class="svc-icon">🛋️</span>
+          <h3>Muebles a Medida</h3>
+          <p>Diseñamos y fabricamos muebles únicos adaptados a tu espacio y estilo. Cada pieza es creada pensando en ti.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-icon">🚪</span>
+          <h3>Puertas y Ventanas</h3>
+          <p>Elaboración e instalación de puertas y ventanas de madera con acabados finos y sellados de larga duración.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-icon">🍳</span>
+          <h3>Cocinas Integrales</h3>
+          <p>Cocinas completas a medida: gabinetes, alacenas y detalles que transforman el corazón de tu hogar.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-icon">🪟</span>
+          <h3>Barandales de Madera</h3>
+          <p>Barandales artesanales para escaleras y balcones. Elegancia estructural con la calidez natural de la madera.</p>
+        </div>
+
+        <div class="svc-card special">
+          <span class="svc-icon">🏍️</span>
+          <h3>Soportes para Casco</h3>
+          <p>Soportes artesanales de madera para casco de motocicleta — funcionales, únicos y con acabado premium.</p>
+        </div>
+
+        <div class="svc-card">
+          <span class="svc-icon">🔨</span>
+          <h3>Proyectos Especiales</h3>
+          <p>¿Tienes algo en mente? Trabajamos contigo para hacer realidad cualquier proyecto de carpintería personalizado.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="wood-divider">
+      <div class="wd-line"></div>
+      <div class="wd-center">🐦 ✦ 🪵</div>
+      <div class="wd-line"></div>
+    </div>
+
+    <!-- GALERÍA -->
+    <section id="galeria">
+      <span class="sec-label">✦ Nuestro trabajo</span>
+      <h2>Galería de <span class="italic">Obras</span></h2>
+      <div class="sec-divider"></div>
+      <p class="gallery-intro">Cada pieza que sale de nuestro taller lleva consigo horas de dedicación y el orgullo de un trabajo bien hecho.</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item tall">
+          <div class="gallery-placeholder">
+            <span class="gallery-ph-icon">🛋️</span>
+            <span class="gallery-ph-label">Mueble a medida</span>
+          </div>
+          <div class="gallery-overlay"><span class="gallery-overlay-text">Mueble personalizado</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="gallery-ph-icon">🚪</span>
+            <span class="gallery-ph-label">Puerta artesanal</span>
+          </div>
+          <div class="gallery-overlay"><span class="gallery-overlay-text">Puerta de madera</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="gallery-ph-icon">🍳</span>
+            <span class="gallery-ph-label">Cocina integral</span>
+          </div>
+          <div class="gallery-overlay"><span class="gallery-overlay-text">Cocina a medida</span></div>
+        </div>
+        <div class="gallery-item wide">
+          <div class="gallery-placeholder" style="min-height:160px">
+            <span class="gallery-ph-icon">🪟</span>
+            <span class="gallery-ph-label">Barandal de madera</span>
+          </div>
+          <div class="gallery-overlay"><span class="gallery-overlay-text">Barandal artesanal</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="gallery-ph-icon">🏍️</span>
+            <span class="gallery-ph-label">Soporte de casco</span>
+          </div>
+          <div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Soporte para casco</span></div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <span class="gallery-ph-icon">🪵</span>
+            <span class="gallery-ph-label">Proyecto especial</span>
+          </div>
+          <div class="gallery-overlay"><span class="gallery-overlay-text">Trabajo especial</span></div>
+        </div>
+      </div>
+
+      <div class="gallery-note">
+        📁 &nbsp; Reemplaza los espacios con tus fotos reales — colócalas en la carpeta /img/galeria/
+      </div>
+    </section>
+
+    <div class="wood-divider">
+      <div class="wd-line"></div>
+      <div class="wd-center">✦ 🪵 ✦</div>
+      <div class="wd-line"></div>
+    </div>
+
+    <!-- CONTACTO -->
+    <section id="contacto">
+      <span class="sec-label">✦ Hablemos</span>
+      <h2>Contáctanos <span class="italic">hoy</span></h2>
+      <div class="sec-divider"></div>
+      <div class="contact-layout">
+        <div class="contact-info-block">
+          <div class="contact-item">
+            <span class="contact-item-icon">📍</span>
+            <div class="contact-item-body">
+              <h3>Ubicación</h3>
+              <p>Tu dirección aquí<br>Ciudad, Estado, México</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-icon">📞</span>
+            <div class="contact-item-body">
+              <h3>Teléfono</h3>
+              <a href="tel:0000000000">000 000 0000</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-icon">💬</span>
+            <div class="contact-item-body">
+              <h3>WhatsApp</h3>
+              <a href="https://wa.me/0000000000">Enviar mensaje →</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-icon">🕐</span>
+            <div class="contact-item-body">
+              <h3>Horario</h3>
+              <p>Lunes – Sábado: 8:00 – 18:00</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-visual">
+          <div class="contact-quote">
+            <p>La madera tiene memoria. Cada pieza que creamos lleva la huella del artesano y la historia del árbol.</p>
+            <cite>— Carpintería Zúñiga</cite>
+          </div>
+          <a href="https://wa.me/0000000000" class="contact-cta-card">
+            <span>¿Listo para tu proyecto?</span>
+            <strong>Pide tu cotización gratis</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /container -->
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-bird">🐦</div>
+    <div class="footer-name">Carpintería Zúñiga</div>
+    <p>Madera con alma · Artesanos de generación</p>
+    <p>© 2025 · Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    /* ── CURSOR ── */
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+      mx=e.clientX; my=e.clientY;
+      cur.style.left=mx+'px'; cur.style.top=my+'px';
+    });
+    (function animRing(){
+      rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+      ring.style.left=rx+'px'; ring.style.top=ry+'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a,button,.svc-card,.gallery-item,.contact-item').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{
+        cur.style.transform='translate(-50%,-50%) scale(2.2)';
+        ring.style.transform='translate(-50%,-50%) scale(1.6)';
+        ring.style.borderColor='rgba(201,168,76,0.9)';
+      });
+      el.addEventListener('mouseleave',()=>{
+        cur.style.transform='translate(-50%,-50%) scale(1)';
+        ring.style.transform='translate(-50%,-50%) scale(1)';
+        ring.style.borderColor='rgba(201,168,76,0.5)';
+      });
+    });
+
+    /* ── SAWDUST PARTICLES ── */
+    const sawdust = document.getElementById('sawdust');
+    const colors = ['#5e2808','#3a1605','#deb887','#1e0d05','#c9a84c'];
+    for(let i=0;i<35;i++){
+      const p = document.createElement('div');
+      p.className = 'dust-particle';
+      p.style.left = Math.random()*100+'vw';
+      p.style.width = (2+Math.random()*4)+'px';
+      p.style.height = p.style.width;
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      const dur = 15+Math.random()*20;
+      p.style.animationDuration = dur+'s';
+      p.style.animationDelay = -(Math.random()*dur)+'s';
+      sawdust.appendChild(p);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.style.opacity='1';
+          e.target.style.transform='translateY(0) translateX(0)';
+        }
+      });
+    },{threshold:0.1});
+
+    document.querySelectorAll('.svc-card,.gallery-item,.contact-item,.about-strip').forEach((el,i)=>{
+      el.style.opacity='0';
+      el.style.transform='translateY(28px)';
+      el.style.transition=`opacity 0.65s ${i*0.08}s ease, transform 0.65s ${i*0.08}s ease`;
+      obs.observe(el);
+    });
+
+    /* ── CLICK RIPPLE (wood chip) ── */
+    document.addEventListener('click', e=>{
+      const r=document.createElement('div');
+      r.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;
+        width:6px;height:6px;background:rgba(201,168,76,0.7);border-radius:50%;
+        pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);
+        animation:rpl 0.55s ease-out forwards;`;
+      document.body.appendChild(r);
+      if(!document.getElementById('rplStyle')){
+        const s=document.createElement('style');
+        s.id='rplStyle';
+        s.textContent='@keyframes rpl{to{transform:translate(-50%,-50%) scale(18);opacity:0}}';
+        document.head.appendChild(s);
+      }
+      setTimeout(()=>r.remove(),600);
+    });
+
+    /* ── SPARK ANIMATION ON PECK ── */
+    const sparks = document.querySelectorAll('.spark');
+    setInterval(()=>{
+      sparks.forEach(s=>{
+        s.style.opacity = Math.random()>0.5 ? '0.8' : '0';
+      });
+    }, 300);
+  </script>
+</body>
+</html>
