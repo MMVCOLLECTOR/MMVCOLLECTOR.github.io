@@ -1,5 +1,4 @@
 
-  <script>
     // === CUSTOM CURSOR ===
     const cursor = document.getElementById('cursor');
     const cursorRing = document.getElementById('cursorRing');
@@ -144,4 +143,3 @@
       document.head.appendChild(style);
       setTimeout(() => { ripple.remove(); style.remove(); }, 700);
     });
-  </script>
