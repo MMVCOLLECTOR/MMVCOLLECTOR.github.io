@@ -3,582 +3,759 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMV COLLECTOR DESIGN</title>
+    <title>MMV COLLECTOR DESIGN — Marco Antonio Marcial Herrera</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --negro:#050505;
+            --negro2:#0e0e0e;
+            --negro3:#161616;
+            --plata:#a8a8a8;
+            --plata-clara:#d4d4d4;
+            --blanco:#f0f0f0;
+            --acento:#2a2a2a;
+            --borde:rgba(168,168,168,0.12);
         }
 
-        :root {
-            --negro: #0a0a0a;
-            --negro-suave: #1a1a1a;
-            --plateado: #c0c0c0;
-            --plateado-claro: #e8e8e8;
-            --blanco: #ffffff;
-            --acento: #3a3a3a;
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Outfit',sans-serif;
+            background:var(--negro);
+            color:var(--plata-clara);
+            line-height:1.6;
+            overflow-x:hidden;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--negro) 0%, var(--negro-suave) 100%);
-            color: var(--plateado-claro);
-            line-height: 1.6;
+        /* ══════════ GRAIN OVERLAY ══════════ */
+        body::before{
+            content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-repeat:repeat;opacity:.5;
         }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
+        /* ══════════ LAYOUT ══════════ */
+        .page{display:flex;min-height:100vh}
+
+        /* ══════════ SIDEBAR ══════════ */
+        .sidebar{
+            width:300px;min-height:100vh;position:fixed;top:0;left:0;
+            background:var(--negro2);
+            border-right:1px solid var(--borde);
+            display:flex;flex-direction:column;
+            padding:48px 32px 32px;
+            z-index:100;
+            transition:transform .4s cubic-bezier(.4,0,.2,1);
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: rgba(26, 26, 26, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 40px 30px;
-            position: fixed;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(192, 192, 192, 0.1);
-            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+        .logo-badge{
+            width:120px;height:120px;margin:0 auto 24px;
+            border:3px solid var(--plata);
+            border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            position:relative;
+            overflow:hidden;
+        }
+        .logo-badge::after{
+            content:'';position:absolute;inset:-2px;
+            border-radius:50%;
+            background:conic-gradient(from 0deg,transparent 0%,rgba(168,168,168,.25) 25%,transparent 50%);
+            animation:spin 6s linear infinite;
+        }
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .logo-badge img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
+        .logo-badge .placeholder{color:var(--plata);font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:4px;position:relative;z-index:1}
+
+        .brand{text-align:center;margin-bottom:8px}
+        .brand h1{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:3.2rem;letter-spacing:8px;
+            background:linear-gradient(180deg,var(--blanco) 0%,var(--plata) 100%);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;
+        }
+        .brand .sub{
+            font-size:.78rem;letter-spacing:4px;color:var(--plata);
+            font-weight:300;
+            border-top:1px solid var(--borde);
+            padding-top:10px;margin-top:6px;
+            text-transform:uppercase;
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px;
+        .sidebar nav{margin-top:52px;flex-grow:1}
+        .sidebar nav ul{list-style:none}
+        .sidebar nav li{margin:6px 0}
+        .sidebar nav a{
+            display:flex;align-items:center;gap:12px;
+            color:var(--plata);text-decoration:none;
+            font-size:.88rem;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
+            padding:12px 16px;border-radius:8px;
+            transition:all .3s ease;
+            position:relative;
+        }
+        .sidebar nav a .dot{
+            width:6px;height:6px;border-radius:50%;
+            background:var(--plata);opacity:0;
+            transition:opacity .3s ease;
+        }
+        .sidebar nav a:hover,.sidebar nav a.active{
+            color:var(--blanco);background:rgba(168,168,168,.06);
+        }
+        .sidebar nav a:hover .dot,.sidebar nav a.active .dot{opacity:1}
+
+        .sidebar-footer{
+            margin-top:auto;padding-top:20px;
+            border-top:1px solid var(--borde);
+            font-size:.75rem;color:var(--plata);opacity:.5;
+            text-align:center;
         }
 
-        .logo-image {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
-            background: rgba(192, 192, 192, 0.1);
-            border: 5px solid var(--plateado);
-            border-radius: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: all 0.3s ease;
+        /* ══════════ HAMBURGER ══════════ */
+        .hamburger{
+            display:none;position:fixed;top:20px;left:20px;z-index:200;
+            width:44px;height:44px;background:var(--negro2);border:1px solid var(--borde);
+            border-radius:8px;cursor:pointer;
+            flex-direction:column;align-items:center;justify-content:center;gap:5px;
+        }
+        .hamburger span{width:20px;height:2px;background:var(--plata);transition:all .3s ease;border-radius:2px}
+        .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .hamburger.open span:nth-child(2){opacity:0}
+        .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90}
+
+        /* ══════════ MAIN ══════════ */
+        .main{margin-left:300px;flex:1;min-width:0}
+
+        /* ══════════ HERO ══════════ */
+        .hero{
+            min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+            padding:100px 80px;position:relative;
+            border-bottom:1px solid var(--borde);
+        }
+        .hero::before{
+            content:'';position:absolute;top:0;right:0;width:50%;height:100%;
+            background:radial-gradient(ellipse at 80% 30%,rgba(168,168,168,.04) 0%,transparent 70%);
+            pointer-events:none;
+        }
+        .hero-eyebrow{
+            font-size:.82rem;letter-spacing:5px;color:var(--plata);
+            text-transform:uppercase;margin-bottom:20px;
+            display:flex;align-items:center;gap:12px;
+        }
+        .hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--plata)}
+        .hero h1{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(3rem,6vw,5.5rem);
+            letter-spacing:3px;line-height:1.05;
+            background:linear-gradient(135deg,var(--blanco) 0%,var(--plata) 100%);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;margin-bottom:28px;
+        }
+        .hero p{
+            font-size:1.15rem;color:var(--plata);max-width:600px;
+            line-height:1.85;font-weight:300;
+        }
+        .hero-cta{
+            display:inline-flex;align-items:center;gap:10px;
+            margin-top:40px;padding:14px 32px;
+            background:linear-gradient(135deg,var(--plata) 0%,var(--blanco) 100%);
+            color:var(--negro);text-decoration:none;
+            border-radius:40px;font-weight:600;font-size:.92rem;letter-spacing:1px;
+            transition:all .35s ease;
+        }
+        .hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(168,168,168,.25)}
+        .hero-cta svg{transition:transform .3s ease}
+        .hero-cta:hover svg{transform:translateX(4px)}
+
+        /* ══════════ SECTIONS ══════════ */
+        section{padding:100px 80px}
+        .section-label{
+            font-size:.78rem;letter-spacing:5px;color:var(--plata);
+            text-transform:uppercase;margin-bottom:12px;
+            display:flex;align-items:center;gap:12px;
+        }
+        .section-label::before{content:'';width:32px;height:1px;background:var(--plata)}
+        .section-title{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:clamp(2rem,4vw,3.2rem);
+            color:var(--blanco);letter-spacing:4px;margin-bottom:50px;
         }
 
-        .logo-image:hover {
-            transform: scale(1.05);
-            border-color: var(--blanco);
-            box-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
+        /* ══════════ SERVICIOS ══════════ */
+        .services-grid{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:24px;
+        }
+        .service-card{
+            background:var(--negro2);border:1px solid var(--borde);
+            border-radius:16px;padding:36px 28px;
+            transition:all .4s ease;position:relative;overflow:hidden;
+        }
+        .service-card::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:2px;
+            background:linear-gradient(90deg,transparent,var(--plata),transparent);
+            opacity:0;transition:opacity .4s ease;
+        }
+        .service-card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-6px)}
+        .service-card:hover::before{opacity:1}
+        .service-icon{
+            width:48px;height:48px;margin-bottom:20px;
+            display:flex;align-items:center;justify-content:center;
+            border:1px solid var(--borde);border-radius:12px;
+            color:var(--plata);
+        }
+        .service-card h3{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:1.4rem;letter-spacing:2px;color:var(--blanco);margin-bottom:12px;
+        }
+        .service-card p{font-size:.9rem;color:var(--plata);line-height:1.7;font-weight:300}
+
+        /* ══════════ PORTAFOLIO ══════════ */
+        .portfolio-tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+        .tab-btn{
+            padding:10px 22px;border-radius:30px;
+            background:transparent;border:1px solid var(--borde);
+            color:var(--plata);font-family:'Outfit',sans-serif;
+            font-size:.82rem;letter-spacing:1.5px;cursor:pointer;
+            transition:all .3s ease;text-transform:uppercase;
+        }
+        .tab-btn:hover,.tab-btn.active{
+            background:var(--plata);color:var(--negro);border-color:var(--plata);
         }
 
-        .logo-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .portfolio-grid{
+            display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+            gap:28px;
+        }
+        .card{
+            background:var(--negro2);border:1px solid var(--borde);
+            border-radius:16px;overflow:hidden;
+            transition:all .45s cubic-bezier(.4,0,.2,1);
+            cursor:pointer;
+        }
+        .card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+        .card-thumb{
+            width:100%;height:220px;
+            background:linear-gradient(135deg,var(--acento) 0%,var(--negro3) 100%);
+            display:flex;align-items:center;justify-content:center;
+            position:relative;overflow:hidden;
+        }
+        .card-thumb .label{
+            font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+            letter-spacing:4px;color:var(--plata);
+            position:relative;z-index:2;
+        }
+        .card-thumb::after{
+            content:'';position:absolute;inset:0;
+            background:linear-gradient(180deg,transparent 50%,rgba(5,5,5,.6) 100%);
+        }
+        .card-body{padding:28px}
+        .card-body h3{
+            font-size:1.2rem;color:var(--blanco);margin-bottom:10px;font-weight:600;
+        }
+        .card-body p{font-size:.88rem;color:var(--plata);line-height:1.7;font-weight:300;margin-bottom:18px}
+        .card-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+        .card-tag{
+            padding:4px 14px;border-radius:20px;
+            font-size:.75rem;letter-spacing:1px;
+            background:rgba(168,168,168,.08);border:1px solid var(--borde);
+            color:var(--plata-clara);
+        }
+        .card-link{
+            display:inline-flex;align-items:center;gap:8px;
+            color:var(--blanco);text-decoration:none;
+            font-size:.85rem;font-weight:500;letter-spacing:1px;
+            transition:all .3s ease;
+        }
+        .card-link:hover{gap:12px;color:var(--plata-clara)}
+        .card-link svg{transition:transform .3s ease}
+        .card-link:hover svg{transform:translateX(3px)}
+
+        /* ══════════ SOBRE MÍ ══════════ */
+        .about-content{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+        .about-text p{font-size:1.05rem;color:var(--plata);line-height:2;font-weight:300;margin-bottom:20px}
+        .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .stat{
+            background:var(--negro2);border:1px solid var(--borde);
+            border-radius:14px;padding:28px 24px;text-align:center;
+        }
+        .stat-num{
+            font-family:'Bebas Neue',sans-serif;
+            font-size:2.8rem;color:var(--blanco);line-height:1;
+        }
+        .stat-label{font-size:.78rem;letter-spacing:2px;color:var(--plata);margin-top:6px;text-transform:uppercase}
+
+        .skills-list{margin-top:36px}
+        .skills-list h3{
+            font-family:'Bebas Neue',sans-serif;font-size:1.3rem;
+            letter-spacing:2px;color:var(--blanco);margin-bottom:16px;
+        }
+        .skill-bar{margin-bottom:14px}
+        .skill-bar span{display:block;font-size:.8rem;color:var(--plata);margin-bottom:6px;letter-spacing:1px}
+        .bar-track{height:4px;background:var(--acento);border-radius:4px;overflow:hidden}
+        .bar-fill{height:100%;background:linear-gradient(90deg,var(--plata),var(--blanco));border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+        /* ══════════ CONTACTO ══════════ */
+        .contact-grid{
+            display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            gap:24px;
+        }
+        .contact-card{
+            background:var(--negro2);border:1px solid var(--borde);
+            border-radius:14px;padding:32px 28px;
+            transition:all .35s ease;
+        }
+        .contact-card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-4px)}
+        .contact-card .icon{
+            width:42px;height:42px;display:flex;align-items:center;justify-content:center;
+            border:1px solid var(--borde);border-radius:10px;margin-bottom:16px;color:var(--plata);
+        }
+        .contact-card h3{font-size:1.05rem;color:var(--blanco);margin-bottom:6px;font-weight:600}
+        .contact-card p{font-size:.9rem;color:var(--plata);font-weight:300}
+        .contact-card a{color:var(--plata-clara);text-decoration:none;transition:color .3s ease}
+        .contact-card a:hover{color:var(--blanco)}
+
+        /* ══════════ FOOTER ══════════ */
+        .footer{
+            padding:40px 80px;border-top:1px solid var(--borde);
+            display:flex;justify-content:space-between;align-items:center;
+            font-size:.8rem;color:var(--plata);opacity:.6;
         }
 
-        .logo-placeholder {
-            color: var(--plateado);
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+        /* ══════════ ANIMATIONS ══════════ */
+        .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+        .fade-up.visible{opacity:1;transform:translateY(0)}
+
+        /* ══════════ RESPONSIVE ══════════ */
+        @media(max-width:1024px){
+            section,.hero{padding:80px 40px}
+            .about-content{grid-template-columns:1fr}
+            .footer{padding:30px 40px}
         }
-
-        .logo h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--blanco) 0%, var(--plateado) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 5px;
-            margin-bottom: 5px;
-        }
-
-        .logo h2 {
-            font-size: 0.9rem;
-            color: var(--plateado);
-            letter-spacing: 3px;
-            font-weight: 300;
-            border-top: 2px solid var(--plateado);
-            padding-top: 10px;
-        }
-
-        .menu {
-            margin-top: 60px;
-            flex-grow: 1;
-        }
-
-        .menu ul {
-            list-style: none;
-        }
-
-        .menu li {
-            margin: 25px 0;
-        }
-
-        .menu a {
-            color: var(--plateado);
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            display: block;
-            padding: 10px 0;
-            border-left: 3px solid transparent;
-            padding-left: 15px;
-        }
-
-        .menu a:hover,
-        .menu a.active {
-            color: var(--blanco);
-            border-left-color: var(--plateado);
-            transform: translateX(5px);
-        }
-
-        .footer-sidebar {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px solid rgba(192, 192, 192, 0.2);
-            font-size: 0.85rem;
-            color: var(--plateado);
-            opacity: 0.7;
-        }
-
-        /* Main Content */
-        .content {
-            margin-left: 280px;
-            flex-grow: 1;
-            padding: 60px 80px;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 80px 0;
-            border-bottom: 1px solid rgba(192, 192, 192, 0.1);
-        }
-
-        .hero-section h1 {
-            font-size: 4.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--blanco) 0%, var(--plateado) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-
-        .hero-section p {
-            font-size: 1.3rem;
-            color: var(--plateado);
-            max-width: 700px;
-            line-height: 1.8;
-        }
-
-        /* Portfolio Section */
-        .portfolio-section {
-            padding: 100px 0;
-        }
-
-        .portfolio-section h2 {
-            font-size: 2.5rem;
-            color: var(--blanco);
-            letter-spacing: 5px;
-            margin-bottom: 60px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .portfolio-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--plateado) 0%, transparent 100%);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
-        }
-
-        .project-card {
-            background: rgba(26, 26, 26, 0.8);
-            border: 1px solid rgba(192, 192, 192, 0.2);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            cursor: pointer;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--plateado);
-            box-shadow: 0 20px 50px rgba(192, 192, 192, 0.15);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 250px;
-            background: linear-gradient(135deg, var(--acento) 0%, var(--negro-suave) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--plateado);
-            letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .project-content {
-            padding: 30px;
-        }
-
-        .project-content h3 {
-            font-size: 1.5rem;
-            color: var(--blanco);
-            margin-bottom: 15px;
-        }
-
-        .project-content p {
-            color: var(--plateado);
-            font-size: 0.95rem;
-            margin-bottom: 20px;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: rgba(192, 192, 192, 0.1);
-            color: var(--plateado-claro);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(192, 192, 192, 0.2);
-        }
-
-        .btn-ver {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 25px;
-            background: linear-gradient(135deg, var(--plateado) 0%, var(--blanco) 100%);
-            color: var(--negro);
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-ver:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(192, 192, 192, 0.3);
-        }
-
-        /* About Section */
-        .about-section {
-            padding: 100px 0;
-            max-width: 800px;
-        }
-
-        .about-section h2 {
-            font-size: 2.5rem;
-            color: var(--blanco);
-            letter-spacing: 5px;
-            margin-bottom: 40px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .about-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--plateado) 0%, transparent 100%);
-        }
-
-        .about-section p {
-            font-size: 1.2rem;
-            color: var(--plateado);
-            line-height: 2;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 100px 0;
-        }
-
-        .contact-section h2 {
-            font-size: 2.5rem;
-            color: var(--blanco);
-            letter-spacing: 5px;
-            margin-bottom: 40px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .contact-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--plateado) 0%, transparent 100%);
-        }
-
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .contact-item {
-            background: rgba(26, 26, 26, 0.8);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(192, 192, 192, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            border-color: var(--plateado);
-            transform: translateY(-5px);
-        }
-
-        .contact-item h3 {
-            color: var(--blanco);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .contact-item p {
-            color: var(--plateado);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                border-right: none;
-                border-bottom: 1px solid rgba(192, 192, 192, 0.1);
-            }
-
-            .content {
-                margin-left: 0;
-                padding: 40px 20px;
-            }
-
-            .hero-section h1 {
-                font-size: 2.5rem;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                flex-direction: column;
-            }
+        @media(max-width:768px){
+            .sidebar{transform:translateX(-100%)}
+            .sidebar.open{transform:translateX(0)}
+            .hamburger{display:flex}
+            .overlay.show{display:block}
+            .main{margin-left:0}
+            section,.hero{padding:60px 24px}
+            .hero{min-height:90vh;padding-top:80px}
+            .portfolio-grid{grid-template-columns:1fr}
+            .services-grid{grid-template-columns:1fr}
+            .footer{padding:24px;flex-direction:column;gap:8px;text-align:center}
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo-container">
-                <div class="logo-image">
-                    <!-- Reemplaza el src con la URL de tu logo -->
-                    <img src="img/LOGO.png" alt="MMV Logo" style="display: none;" onload="this.style.display='block'; this.parentElement.querySelector('.logo-placeholder').style.display='none';">
-                    <span class="logo-placeholder">LOGO</span>
+
+<!-- Hamburger -->
+<button class="hamburger" id="menuToggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<div class="page">
+
+    <!-- ══════════ SIDEBAR ══════════ -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo-badge">
+            <img src="img/LOGO.png" alt="MMV Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="display:none" onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+            <span class="placeholder" style="display:flex">MMV</span>
+        </div>
+
+        <div class="brand">
+            <h1>MMV</h1>
+            <p class="sub">Collector Design</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="#inicio" class="active"><span class="dot"></span>Inicio</a></li>
+                <li><a href="#servicios"><span class="dot"></span>Servicios</a></li>
+                <li><a href="#portafolio"><span class="dot"></span>Portafolio</a></li>
+                <li><a href="#sobre-mi"><span class="dot"></span>Sobre Mí</a></li>
+                <li><a href="#contacto"><span class="dot"></span>Contacto</a></li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>&copy; 2025 MMV Collector Design</p>
+        </div>
+    </aside>
+
+    <!-- ══════════ MAIN ══════════ -->
+    <div class="main">
+
+        <!-- HERO -->
+        <section id="inicio" class="hero">
+            <p class="hero-eyebrow">Ing. en Sistemas Computacionales</p>
+            <h1>Diseño &amp; Tecnología<br>que trascienden.</h1>
+            <p>Soy Marco Antonio Marcial Herrera. Creo identidades visuales, experiencias digitales y brindo soluciones tecnológicas integrales — desde el diseño de tu marca hasta el mantenimiento de tus equipos.</p>
+            <a href="#portafolio" class="hero-cta">
+                Ver Portafolio
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section id="servicios" style="border-bottom:1px solid var(--borde)">
+            <p class="section-label">Lo que hago</p>
+            <h2 class="section-title">Servicios</h2>
+
+            <div class="services-grid">
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12 C8 8, 16 8, 16 12 C16 16, 8 16, 8 12Z"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                    </div>
+                    <h3>Diseño de Logos</h3>
+                    <p>Identidades visuales únicas y memorables que representan la esencia de tu marca o negocio con profesionalismo.</p>
+                </div>
+
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>Páginas Web</h3>
+                    <p>Sitios web modernos, responsivos y optimizados que conectan con tu audiencia y potencian tu presencia digital.</p>
+                </div>
+
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="7" x2="6" y2="7.01"/><line x1="10" y1="7" x2="10" y2="7.01"/></svg>
+                    </div>
+                    <h3>Tarjetas de Presentación</h3>
+                    <p>Diseños elegantes y profesionales que causan una primera impresión impactante y refuerzan tu imagen de marca.</p>
+                </div>
+
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    </div>
+                    <h3>Mantenimiento de PC's &amp; Laptops</h3>
+                    <p>Servicio técnico profesional: limpieza, optimización, diagnóstico de fallas y reparación de equipos de cómputo.</p>
+                </div>
+
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    </div>
+                    <h3>Instalación &amp; Activación de Office</h3>
+                    <p>Servicio remoto de instalación, configuración y activación de Microsoft Office en tu equipo, de forma rápida y segura.</p>
+                </div>
+
+                <div class="service-card fade-up">
+                    <div class="service-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+                    </div>
+                    <h3>Branding Integral</h3>
+                    <p>Creación completa de tu identidad de marca: logo, paleta de colores, tipografía y aplicaciones en diversos medios.</p>
                 </div>
             </div>
-            
-            <div class="logo">
-                <h1>MMV</h1>
-                <h2>COLLECTOR DESIGN</h2>
+        </section>
+
+        <!-- PORTAFOLIO -->
+        <section id="portafolio" style="border-bottom:1px solid var(--borde)">
+            <p class="section-label">Trabajos realizados</p>
+            <h2 class="section-title">Portafolio</h2>
+
+            <div class="portfolio-tabs">
+                <button class="tab-btn active" data-filter="all">Todos</button>
+                <button class="tab-btn" data-filter="web">Páginas Web</button>
+                <button class="tab-btn" data-filter="logo">Logos</button>
+                <button class="tab-btn" data-filter="tarjeta">Tarjetas</button>
             </div>
-            
-            <nav class="menu">
-                <ul>
-                    <li><a href="#inicio" class="active">INICIO</a></li>
-                    <li><a href="#portafolio">PORTAFOLIO</a></li>
-                    <li><a href="#sobre-mi">SOBRE MÍ</a></li>
-                    <li><a href="#contacto">CONTACTO</a></li>
-                </ul>
-            </nav>
-            
-            <div class="footer-sidebar">
-                <p>&copy; 2025 MMV Design</p>
-            </div>
-        </aside>
 
-        <main class="content">
-            <section id="inicio" class="hero-section">
-                <h1>Diseño que trasciende.</h1>
-                <p>Explora una colección curada de proyectos de diseño gráfico, web y branding que combinan elegancia minimalista con funcionalidad excepcional.</p>
-            </section>
-            
-            <section id="portafolio" class="portfolio-section">
-                <h2>PORTAFOLIO</h2>
-                
-                <div class="portfolio-grid">
-                    <!-- Proyecto 1: Órgano Sagitario -->
-                    <div class="project-card">
-                        <div class="project-image">
-                            <span>ÓRGANO SAGITARIO</span>
-                        </div>
-                        <div class="project-content">
-                            <h3>Emmanuel Ramírez Cruz</h3>
-                            <p>Página web profesional para tecladista y proyecto musical "Órgano Sagitario". Diseño elegante y funcional con información de servicios, experiencia y contacto directo.</p>
-                            <div class="project-tags">
-                                <span class="tag">Diseño Web</span>
-                                <span class="tag">HTML/CSS</span>
-                                <span class="tag">Responsive</span>
-                            </div>
-                            <a href="https://mmvcollector.github.io/pages/OrganoSagitario.html" target="_blank" class="btn-ver">VER PROYECTO</a>
-                        </div>
+            <div class="portfolio-grid">
+
+                <!-- Órgano Sagitario -->
+                <div class="card fade-up" data-category="web">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+                        <span class="label">♪ ÓRGANO SAGITARIO</span>
                     </div>
-
-                    <!-- Proyecto 2: Placeholder -->
-                    <div class="project-card">
-                        <div class="project-image">
-                            <span>PRÓXIMAMENTE</span>
+                    <div class="card-body">
+                        <h3>Emmanuel Ramírez Cruz</h3>
+                        <p>Página web profesional para tecladista y proyecto musical "Órgano Sagitario". Diseño elegante con información de servicios, experiencia y contacto directo.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Diseño Web</span>
+                            <span class="card-tag">HTML / CSS</span>
+                            <span class="card-tag">Responsive</span>
                         </div>
-                        <div class="project-content">
-                            <h3>Nuevo Proyecto</h3>
-                            <p>Un proyecto innovador está en desarrollo. Mantente atento para conocer más detalles pronto.</p>
-                            <div class="project-tags">
-                                <span class="tag">Branding</span>
-                                <span class="tag">Diseño Gráfico</span>
-                            </div>
-                        </div>
+                        <a href="https://mmvcollector.github.io/pages/OrganoSagitario.html" target="_blank" class="card-link">
+                            Ver proyecto
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
                     </div>
+                </div>
 
-                    <!-- Proyecto 3: Placeholder -->
-                    <div class="project-card">
-                        <div class="project-image">
-                            <span>PRÓXIMAMENTE</span>
+                <!-- Carpintería Zuñiga -->
+                <div class="card fade-up" data-category="web">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#2d1b0e,#4a2c17)">
+                        <span class="label">🪚 CARPINTERÍA ZUÑIGA</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Carpintería Zuñiga</h3>
+                        <p>Sitio web profesional para negocio de carpintería. Muestra servicios, trabajos realizados y facilita el contacto directo con clientes potenciales.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Diseño Web</span>
+                            <span class="card-tag">HTML / CSS</span>
+                            <span class="card-tag">Landing Page</span>
                         </div>
-                        <div class="project-content">
-                            <h3>Nuevo Proyecto</h3>
-                            <p>Un proyecto innovador está en desarrollo. Mantente atento para conocer más detalles pronto.</p>
-                            <div class="project-tags">
-                                <span class="tag">Diseño UI/UX</span>
-                                <span class="tag">Web Design</span>
-                            </div>
+                        <a href="https://mmvcollector.github.io/pages/CarpinteriaZu%C3%B1iga.html" target="_blank" class="card-link">
+                            Ver proyecto
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Logo placeholder 1 -->
+                <div class="card fade-up" data-category="logo">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)">
+                        <span class="label">LOGO — CLIENTE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Diseño de Logo</h3>
+                        <p>Identidad visual creada para cliente. Concepto minimalista con tipografía personalizada que refleja los valores de la marca.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Logo</span>
+                            <span class="card-tag">Identidad Visual</span>
                         </div>
                     </div>
                 </div>
-            </section>
-            
-            <section id="sobre-mi" class="about-section">
-                <h2>SOBRE MÍ</h2>
-                <p>Soy un diseñador especializado en crear identidades visuales impactantes y experiencias digitales memorables. Mi enfoque combina el minimalismo elegante con la funcionalidad moderna, creando diseños que no solo se ven bien, sino que también comunican efectivamente y resuelven problemas reales. Cada proyecto es una oportunidad para transformar ideas en realidades visuales que trascienden.</p>
-            </section>
 
-            <section id="contacto" class="contact-section">
-                <h2>CONTACTO</h2>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h3>Email</h3>
-                        <p>contacto@mmvdesign.com</p>
+                <!-- Tarjeta placeholder -->
+                <div class="card fade-up" data-category="tarjeta">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#1c1c1c,#333)">
+                        <span class="label">TARJETA — CLIENTE</span>
                     </div>
-                    <div class="contact-item">
-                        <h3>Teléfono</h3>
-                        <p>954-312-5522</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>Ubicación</h3>
-                        <p>Oaxaca, México</p>
+                    <div class="card-body">
+                        <h3>Tarjeta de Presentación</h3>
+                        <p>Diseño profesional de tarjeta de presentación con acabados premium y diseño que refleja la personalidad del negocio.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Diseño Gráfico</span>
+                            <span class="card-tag">Tarjetas</span>
+                            <span class="card-tag">Print</span>
+                        </div>
                     </div>
                 </div>
-            </section>
-        </main>
-    </div>
 
-    <script>
-        // Smooth scroll para los enlaces del menú
-        document.querySelectorAll('.menu a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                // Remover clase active de todos los enlaces
-                document.querySelectorAll('.menu a').forEach(link => {
-                    link.classList.remove('active');
-                });
-                
-                // Agregar clase active al enlace clickeado
-                this.classList.add('active');
-                
-                // Scroll suave
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                targetSection.scrollIntoView({ behavior: 'smooth' });
-            });
+                <!-- Próximamente 1 -->
+                <div class="card fade-up" data-category="web">
+                    <div class="card-thumb">
+                        <span class="label">PRÓXIMAMENTE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Nuevo Proyecto Web</h3>
+                        <p>Un nuevo proyecto está en desarrollo. Mantente atento para conocer más detalles pronto.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Diseño Web</span>
+                            <span class="card-tag">En desarrollo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Próximamente 2 -->
+                <div class="card fade-up" data-category="logo">
+                    <div class="card-thumb">
+                        <span class="label">PRÓXIMAMENTE</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Nuevo Logo</h3>
+                        <p>Un proyecto de identidad visual innovador está en camino. Pronto se revelará.</p>
+                        <div class="card-tags">
+                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">En desarrollo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE MÍ -->
+        <section id="sobre-mi" style="border-bottom:1px solid var(--borde)">
+            <p class="section-label">Conóceme</p>
+            <h2 class="section-title">Sobre Mí</h2>
+
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Soy <strong style="color:var(--blanco)">Marco Antonio Marcial Herrera</strong>, Ingeniero en Sistemas Computacionales con pasión por el diseño gráfico y las soluciones tecnológicas.</p>
+                    <p>Mi enfoque combina el conocimiento técnico con la creatividad visual para ofrecer servicios integrales: desde la creación de tu identidad de marca — logos, tarjetas de presentación y páginas web — hasta el mantenimiento y soporte técnico de tus equipos de cómputo.</p>
+                    <p>Cada proyecto es una oportunidad para transformar ideas en realidades visuales y tecnológicas que trascienden. Trabajo con compromiso, detalle y la visión de entregar resultados que superen expectativas.</p>
+
+                    <div class="skills-list">
+                        <h3>Habilidades</h3>
+                        <div class="skill-bar">
+                            <span>Diseño Gráfico &amp; Branding</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="92" style="width:0"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Desarrollo Web (HTML/CSS/JS)</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="88" style="width:0"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Mantenimiento de Hardware</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="90" style="width:0"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Soporte Técnico Remoto</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="85" style="width:0"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-stats">
+                    <div class="stat fade-up">
+                        <div class="stat-num">ISC</div>
+                        <div class="stat-label">Ing. Sistemas</div>
+                    </div>
+                    <div class="stat fade-up">
+                        <div class="stat-num">5+</div>
+                        <div class="stat-label">Proyectos Web</div>
+                    </div>
+                    <div class="stat fade-up">
+                        <div class="stat-num">10+</div>
+                        <div class="stat-label">Logos Creados</div>
+                    </div>
+                    <div class="stat fade-up">
+                        <div class="stat-num">100%</div>
+                        <div class="stat-label">Compromiso</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto">
+            <p class="section-label">Hablemos</p>
+            <h2 class="section-title">Contacto</h2>
+
+            <div class="contact-grid">
+                <div class="contact-card fade-up">
+                    <div class="icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:contacto@mmvdesign.com">contacto@mmvdesign.com</a></p>
+                </div>
+
+                <div class="contact-card fade-up">
+                    <div class="icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                    </div>
+                    <h3>Teléfono</h3>
+                    <p><a href="tel:9543125522">954-312-5522</a></p>
+                </div>
+
+                <div class="contact-card fade-up">
+                    <div class="icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <h3>Ubicación</h3>
+                    <p>Oaxaca, México</p>
+                </div>
+
+                <div class="contact-card fade-up">
+                    <div class="icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>Soporte Remoto</h3>
+                    <p>Disponible para asistencia técnica a distancia</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>&copy; 2025 MMV Collector Design — Marco Antonio Marcial Herrera</p>
+            <p>Ing. en Sistemas Computacionales</p>
+        </footer>
+
+    </div><!-- /main -->
+</div><!-- /page -->
+
+<script>
+// ══════ Mobile Menu ══════
+const toggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+toggle.addEventListener('click', () => {
+    toggle.classList.toggle('open');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', () => {
+    toggle.classList.remove('open');
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+});
+
+// ══════ Smooth Scroll & Active Nav ══════
+document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        // close mobile
+        toggle.classList.remove('open');
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+    });
+});
+
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.sidebar nav a');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(l => {
+        l.classList.toggle('active', l.getAttribute('href') === `#${current}`);
+    });
+});
+
+// ══════ Fade-up on scroll ══════
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ══════ Skill bars animate ══════
+const barObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.style.width = e.target.dataset.width + '%';
+        }
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.bar-fill').forEach(b => barObserver.observe(b));
+
+// ══════ Portfolio filter ══════
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.card').forEach(card => {
+            if (filter === 'all' || card.dataset.category === filter) {
+                card.style.display = '';
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => { card.style.display = 'none'; }, 400);
+            }
         });
+    });
+});
 
-        // Detectar sección visible y actualizar menú activo
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const menuLinks = document.querySelectorAll('.menu a');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            menuLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+// ══════ Hero CTA smooth scroll ══════
+document.querySelector('.hero-cta')?.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector('#portafolio')?.scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+
 </body>
 </html>
-
-
-
