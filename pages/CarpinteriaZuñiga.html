@@ -768,6 +768,113 @@
       color: rgba(245,239,230,0.2); margin-top: 0.35rem;
     }
 
+
+    /* ── GALLERY TABS ── */
+    .gallery-tabs {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+    .gtab {
+      padding: 0.5rem 1.25rem;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.2);
+      color: rgba(245,239,230,0.5);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-radius: 2px; cursor: none;
+      transition: all 0.3s;
+    }
+    .gtab:hover { border-color: rgba(201,168,76,0.5); color: var(--gold); }
+    .gtab.active {
+      background: var(--gold); color: var(--ink);
+      border-color: var(--gold);
+    }
+
+    /* ── GALLERY GRID (real images) ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+    }
+    .gallery-item {
+      position: relative; overflow: hidden;
+      border-radius: 3px;
+      border: 1px solid rgba(201,168,76,0.08);
+      aspect-ratio: 1;
+      cursor: none;
+      transition: all 0.4s;
+      background: #0d0602;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.07); }
+    .gallery-item:hover {
+      border-color: rgba(201,168,76,0.4);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      z-index: 5;
+    }
+    .gallery-item.hidden { display: none; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(6,3,1,0.96);
+      z-index: 9000;
+      display: none;
+      align-items: center; justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lb-img-wrap {
+      max-width: 88vw; max-height: 85vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .lightbox img {
+      max-width: 88vw; max-height: 82vh;
+      object-fit: contain;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 3px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.8);
+    }
+    .lb-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      background: none; border: none;
+      color: var(--gold); font-size: 1.8rem;
+      cursor: none; opacity: 0.7; transition: opacity 0.2s;
+    }
+    .lb-close:hover { opacity: 1; }
+    .lb-prev, .lb-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--gold); font-size: 2.5rem;
+      width: 50px; height: 70px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: none; border-radius: 3px;
+      transition: all 0.2s;
+    }
+    .lb-prev { left: 1rem; }
+    .lb-next { right: 1rem; }
+    .lb-prev:hover, .lb-next:hover { background: rgba(201,168,76,0.2); }
+    .lb-caption {
+      position: absolute; bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.7;
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+    }
+
     /* ══════════════════════════════════
        RESPONSIVE
     ══════════════════════════════════ */
@@ -884,7 +991,7 @@
   <!-- ══ NAV ══ -->
   <nav>
     <div class="nav-inner">
-      <a href="#" class="nav-brand">Carpintería · Zúñiga</a>
+      <a href="#" class="nav-brand">C · Zúñiga</a>
       <ul>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
@@ -979,220 +1086,58 @@
       <div class="sec-divider"></div>
       <p class="gallery-intro">Cada pieza que sale de nuestro taller lleva consigo horas de dedicación y el orgullo de un trabajo bien hecho.</p>
 
-      <div class="gallery-grid">
-        <div class="gallery-item tall">
-          <div class="gallery-placeholder">
-            <span class="gallery-ph-icon">🛋️</span>
-            <span class="gallery-ph-label">Mueble a medida</span>
-          </div>
-          <div class="gallery-overlay"><span class="gallery-overlay-text">Mueble personalizado</span></div>
-        </div>
-        <div class="gallery-item">
-          <div class="gallery-placeholder">
-            <span class="gallery-ph-icon">🚪</span>
-            <span class="gallery-ph-label">Puerta artesanal</span>
-          </div>
-          <div class="gallery-overlay"><span class="gallery-overlay-text">Puerta de madera</span></div>
-        </div>
-        <div class="gallery-item">
-          <div class="gallery-placeholder">
-            <span class="gallery-ph-icon">🍳</span>
-            <span class="gallery-ph-label">Cocina integral</span>
-          </div>
-          <div class="gallery-overlay"><span class="gallery-overlay-text">Cocina a medida</span></div>
-        </div>
-        <div class="gallery-item wide">
-          <div class="gallery-placeholder" style="min-height:160px">
-            <span class="gallery-ph-icon">🪟</span>
-            <span class="gallery-ph-label">Barandal de madera</span>
-          </div>
-          <div class="gallery-overlay"><span class="gallery-overlay-text">Barandal artesanal</span></div>
-        </div>
-        <div class="gallery-item">
-          <div class="gallery-placeholder">
-            <span class="gallery-ph-icon">🏍️</span>
-            <span class="gallery-ph-label">Soporte de casco</span>
-          </div>
-          <div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Soporte para casco</span></div>
-        </div>
-        <div class="gallery-item">
-          <div class="gallery-placeholder">
-            <span class="gallery-ph-icon">🪵</span>
-            <span class="gallery-ph-label">Proyecto especial</span>
-          </div>
-          <div class="gallery-overlay"><span class="gallery-overlay-text">Trabajo especial</span></div>
-        </div>
+      <!-- Gallery Filter Tabs -->
+      <div class="gallery-tabs">
+        <button class="gtab active" data-filter="all">Todo</button>
+        <button class="gtab" data-filter="portacasco">Porta Casco</button>
+        <button class="gtab" data-filter="cocina">Cocinas</button>
+        <button class="gtab" data-filter="puerta">Puertas & Portones</button>
+        <button class="gtab" data-filter="barandal">Barandales</button>
+        <button class="gtab" data-filter="mueble">Muebles</button>
+        <button class="gtab" data-filter="otro">Otros</button>
       </div>
 
-      <div class="gallery-note">
-        📁 &nbsp; Reemplaza los espacios con tus fotos reales — colócalas en la carpeta /img/galeria/
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="gallery-item" data-cat="portacasco"><img src="RECURSOS/CarpinteriaZ/portacasco.jpeg" alt="Porta casco"><div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Porta Casco</span></div></div>
+        <div class="gallery-item" data-cat="portacasco"><img src="RECURSOS/CarpinteriaZ/portacasco2.jpeg" alt="Porta casco 2"><div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Porta Casco</span></div></div>
+        <div class="gallery-item" data-cat="portacasco"><img src="RECURSOS/CarpinteriaZ/portacasco3.jpeg" alt="Porta casco 3"><div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Porta Casco</span></div></div>
+        <div class="gallery-item" data-cat="portacasco"><img src="RECURSOS/CarpinteriaZ/portacasco4.jpeg" alt="Porta casco 4"><div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Porta Casco</span></div></div>
+        <div class="gallery-item" data-cat="portacasco"><img src="RECURSOS/CarpinteriaZ/portacasco5.jpeg" alt="Porta casco 5"><div class="gallery-overlay"><span class="gallery-overlay-text" style="color:var(--green-neon)">Porta Casco</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral.jpg" alt="Cocina integral"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral2.jpg" alt="Cocina integral 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral3.jpg" alt="Cocina integral 3"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral4.jpg" alt="Cocina integral 4"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral5.jpg" alt="Cocina integral 5"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral6.jpg" alt="Cocina integral 6"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="cocina"><img src="RECURSOS/CarpinteriaZ/cocina_integral7.jpg" alt="Cocina integral 7"><div class="gallery-overlay"><span class="gallery-overlay-text">Cocina Integral</span></div></div>
+        <div class="gallery-item" data-cat="puerta"><img src="RECURSOS/CarpinteriaZ/puerta.jpg" alt="Puerta"><div class="gallery-overlay"><span class="gallery-overlay-text">Puerta de Madera</span></div></div>
+        <div class="gallery-item" data-cat="puerta"><img src="RECURSOS/CarpinteriaZ/puerta2.jpg" alt="Puerta 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Puerta de Madera</span></div></div>
+        <div class="gallery-item" data-cat="puerta"><img src="RECURSOS/CarpinteriaZ/puerta3.jpg" alt="Puerta 3"><div class="gallery-overlay"><span class="gallery-overlay-text">Puerta de Madera</span></div></div>
+        <div class="gallery-item" data-cat="puerta"><img src="RECURSOS/CarpinteriaZ/puerta4.jpg" alt="Puerta 4"><div class="gallery-overlay"><span class="gallery-overlay-text">Puerta de Madera</span></div></div>
+        <div class="gallery-item" data-cat="puerta"><img src="RECURSOS/CarpinteriaZ/porton_de_madera.jpg" alt="Portón"><div class="gallery-overlay"><span class="gallery-overlay-text">Portón de Madera</span></div></div>
+        <div class="gallery-item" data-cat="puerta"><img src="RECURSOS/CarpinteriaZ/porton_de_madera2.jpg" alt="Portón 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Portón de Madera</span></div></div>
+        <div class="gallery-item" data-cat="barandal"><img src="RECURSOS/CarpinteriaZ/barandal_de_madera.jpg" alt="Barandal"><div class="gallery-overlay"><span class="gallery-overlay-text">Barandal</span></div></div>
+        <div class="gallery-item" data-cat="barandal"><img src="RECURSOS/CarpinteriaZ/barandal_de_madera2.jpg" alt="Barandal 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Barandal</span></div></div>
+        <div class="gallery-item" data-cat="barandal"><img src="RECURSOS/CarpinteriaZ/barandal_de_madera3.jpg" alt="Barandal 3"><div class="gallery-overlay"><span class="gallery-overlay-text">Barandal</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/mueble_a_medida.jpg" alt="Mueble a medida"><div class="gallery-overlay"><span class="gallery-overlay-text">Mueble a Medida</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/mueble_a_medida2.jpg" alt="Mueble a medida 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Mueble a Medida</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/base_cama.jpg" alt="Base de cama"><div class="gallery-overlay"><span class="gallery-overlay-text">Base de Cama</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/base_cama2.jpg" alt="Base de cama 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Base de Cama</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/base_cama3.jpg" alt="Base de cama 3"><div class="gallery-overlay"><span class="gallery-overlay-text">Base de Cama</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/base_cama4.jpg" alt="Base de cama 4"><div class="gallery-overlay"><span class="gallery-overlay-text">Base de Cama</span></div></div>
+        <div class="gallery-item" data-cat="mueble"><img src="RECURSOS/CarpinteriaZ/tocador.jpg" alt="Tocador"><div class="gallery-overlay"><span class="gallery-overlay-text">Tocador</span></div></div>
+        <div class="gallery-item" data-cat="otro"><img src="RECURSOS/CarpinteriaZ/alcancia.jpg" alt="Alcancía"><div class="gallery-overlay"><span class="gallery-overlay-text">Alcancía</span></div></div>
+        <div class="gallery-item" data-cat="otro"><img src="RECURSOS/CarpinteriaZ/alcancia2.jpg" alt="Alcancía 2"><div class="gallery-overlay"><span class="gallery-overlay-text">Alcancía</span></div></div>
+        <div class="gallery-item" data-cat="otro"><img src="RECURSOS/CarpinteriaZ/alcancia3.jpg" alt="Alcancía 3"><div class="gallery-overlay"><span class="gallery-overlay-text">Alcancía</span></div></div>
+        <div class="gallery-item" data-cat="otro"><img src="RECURSOS/CarpinteriaZ/alcancia4.jpg" alt="Alcancía 4"><div class="gallery-overlay"><span class="gallery-overlay-text">Alcancía</span></div></div>
+        <div class="gallery-item" data-cat="otro"><img src="RECURSOS/CarpinteriaZ/portamonedas.jpg" alt="Portamonedas"><div class="gallery-overlay"><span class="gallery-overlay-text">Portamonedas</span></div></div>
       </div>
-    </section>
 
-    <div class="wood-divider">
-      <div class="wd-line"></div>
-      <div class="wd-center">✦ 🪵 ✦</div>
-      <div class="wd-line"></div>
-    </div>
-
-    <!-- CONTACTO -->
-    <section id="contacto">
-      <span class="sec-label">✦ Hablemos</span>
-      <h2>Contáctanos <span class="italic">hoy</span></h2>
-      <div class="sec-divider"></div>
-      <div class="contact-layout">
-        <div class="contact-info-block">
-          <div class="contact-item">
-            <span class="contact-item-icon">📍</span>
-            <div class="contact-item-body">
-              <h3>Ubicación</h3>
-              <p>Plan de Guadalupe, 69815<br>San Martín Huamelúlpam, Oax., México</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-item-icon">📞</span>
-            <div class="contact-item-body">
-              <h3>Teléfono</h3>
-              <a href="tel:2228053225">222 805 3225</a>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-item-icon">💬</span>
-            <div class="contact-item-body">
-              <h3>WhatsApp</h3>
-              <a href="https://wa.me/2228053225">Enviar mensaje →</a>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-item-icon">🕐</span>
-            <div class="contact-item-body">
-              <h3>Horario</h3>
-              <p>Lunes – Sábado: 8:00 – 18:00</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-item-icon">✉️</span>
-            <div class="contact-item-body">
-              <h3>Correo</h3>
-              <a href="mailto:javieridairz@gmail.com">javieridairz@gmail.com</a>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-item-icon">📘</span>
-            <div class="contact-item-body">
-              <h3>Facebook</h3>
-              <a href="https://www.facebook.com/carpinteriazunigajr/" target="_blank">carpinteriazunigajr →</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="contact-visual">
-          <div class="contact-quote">
-            <p>La madera tiene memoria. Cada pieza que creamos lleva la huella del artesano y la historia del árbol.</p>
-            <cite>— Carpintería Zúñiga</cite>
-          </div>
-          <a href="https://wa.me/2228053225" class="contact-cta-card">
-            <span>¿Listo para tu proyecto?</span>
-            <strong>Pide tu cotización gratis</strong>
-          </a>
-        </div>
-      </div>
-    </section>
-
-  </div><!-- /container -->
-
-  <!-- ══ FOOTER ══ -->
-  <footer>
-    <div class="footer-bird">🐦</div>
-    <div class="footer-name">Carpintería Zúñiga</div>
-    <p>Madera con alma · Artesanos de generación</p>
-    <p>© 2025 · Todos los derechos reservados</p>
-  </footer>
-
-  <script>
-    /* ── CURSOR ── */
-    const cur = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx=0,my=0,rx=0,ry=0;
-    document.addEventListener('mousemove', e => {
-      mx=e.clientX; my=e.clientY;
-      cur.style.left=mx+'px'; cur.style.top=my+'px';
-    });
-    (function animRing(){
-      rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-      ring.style.left=rx+'px'; ring.style.top=ry+'px';
-      requestAnimationFrame(animRing);
-    })();
-    document.querySelectorAll('a,button,.svc-card,.gallery-item,.contact-item').forEach(el=>{
-      el.addEventListener('mouseenter',()=>{
-        cur.style.transform='translate(-50%,-50%) scale(2.2)';
-        ring.style.transform='translate(-50%,-50%) scale(1.6)';
-        ring.style.borderColor='rgba(201,168,76,0.9)';
-      });
-      el.addEventListener('mouseleave',()=>{
-        cur.style.transform='translate(-50%,-50%) scale(1)';
-        ring.style.transform='translate(-50%,-50%) scale(1)';
-        ring.style.borderColor='rgba(201,168,76,0.5)';
-      });
-    });
-
-    /* ── SAWDUST PARTICLES ── */
-    const sawdust = document.getElementById('sawdust');
-    const colors = ['#5e2808','#3a1605','#deb887','#1e0d05','#c9a84c'];
-    for(let i=0;i<35;i++){
-      const p = document.createElement('div');
-      p.className = 'dust-particle';
-      p.style.left = Math.random()*100+'vw';
-      p.style.width = (2+Math.random()*4)+'px';
-      p.style.height = p.style.width;
-      p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      const dur = 15+Math.random()*20;
-      p.style.animationDuration = dur+'s';
-      p.style.animationDelay = -(Math.random()*dur)+'s';
-      sawdust.appendChild(p);
-    }
-
-    /* ── SCROLL REVEAL ── */
-    const obs = new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          e.target.style.opacity='1';
-          e.target.style.transform='translateY(0) translateX(0)';
-        }
-      });
-    },{threshold:0.1});
-
-    document.querySelectorAll('.svc-card,.gallery-item,.contact-item,.about-strip').forEach((el,i)=>{
-      el.style.opacity='0';
-      el.style.transform='translateY(28px)';
-      el.style.transition=`opacity 0.65s ${i*0.08}s ease, transform 0.65s ${i*0.08}s ease`;
-      obs.observe(el);
-    });
-
-    /* ── CLICK RIPPLE (wood chip) ── */
-    document.addEventListener('click', e=>{
-      const r=document.createElement('div');
-      r.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;
-        width:6px;height:6px;background:rgba(201,168,76,0.7);border-radius:50%;
-        pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);
-        animation:rpl 0.55s ease-out forwards;`;
-      document.body.appendChild(r);
-      if(!document.getElementById('rplStyle')){
-        const s=document.createElement('style');
-        s.id='rplStyle';
-        s.textContent='@keyframes rpl{to{transform:translate(-50%,-50%) scale(18);opacity:0}}';
-        document.head.appendChild(s);
-      }
-      setTimeout(()=>r.remove(),600);
-    });
-
-    /* ── SPARK ANIMATION ON PECK ── */
-    const sparks = document.querySelectorAll('.spark');
-    setInterval(()=>{
-      sparks.forEach(s=>{
-        s.style.opacity = Math.random()>0.5 ? '0.8' : '0';
-      });
-    }, 300);
-  </script>
-</body>
-</html>
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox">
+        <button class="lb-close" id="lbClose">✕</button>
+        <button class="lb-prev" id="lbPrev">‹</button>
+        <button class="lb-next" id="lbNext">›</button>
+        <div class="lb-img-wrap"><img id="lbImg" src="" alt=""></div>
+        <div class="lb-caption" id="lbCaption"></div>
+      </div>─
