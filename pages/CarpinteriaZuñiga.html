@@ -190,7 +190,7 @@
     .corner-br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
 
     .hero-logo {
-      width: 180px; height: 180px;
+      width: 200px; height: 200px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--gold-dim);
@@ -202,7 +202,7 @@
       background: radial-gradient(circle at 40% 35%, #1e0d05, #060200);
     }
     .hero-logo-fallback {
-      width: 180px; height: 180px; border-radius: 50%;
+      width: 200px; height: 200px; border-radius: 50%;
       background: radial-gradient(circle at 40% 35%, #1e0d05, #060200);
       display: flex; align-items: center; justify-content: center;
       font-size: 5rem;
@@ -991,7 +991,7 @@
   <!-- ══ NAV ══ -->
   <nav>
     <div class="nav-inner">
-      <a href="#" class="nav-brand">C · Zúñiga</a>
+      <a href="#" class="nav-brand">Carpintería Zúñiga</a>
       <ul>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#servicios">Servicios</a></li>
@@ -1007,7 +1007,7 @@
     <!-- NOSOTROS -->
     <section id="nosotros">
       <span class="sec-label">✦ Quiénes somos</span>
-      <h2>Madera con <span class="italic">alma</span></h2>
+      <h2>Sobre <span class="italic">Carpintería Zuñiga...</span></h2>
       <div class="sec-divider"></div>
       <div class="about-strip">
         <div class="about-text">
@@ -1140,4 +1140,238 @@
         <button class="lb-next" id="lbNext">›</button>
         <div class="lb-img-wrap"><img id="lbImg" src="" alt=""></div>
         <div class="lb-caption" id="lbCaption"></div>
-      </div>─
+      </div>
+    </section>
+
+    <div class="wood-divider">
+      <div class="wd-line"></div>
+      <div class="wd-center">✦ 🪵 ✦</div>
+      <div class="wd-line"></div>
+    </div>
+
+    <!-- CONTACTO -->
+    <section id="contacto">
+      <span class="sec-label">✦ Hablemos</span>
+      <h2>Contáctanos <span class="italic">hoy</span></h2>
+      <div class="sec-divider"></div>
+      <div class="contact-layout">
+        <div class="contact-info-block">
+
+          <div class="contact-item">
+            <span class="contact-item-icon">📍</span>
+            <div class="contact-item-body">
+              <h3>Ubicación</h3>
+              <p>Plan de Guadalupe, 69815<br>San Martín Huamelúlpam, Oax., México</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item-icon">📞</span>
+            <div class="contact-item-body">
+              <h3>Teléfono</h3>
+              <a href="tel:2228053225">222 805 3225</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item-icon">💬</span>
+            <div class="contact-item-body">
+              <h3>WhatsApp</h3>
+              <a href="https://wa.me/2228053225" target="_blank">Enviar mensaje →</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item-icon">✉️</span>
+            <div class="contact-item-body">
+              <h3>Correo</h3>
+              <a href="mailto:javieridairz@gmail.com">javieridairz@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <span class="contact-item-icon">📘</span>
+            <div class="contact-item-body">
+              <h3>Facebook</h3>
+              <a href="https://www.facebook.com/carpinteriazunigajr/" target="_blank">carpinteriazunigajr →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="contact-visual">
+          <div class="contact-quote">
+            <p>La madera tiene memoria. Cada pieza que creamos lleva la huella del artesano y la historia del árbol.</p>
+            <cite>— Carpintería Zúñiga</cite>
+          </div>
+          <a href="https://wa.me/2228053225" class="contact-cta-card" target="_blank">
+            <span>¿Listo para tu proyecto?</span>
+            <strong>Pide tu cotización gratis</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /container -->
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-bird">🐦</div>
+    <div class="footer-name">Carpintería Zúñiga</div>
+    <p>Madera con alma · Artesanos de generación</p>
+    <p>San Martín Huamelúlpam, Oaxaca · 222 805 3225</p>
+    <p>© 2025 · Todos los derechos reservados</p>
+  </footer>
+
+  <script>
+    /* ── CURSOR ── */
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => {
+      mx=e.clientX; my=e.clientY;
+      cur.style.left=mx+'px'; cur.style.top=my+'px';
+    });
+    (function animRing(){
+      rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+      ring.style.left=rx+'px'; ring.style.top=ry+'px';
+      requestAnimationFrame(animRing);
+    })();
+    document.querySelectorAll('a,button,.svc-card,.gallery-item,.contact-item').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{
+        cur.style.transform='translate(-50%,-50%) scale(2.2)';
+        ring.style.transform='translate(-50%,-50%) scale(1.6)';
+        ring.style.borderColor='rgba(201,168,76,0.9)';
+      });
+      el.addEventListener('mouseleave',()=>{
+        cur.style.transform='translate(-50%,-50%) scale(1)';
+        ring.style.transform='translate(-50%,-50%) scale(1)';
+        ring.style.borderColor='rgba(201,168,76,0.5)';
+      });
+    });
+
+    /* ── SAWDUST PARTICLES ── */
+    const sawdust = document.getElementById('sawdust');
+    const colors = ['#c68642','#3a1605','#7a3a10','#1e0d05','#c9a84c'];
+    for(let i=0;i<35;i++){
+      const p = document.createElement('div');
+      p.className = 'dust-particle';
+      p.style.left = Math.random()*100+'vw';
+      p.style.width = (2+Math.random()*4)+'px';
+      p.style.height = p.style.width;
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      const dur = 15+Math.random()*20;
+      p.style.animationDuration = dur+'s';
+      p.style.animationDelay = -(Math.random()*dur)+'s';
+      sawdust.appendChild(p);
+    }
+
+    /* ── SCROLL REVEAL ── */
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.style.opacity='1';
+          e.target.style.transform='translateY(0) translateX(0)';
+        }
+      });
+    },{threshold:0.1});
+    document.querySelectorAll('.svc-card,.gallery-item,.contact-item,.about-strip').forEach((el,i)=>{
+      el.style.opacity='0';
+      el.style.transform='translateY(28px)';
+      el.style.transition=`opacity 0.65s ${i*0.08}s ease, transform 0.65s ${i*0.08}s ease`;
+      obs.observe(el);
+    });
+
+    /* ── CLICK RIPPLE ── */
+    document.addEventListener('click', e=>{
+      const r=document.createElement('div');
+      r.style.cssText=`position:fixed;left:${e.clientX}px;top:${e.clientY}px;
+        width:6px;height:6px;background:rgba(201,168,76,0.7);border-radius:50%;
+        pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);
+        animation:rpl 0.55s ease-out forwards;`;
+      document.body.appendChild(r);
+      if(!document.getElementById('rplStyle')){
+        const s=document.createElement('style');
+        s.id='rplStyle';
+        s.textContent='@keyframes rpl{to{transform:translate(-50%,-50%) scale(18);opacity:0}}';
+        document.head.appendChild(s);
+      }
+      setTimeout(()=>r.remove(),600);
+    });
+
+    /* ── SPARK on peck ── */
+    const sparks = document.querySelectorAll('.spark');
+    setInterval(()=>{
+      sparks.forEach(s=>{ s.style.opacity = Math.random()>0.5 ? '0.8' : '0'; });
+    }, 300);
+
+    /* ── GALLERY TABS ── */
+    const tabs = document.querySelectorAll('.gtab');
+    const items = document.querySelectorAll('.gallery-item[data-cat]');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const filter = tab.dataset.filter;
+        items.forEach(item => {
+          if(filter === 'all' || item.dataset.cat === filter){
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    /* ── LIGHTBOX ── */
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+    let currentImgs = [];
+    let currentIdx = 0;
+
+    function openLightbox(idx) {
+      const visible = [...document.querySelectorAll('.gallery-item[data-cat]:not(.hidden)')];
+      currentImgs = visible.map(el => ({
+        src: el.querySelector('img').src,
+        caption: el.querySelector('.gallery-overlay-text').textContent
+      }));
+      currentIdx = idx;
+      showLb();
+      lightbox.classList.add('open');
+    }
+
+    function showLb() {
+      lbImg.src = currentImgs[currentIdx].src;
+      lbCaption.textContent = currentImgs[currentIdx].caption;
+    }
+
+    document.querySelectorAll('.gallery-item[data-cat]').forEach((item) => {
+      item.addEventListener('click', () => {
+        const visible = [...document.querySelectorAll('.gallery-item[data-cat]:not(.hidden)')];
+        const visIdx = visible.indexOf(item);
+        openLightbox(visIdx);
+      });
+    });
+
+    document.getElementById('lbClose').addEventListener('click', () => lightbox.classList.remove('open'));
+    document.getElementById('lbPrev').addEventListener('click', () => {
+      currentIdx = (currentIdx - 1 + currentImgs.length) % currentImgs.length;
+      showLb();
+    });
+    document.getElementById('lbNext').addEventListener('click', () => {
+      currentIdx = (currentIdx + 1) % currentImgs.length;
+      showLb();
+    });
+    lightbox.addEventListener('click', e => {
+      if(e.target === lightbox) lightbox.classList.remove('open');
+    });
+    document.addEventListener('keydown', e => {
+      if(!lightbox.classList.contains('open')) return;
+      if(e.key === 'ArrowRight') { currentIdx=(currentIdx+1)%currentImgs.length; showLb(); }
+      if(e.key === 'ArrowLeft')  { currentIdx=(currentIdx-1+currentImgs.length)%currentImgs.length; showLb(); }
+      if(e.key === 'Escape') lightbox.classList.remove('open');
+    });
+  </script>
+</body>
+</html>
