@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMV COLLECTOR DESIGN</title>
+    <title>MMV COLLECTOR DESIGN — Marco Antonio Marcial Herrera</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -17,320 +17,296 @@
             --acento:#2a2a2a;
             --borde:rgba(168,168,168,0.12);
         }
-
         html{scroll-behavior:smooth}
         body{
             font-family:'Outfit',sans-serif;
             background:var(--negro);
             color:var(--plata-clara);
-            line-height:1.6;
-            overflow-x:hidden;
+            line-height:1.6;overflow-x:hidden;
         }
 
-        /* ══════════ GRAIN OVERLAY ══════════ */
         body::before{
             content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
             background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            background-repeat:repeat;opacity:.5;
+            background-repeat:repeat;opacity:.45;
         }
 
-        /* ══════════ LAYOUT ══════════ */
-        .page{display:flex;min-height:100vh}
+        .grid-bg{
+            position:fixed;inset:0;pointer-events:none;z-index:0;
+            background-image:
+                linear-gradient(rgba(168,168,168,.03) 1px,transparent 1px),
+                linear-gradient(90deg,rgba(168,168,168,.03) 1px,transparent 1px);
+            background-size:60px 60px;
+        }
 
-        /* ══════════ SIDEBAR ══════════ */
+        .page{display:flex;min-height:100vh;position:relative;z-index:1}
+
+        /* SIDEBAR */
         .sidebar{
-            width:300px;min-height:100vh;position:fixed;top:0;left:0;
-            background:var(--negro2);
+            width:290px;min-height:100vh;position:fixed;top:0;left:0;
+            background:rgba(14,14,14,.97);backdrop-filter:blur(12px);
             border-right:1px solid var(--borde);
             display:flex;flex-direction:column;
-            padding:48px 32px 32px;
-            z-index:100;
+            padding:44px 28px 28px;z-index:100;
             transition:transform .4s cubic-bezier(.4,0,.2,1);
         }
-
         .logo-badge{
-            width:120px;height:120px;margin:0 auto 24px;
-            border:3px solid var(--plata);
-            border-radius:50%;
+            width:110px;height:110px;margin:0 auto 20px;
+            border:2px solid var(--plata);border-radius:50%;
             display:flex;align-items:center;justify-content:center;
-            position:relative;
-            overflow:hidden;
+            position:relative;overflow:hidden;
         }
         .logo-badge::after{
-            content:'';position:absolute;inset:-2px;
-            border-radius:50%;
-            background:conic-gradient(from 0deg,transparent 0%,rgba(168,168,168,.25) 25%,transparent 50%);
-            animation:spin 6s linear infinite;
+            content:'';position:absolute;inset:-2px;border-radius:50%;
+            background:conic-gradient(from 0deg,transparent 0%,rgba(168,168,168,.2) 25%,transparent 50%);
+            animation:spin 8s linear infinite;
         }
         @keyframes spin{to{transform:rotate(360deg)}}
         .logo-badge img{width:100%;height:100%;object-fit:cover;position:relative;z-index:1}
-        .logo-badge .placeholder{color:var(--plata);font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:4px;position:relative;z-index:1}
+        .logo-badge .placeholder{color:var(--plata);font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:4px;position:relative;z-index:1}
 
-        .brand{text-align:center;margin-bottom:8px}
+        .brand{text-align:center;margin-bottom:6px}
         .brand h1{
             font-family:'Bebas Neue',sans-serif;
-            font-size:3.2rem;letter-spacing:8px;
+            font-size:3rem;letter-spacing:8px;
             background:linear-gradient(180deg,var(--blanco) 0%,var(--plata) 100%);
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            background-clip:text;
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
         }
         .brand .sub{
-            font-size:.78rem;letter-spacing:4px;color:var(--plata);
-            font-weight:300;
-            border-top:1px solid var(--borde);
-            padding-top:10px;margin-top:6px;
-            text-transform:uppercase;
+            font-size:.72rem;letter-spacing:4px;color:var(--plata);
+            font-weight:300;border-top:1px solid var(--borde);
+            padding-top:8px;margin-top:4px;text-transform:uppercase;
         }
 
-        .sidebar nav{margin-top:52px;flex-grow:1}
+        .sidebar nav{margin-top:48px;flex-grow:1}
         .sidebar nav ul{list-style:none}
-        .sidebar nav li{margin:6px 0}
+        .sidebar nav li{margin:4px 0}
         .sidebar nav a{
             display:flex;align-items:center;gap:12px;
             color:var(--plata);text-decoration:none;
-            font-size:.88rem;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
-            padding:12px 16px;border-radius:8px;
-            transition:all .3s ease;
-            position:relative;
+            font-size:.82rem;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;
+            padding:11px 14px;border-radius:8px;transition:all .3s ease;
         }
-        .sidebar nav a .dot{
-            width:6px;height:6px;border-radius:50%;
-            background:var(--plata);opacity:0;
-            transition:opacity .3s ease;
-        }
-        .sidebar nav a:hover,.sidebar nav a.active{
-            color:var(--blanco);background:rgba(168,168,168,.06);
-        }
+        .sidebar nav a .dot{width:5px;height:5px;border-radius:50%;background:var(--plata);opacity:0;transition:opacity .3s ease}
+        .sidebar nav a:hover,.sidebar nav a.active{color:var(--blanco);background:rgba(168,168,168,.06)}
         .sidebar nav a:hover .dot,.sidebar nav a.active .dot{opacity:1}
 
-        .sidebar-footer{
-            margin-top:auto;padding-top:20px;
-            border-top:1px solid var(--borde);
-            font-size:.75rem;color:var(--plata);opacity:.5;
-            text-align:center;
-        }
+        .sidebar-footer{margin-top:auto;padding-top:16px;border-top:1px solid var(--borde);font-size:.7rem;color:var(--plata);opacity:.45;text-align:center}
 
-        /* ══════════ HAMBURGER ══════════ */
+        /* HAMBURGER */
         .hamburger{
-            display:none;position:fixed;top:20px;left:20px;z-index:200;
-            width:44px;height:44px;background:var(--negro2);border:1px solid var(--borde);
-            border-radius:8px;cursor:pointer;
-            flex-direction:column;align-items:center;justify-content:center;gap:5px;
+            display:none;position:fixed;top:18px;left:18px;z-index:200;
+            width:42px;height:42px;background:var(--negro2);border:1px solid var(--borde);
+            border-radius:8px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;
         }
-        .hamburger span{width:20px;height:2px;background:var(--plata);transition:all .3s ease;border-radius:2px}
+        .hamburger span{width:18px;height:2px;background:var(--plata);transition:all .3s ease;border-radius:2px}
         .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
         .hamburger.open span:nth-child(2){opacity:0}
         .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:90}
+        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:90}
 
-        /* ══════════ MAIN ══════════ */
-        .main{margin-left:300px;flex:1;min-width:0}
+        .main{margin-left:290px;flex:1;min-width:0}
 
-        /* ══════════ HERO ══════════ */
+        /* HERO */
         .hero{
             min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-            padding:100px 80px;position:relative;
-            border-bottom:1px solid var(--borde);
+            padding:100px 80px;position:relative;border-bottom:1px solid var(--borde);
         }
         .hero::before{
-            content:'';position:absolute;top:0;right:0;width:50%;height:100%;
-            background:radial-gradient(ellipse at 80% 30%,rgba(168,168,168,.04) 0%,transparent 70%);
+            content:'';position:absolute;top:0;right:0;width:55%;height:100%;
+            background:radial-gradient(ellipse at 70% 40%,rgba(168,168,168,.035) 0%,transparent 65%);
             pointer-events:none;
         }
         .hero-eyebrow{
-            font-size:.82rem;letter-spacing:5px;color:var(--plata);
-            text-transform:uppercase;margin-bottom:20px;
-            display:flex;align-items:center;gap:12px;
+            font-size:.78rem;letter-spacing:5px;color:var(--plata);text-transform:uppercase;
+            margin-bottom:18px;display:flex;align-items:center;gap:12px;
         }
-        .hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--plata)}
+        .hero-eyebrow::before{content:'';width:36px;height:1px;background:var(--plata)}
         .hero h1{
             font-family:'Bebas Neue',sans-serif;
-            font-size:clamp(3rem,6vw,5.5rem);
-            letter-spacing:3px;line-height:1.05;
+            font-size:clamp(2.8rem,5.5vw,5.2rem);
+            letter-spacing:3px;line-height:1.08;
             background:linear-gradient(135deg,var(--blanco) 0%,var(--plata) 100%);
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            background-clip:text;margin-bottom:28px;
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+            margin-bottom:24px;
         }
-        .hero p{
-            font-size:1.15rem;color:var(--plata);max-width:600px;
-            line-height:1.85;font-weight:300;
-        }
-        .hero-cta{
+        .hero p{font-size:1.1rem;color:var(--plata);max-width:580px;line-height:1.85;font-weight:300}
+        .hero-btns{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap}
+        .btn-primary{
             display:inline-flex;align-items:center;gap:10px;
-            margin-top:40px;padding:14px 32px;
+            padding:13px 30px;
             background:linear-gradient(135deg,var(--plata) 0%,var(--blanco) 100%);
-            color:var(--negro);text-decoration:none;
-            border-radius:40px;font-weight:600;font-size:.92rem;letter-spacing:1px;
-            transition:all .35s ease;
+            color:var(--negro);text-decoration:none;border-radius:40px;
+            font-weight:600;font-size:.88rem;letter-spacing:1px;transition:all .35s ease;
         }
-        .hero-cta:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(168,168,168,.25)}
-        .hero-cta svg{transition:transform .3s ease}
-        .hero-cta:hover svg{transform:translateX(4px)}
+        .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(168,168,168,.2)}
+        .btn-secondary{
+            display:inline-flex;align-items:center;gap:10px;
+            padding:13px 30px;border:1px solid var(--borde);
+            color:var(--plata-clara);text-decoration:none;border-radius:40px;
+            font-weight:500;font-size:.88rem;letter-spacing:1px;transition:all .35s ease;
+        }
+        .btn-secondary:hover{border-color:var(--plata);color:var(--blanco);transform:translateY(-3px)}
+        .btn-primary svg,.btn-secondary svg{transition:transform .3s ease}
+        .btn-primary:hover svg,.btn-secondary:hover svg{transform:translateX(3px)}
 
-        /* ══════════ SECTIONS ══════════ */
+        /* SECTIONS */
         section{padding:100px 80px}
         .section-label{
-            font-size:.78rem;letter-spacing:5px;color:var(--plata);
-            text-transform:uppercase;margin-bottom:12px;
-            display:flex;align-items:center;gap:12px;
+            font-size:.74rem;letter-spacing:5px;color:var(--plata);text-transform:uppercase;
+            margin-bottom:10px;display:flex;align-items:center;gap:12px;
         }
-        .section-label::before{content:'';width:32px;height:1px;background:var(--plata)}
+        .section-label::before{content:'';width:28px;height:1px;background:var(--plata)}
         .section-title{
-            font-family:'Bebas Neue',sans-serif;
-            font-size:clamp(2rem,4vw,3.2rem);
-            color:var(--blanco);letter-spacing:4px;margin-bottom:50px;
+            font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);
+            color:var(--blanco);letter-spacing:4px;margin-bottom:48px;
         }
 
-        /* ══════════ SERVICIOS ══════════ */
-        .services-grid{
-            display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-            gap:24px;
+        /* SERVICIOS */
+        .services-duo{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px}
+        .service-main{
+            background:var(--negro2);border:1px solid var(--borde);border-radius:18px;
+            padding:44px 36px;position:relative;overflow:hidden;transition:all .4s ease;
         }
-        .service-card{
-            background:var(--negro2);border:1px solid var(--borde);
-            border-radius:16px;padding:36px 28px;
-            transition:all .4s ease;position:relative;overflow:hidden;
-        }
-        .service-card::before{
+        .service-main::before{
             content:'';position:absolute;top:0;left:0;right:0;height:2px;
             background:linear-gradient(90deg,transparent,var(--plata),transparent);
             opacity:0;transition:opacity .4s ease;
         }
-        .service-card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-6px)}
-        .service-card:hover::before{opacity:1}
-        .service-icon{
-            width:48px;height:48px;margin-bottom:20px;
-            display:flex;align-items:center;justify-content:center;
-            border:1px solid var(--borde);border-radius:12px;
-            color:var(--plata);
+        .service-main:hover{border-color:rgba(168,168,168,.25);transform:translateY(-5px)}
+        .service-main:hover::before{opacity:1}
+        .service-main .icon-lg{
+            width:56px;height:56px;margin-bottom:22px;display:flex;align-items:center;justify-content:center;
+            border:1px solid var(--borde);border-radius:14px;color:var(--plata-clara);
         }
-        .service-card h3{
-            font-family:'Bebas Neue',sans-serif;
-            font-size:1.4rem;letter-spacing:2px;color:var(--blanco);margin-bottom:12px;
+        .service-main h3{
+            font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:2px;
+            color:var(--blanco);margin-bottom:14px;
         }
-        .service-card p{font-size:.9rem;color:var(--plata);line-height:1.7;font-weight:300}
+        .service-main>p{font-size:.92rem;color:var(--plata);line-height:1.75;font-weight:300}
+        .service-list{list-style:none;margin-top:18px}
+        .service-list li{
+            font-size:.85rem;color:var(--plata-clara);padding:7px 0;
+            border-bottom:1px solid rgba(168,168,168,.06);
+            display:flex;align-items:center;gap:10px;
+        }
+        .service-list li::before{content:'›';color:var(--plata);font-weight:700}
 
-        /* ══════════ PORTAFOLIO ══════════ */
-        .portfolio-tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+        .services-extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+        .service-sm{
+            background:var(--negro2);border:1px solid var(--borde);border-radius:14px;
+            padding:28px 24px;transition:all .35s ease;
+        }
+        .service-sm:hover{border-color:rgba(168,168,168,.25);transform:translateY(-4px)}
+        .service-sm .icon-sm{
+            width:40px;height:40px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;
+            border:1px solid var(--borde);border-radius:10px;color:var(--plata);
+        }
+        .service-sm h4{font-size:1rem;color:var(--blanco);margin-bottom:8px;font-weight:600;letter-spacing:.5px}
+        .service-sm p{font-size:.82rem;color:var(--plata);line-height:1.65;font-weight:300}
+
+        /* PORTAFOLIO */
+        .portfolio-tabs{display:flex;gap:8px;margin-bottom:36px;flex-wrap:wrap}
         .tab-btn{
-            padding:10px 22px;border-radius:30px;
-            background:transparent;border:1px solid var(--borde);
-            color:var(--plata);font-family:'Outfit',sans-serif;
-            font-size:.82rem;letter-spacing:1.5px;cursor:pointer;
-            transition:all .3s ease;text-transform:uppercase;
+            padding:9px 20px;border-radius:28px;background:transparent;border:1px solid var(--borde);
+            color:var(--plata);font-family:'Outfit',sans-serif;font-size:.78rem;
+            letter-spacing:1.5px;cursor:pointer;transition:all .3s ease;text-transform:uppercase;
         }
-        .tab-btn:hover,.tab-btn.active{
-            background:var(--plata);color:var(--negro);border-color:var(--plata);
-        }
+        .tab-btn:hover,.tab-btn.active{background:var(--plata);color:var(--negro);border-color:var(--plata)}
 
-        .portfolio-grid{
-            display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
-            gap:28px;
-        }
+        .portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:26px}
         .card{
-            background:var(--negro2);border:1px solid var(--borde);
-            border-radius:16px;overflow:hidden;
-            transition:all .45s cubic-bezier(.4,0,.2,1);
-            cursor:pointer;
+            background:var(--negro2);border:1px solid var(--borde);border-radius:16px;
+            overflow:hidden;transition:all .45s cubic-bezier(.4,0,.2,1);
         }
-        .card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+        .card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-7px);box-shadow:0 24px 56px rgba(0,0,0,.45)}
         .card-thumb{
-            width:100%;height:220px;
+            width:100%;height:200px;
             background:linear-gradient(135deg,var(--acento) 0%,var(--negro3) 100%);
-            display:flex;align-items:center;justify-content:center;
-            position:relative;overflow:hidden;
+            display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
         }
         .card-thumb .label{
-            font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
-            letter-spacing:4px;color:var(--plata);
-            position:relative;z-index:2;
+            font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:4px;
+            color:var(--plata);position:relative;z-index:2;
         }
-        .card-thumb::after{
-            content:'';position:absolute;inset:0;
-            background:linear-gradient(180deg,transparent 50%,rgba(5,5,5,.6) 100%);
-        }
-        .card-body{padding:28px}
-        .card-body h3{
-            font-size:1.2rem;color:var(--blanco);margin-bottom:10px;font-weight:600;
-        }
-        .card-body p{font-size:.88rem;color:var(--plata);line-height:1.7;font-weight:300;margin-bottom:18px}
-        .card-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+        .card-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,5,5,.55) 100%)}
+        .card-body{padding:26px}
+        .card-body h3{font-size:1.15rem;color:var(--blanco);margin-bottom:8px;font-weight:600}
+        .card-body p{font-size:.85rem;color:var(--plata);line-height:1.7;font-weight:300;margin-bottom:16px}
+        .card-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
         .card-tag{
-            padding:4px 14px;border-radius:20px;
-            font-size:.75rem;letter-spacing:1px;
-            background:rgba(168,168,168,.08);border:1px solid var(--borde);
-            color:var(--plata-clara);
+            padding:3px 12px;border-radius:18px;font-size:.72rem;letter-spacing:1px;
+            background:rgba(168,168,168,.07);border:1px solid var(--borde);color:var(--plata-clara);
         }
         .card-link{
-            display:inline-flex;align-items:center;gap:8px;
-            color:var(--blanco);text-decoration:none;
-            font-size:.85rem;font-weight:500;letter-spacing:1px;
-            transition:all .3s ease;
+            display:inline-flex;align-items:center;gap:8px;color:var(--blanco);text-decoration:none;
+            font-size:.82rem;font-weight:500;letter-spacing:1px;transition:all .3s ease;
         }
         .card-link:hover{gap:12px;color:var(--plata-clara)}
         .card-link svg{transition:transform .3s ease}
         .card-link:hover svg{transform:translateX(3px)}
 
-        /* ══════════ SOBRE MÍ ══════════ */
-        .about-content{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-        .about-text p{font-size:1.05rem;color:var(--plata);line-height:2;font-weight:300;margin-bottom:20px}
-        .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        /* SOBRE MÍ */
+        .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+        .about-text p{font-size:1.02rem;color:var(--plata);line-height:1.95;font-weight:300;margin-bottom:18px}
+        .about-text strong{color:var(--blanco)}
+
+        .tech-stack{margin-top:32px}
+        .tech-stack h3{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--blanco);margin-bottom:14px}
+        .tech-pills{display:flex;flex-wrap:wrap;gap:8px}
+        .pill{
+            padding:6px 16px;border-radius:20px;font-size:.78rem;letter-spacing:1px;
+            background:rgba(168,168,168,.06);border:1px solid var(--borde);color:var(--plata-clara);
+            transition:all .3s ease;
+        }
+        .pill:hover{border-color:var(--plata);color:var(--blanco)}
+
+        .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px}
         .stat{
-            background:var(--negro2);border:1px solid var(--borde);
-            border-radius:14px;padding:28px 24px;text-align:center;
+            background:var(--negro2);border:1px solid var(--borde);border-radius:14px;
+            padding:26px 20px;text-align:center;transition:all .35s ease;
         }
-        .stat-num{
-            font-family:'Bebas Neue',sans-serif;
-            font-size:2.8rem;color:var(--blanco);line-height:1;
-        }
-        .stat-label{font-size:.78rem;letter-spacing:2px;color:var(--plata);margin-top:6px;text-transform:uppercase}
+        .stat:hover{border-color:rgba(168,168,168,.25)}
+        .stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;color:var(--blanco);line-height:1}
+        .stat-label{font-size:.72rem;letter-spacing:2px;color:var(--plata);margin-top:5px;text-transform:uppercase}
 
-        .skills-list{margin-top:36px}
-        .skills-list h3{
-            font-family:'Bebas Neue',sans-serif;font-size:1.3rem;
-            letter-spacing:2px;color:var(--blanco);margin-bottom:16px;
-        }
-        .skill-bar{margin-bottom:14px}
-        .skill-bar span{display:block;font-size:.8rem;color:var(--plata);margin-bottom:6px;letter-spacing:1px}
-        .bar-track{height:4px;background:var(--acento);border-radius:4px;overflow:hidden}
-        .bar-fill{height:100%;background:linear-gradient(90deg,var(--plata),var(--blanco));border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+        .skills-list{margin-top:28px}
+        .skills-list h3{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--blanco);margin-bottom:14px}
+        .skill-bar{margin-bottom:12px}
+        .skill-bar span{display:block;font-size:.76rem;color:var(--plata);margin-bottom:5px;letter-spacing:1px}
+        .bar-track{height:3px;background:var(--acento);border-radius:3px;overflow:hidden}
+        .bar-fill{height:100%;background:linear-gradient(90deg,var(--plata),var(--blanco));border-radius:3px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
 
-        /* ══════════ CONTACTO ══════════ */
-        .contact-grid{
-            display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-            gap:24px;
-        }
+        /* CONTACTO */
+        .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
         .contact-card{
-            background:var(--negro2);border:1px solid var(--borde);
-            border-radius:14px;padding:32px 28px;
-            transition:all .35s ease;
+            background:var(--negro2);border:1px solid var(--borde);border-radius:14px;
+            padding:30px 26px;transition:all .35s ease;
         }
         .contact-card:hover{border-color:rgba(168,168,168,.3);transform:translateY(-4px)}
         .contact-card .icon{
-            width:42px;height:42px;display:flex;align-items:center;justify-content:center;
-            border:1px solid var(--borde);border-radius:10px;margin-bottom:16px;color:var(--plata);
+            width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+            border:1px solid var(--borde);border-radius:10px;margin-bottom:14px;color:var(--plata);
         }
-        .contact-card h3{font-size:1.05rem;color:var(--blanco);margin-bottom:6px;font-weight:600}
-        .contact-card p{font-size:.9rem;color:var(--plata);font-weight:300}
+        .contact-card h3{font-size:1rem;color:var(--blanco);margin-bottom:5px;font-weight:600}
+        .contact-card p{font-size:.88rem;color:var(--plata);font-weight:300}
         .contact-card a{color:var(--plata-clara);text-decoration:none;transition:color .3s ease}
         .contact-card a:hover{color:var(--blanco)}
 
-        /* ══════════ FOOTER ══════════ */
         .footer{
-            padding:40px 80px;border-top:1px solid var(--borde);
+            padding:36px 80px;border-top:1px solid var(--borde);
             display:flex;justify-content:space-between;align-items:center;
-            font-size:.8rem;color:var(--plata);opacity:.6;
+            font-size:.75rem;color:var(--plata);opacity:.55;
         }
 
-        /* ══════════ ANIMATIONS ══════════ */
-        .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+        .fade-up{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
         .fade-up.visible{opacity:1;transform:translateY(0)}
 
-        /* ══════════ RESPONSIVE ══════════ */
         @media(max-width:1024px){
             section,.hero{padding:80px 40px}
-            .about-content{grid-template-columns:1fr}
-            .footer{padding:30px 40px}
+            .about-layout{grid-template-columns:1fr}
+            .services-duo{grid-template-columns:1fr}
+            .footer{padding:28px 40px}
         }
         @media(max-width:768px){
             .sidebar{transform:translateX(-100%)}
@@ -338,17 +314,20 @@
             .hamburger{display:flex}
             .overlay.show{display:block}
             .main{margin-left:0}
-            section,.hero{padding:60px 24px}
-            .hero{min-height:90vh;padding-top:80px}
+            section,.hero{padding:56px 22px}
+            .hero{min-height:90vh;padding-top:76px}
             .portfolio-grid{grid-template-columns:1fr}
-            .services-grid{grid-template-columns:1fr}
-            .footer{padding:24px;flex-direction:column;gap:8px;text-align:center}
+            .services-extras{grid-template-columns:1fr}
+            .contact-grid{grid-template-columns:1fr}
+            .footer{padding:22px;flex-direction:column;gap:6px;text-align:center}
+            .hero-btns{flex-direction:column;gap:12px}
         }
     </style>
 </head>
 <body>
 
-<!-- Hamburger -->
+<div class="grid-bg"></div>
+
 <button class="hamburger" id="menuToggle" aria-label="Menú">
     <span></span><span></span><span></span>
 </button>
@@ -356,18 +335,15 @@
 
 <div class="page">
 
-    <!-- ══════════ SIDEBAR ══════════ -->
     <aside class="sidebar" id="sidebar">
         <div class="logo-badge">
             <img src="img/LOGO.png" alt="MMV Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" style="display:none" onload="this.style.display='block';this.nextElementSibling.style.display='none'">
             <span class="placeholder" style="display:flex">MMV</span>
         </div>
-
         <div class="brand">
             <h1>MMV</h1>
             <p class="sub">Collector Design</p>
         </div>
-
         <nav>
             <ul>
                 <li><a href="#inicio" class="active"><span class="dot"></span>Inicio</a></li>
@@ -377,24 +353,26 @@
                 <li><a href="#contacto"><span class="dot"></span>Contacto</a></li>
             </ul>
         </nav>
-
-        <div class="sidebar-footer">
-            <p>&copy; 2025 MMV Collector Design</p>
-        </div>
+        <div class="sidebar-footer"><p>&copy; 2025 MMV Collector Design</p></div>
     </aside>
 
-    <!-- ══════════ MAIN ══════════ -->
     <div class="main">
 
         <!-- HERO -->
         <section id="inicio" class="hero">
             <p class="hero-eyebrow">Ing. en Sistemas Computacionales</p>
-            <h1>Diseño &amp; Tecnología<br>que trascienden.</h1>
-            <p>Soy Marco Antonio Marcial Herrera. Creo identidades visuales, experiencias digitales y brindo soluciones tecnológicas integrales — desde el diseño de tu marca hasta el mantenimiento de tus equipos.</p>
-            <a href="#portafolio" class="hero-cta">
-                Ver Portafolio
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
+            <h1>Desarrollo Web<br>&amp; Soluciones en<br>Sistemas Locales.</h1>
+            <p>Soy Marco Antonio Marcial Herrera. Desarrollo sitios web profesionales y brindo soporte técnico integral — mantenimiento de equipos, instalación de software y soluciones IT para tu negocio.</p>
+            <div class="hero-btns">
+                <a href="#portafolio" class="btn-primary">
+                    Ver Portafolio
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+                <a href="#servicios" class="btn-secondary">
+                    Mis Servicios
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </a>
+            </div>
         </section>
 
         <!-- SERVICIOS -->
@@ -402,53 +380,68 @@
             <p class="section-label">Lo que hago</p>
             <h2 class="section-title">Servicios</h2>
 
-            <div class="services-grid">
-                <div class="service-card fade-up">
-                    <div class="service-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12 C8 8, 16 8, 16 12 C16 16, 8 16, 8 12Z"/><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+            <div class="services-duo">
+                <!-- DESARROLLO WEB -->
+                <div class="service-main fade-up">
+                    <div class="icon-lg">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
                     </div>
-                    <h3>Diseño de Logos</h3>
-                    <p>Identidades visuales únicas y memorables que representan la esencia de tu marca o negocio con profesionalismo.</p>
+                    <h3>Desarrollo Web</h3>
+                    <p>Sitios web profesionales, responsivos y optimizados para posicionar tu marca en internet.</p>
+                    <ul class="service-list">
+                        <li>Páginas web corporativas y landing pages</li>
+                        <li>Portafolios y sitios de presentación</li>
+                        <li>Diseño UI/UX personalizado</li>
+                        <li>HTML, CSS, JavaScript</li>
+                        <li>Hosting, dominio y publicación</li>
+                    </ul>
                 </div>
 
-                <div class="service-card fade-up">
-                    <div class="service-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <!-- SISTEMAS LOCALES -->
+                <div class="service-main fade-up">
+                    <div class="icon-lg">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M7 8h2m2 0h2m2 0h2"/><path d="M7 11h10"/></svg>
                     </div>
-                    <h3>Páginas Web</h3>
-                    <p>Sitios web modernos, responsivos y optimizados que conectan con tu audiencia y potencian tu presencia digital.</p>
+                    <h3>Sistemas &amp; Soporte Técnico</h3>
+                    <p>Soluciones integrales para mantener tus equipos funcionando al máximo rendimiento.</p>
+                    <ul class="service-list">
+                        <li>Mantenimiento preventivo y correctivo de PC's y laptops</li>
+                        <li>Formateo e instalación de sistemas operativos</li>
+                        <li>Instalación y activación de Office (remoto)</li>
+                        <li>Optimización y limpieza de software</li>
+                        <li>Diagnóstico y reparación de fallas</li>
+                    </ul>
                 </div>
+            </div>
 
-                <div class="service-card fade-up">
-                    <div class="service-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="7" x2="6" y2="7.01"/><line x1="10" y1="7" x2="10" y2="7.01"/></svg>
+            <div class="services-extras">
+                <div class="service-sm fade-up">
+                    <div class="icon-sm">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12 C8 8, 16 8, 16 12 C16 16, 8 16, 8 12Z"/></svg>
                     </div>
-                    <h3>Tarjetas de Presentación</h3>
-                    <p>Diseños elegantes y profesionales que causan una primera impresión impactante y refuerzan tu imagen de marca.</p>
+                    <h4>Diseño de Logos</h4>
+                    <p>Identidades visuales únicas que representan la esencia de tu marca.</p>
                 </div>
-
-                <div class="service-card fade-up">
-                    <div class="service-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                <div class="service-sm fade-up">
+                    <div class="icon-sm">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
                     </div>
-                    <h3>Mantenimiento de PC's &amp; Laptops</h3>
-                    <p>Servicio técnico profesional: limpieza, optimización, diagnóstico de fallas y reparación de equipos de cómputo.</p>
+                    <h4>Tarjetas de Presentación</h4>
+                    <p>Diseños profesionales que refuerzan la primera impresión de tu negocio.</p>
                 </div>
-
-                <div class="service-card fade-up">
-                    <div class="service-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <div class="service-sm fade-up">
+                    <div class="icon-sm">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                     </div>
-                    <h3>Instalación &amp; Activación de Office</h3>
-                    <p>Servicio remoto de instalación, configuración y activación de Microsoft Office en tu equipo, de forma rápida y segura.</p>
+                    <h4>Branding Integral</h4>
+                    <p>Paquetes completos de identidad visual: logo, paleta, tipografía y aplicaciones.</p>
                 </div>
-
-                <div class="service-card fade-up">
-                    <div class="service-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg>
+                <div class="service-sm fade-up">
+                    <div class="icon-sm">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 019-9"/></svg>
                     </div>
-                    <h3>Branding Integral</h3>
-                    <p>Creación completa de tu identidad de marca: logo, paleta de colores, tipografía y aplicaciones en diversos medios.</p>
+                    <h4>Soporte Remoto</h4>
+                    <p>Asistencia técnica a distancia: instalación de programas, configuración y resolución de problemas.</p>
                 </div>
             </div>
         </section>
@@ -466,87 +459,77 @@
             </div>
 
             <div class="portfolio-grid">
-
-                <!-- Órgano Sagitario -->
                 <div class="card fade-up" data-category="web">
-                    <div class="card-thumb" style="background:linear-gradient(135deg,#1a1a2e,#16213e)">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#12121f,#1a1a2e)">
                         <span class="label">♪ ÓRGANO SAGITARIO</span>
                     </div>
                     <div class="card-body">
                         <h3>Emmanuel Ramírez Cruz</h3>
-                        <p>Página web profesional para tecladista y proyecto musical "Órgano Sagitario". Diseño elegante con información de servicios, experiencia y contacto directo.</p>
+                        <p>Página web profesional para tecladista y proyecto musical "Órgano Sagitario". Diseño elegante con servicios, experiencia y contacto directo.</p>
                         <div class="card-tags">
                             <span class="card-tag">Diseño Web</span>
                             <span class="card-tag">HTML / CSS</span>
                             <span class="card-tag">Responsive</span>
                         </div>
                         <a href="https://mmvcollector.github.io/pages/OrganoSagitario.html" target="_blank" class="card-link">
-                            Ver proyecto
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            Ver proyecto <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                         </a>
                     </div>
                 </div>
 
-                <!-- Carpintería Zuñiga -->
                 <div class="card fade-up" data-category="web">
-                    <div class="card-thumb" style="background:linear-gradient(135deg,#2d1b0e,#4a2c17)">
-                        <span class="label">🪚 CARPINTERÍA ZUÑIGA</span>
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#1f1508,#3a2510)">
+                        <span class="label">🪵 CARPINTERÍA ZUÑIGA</span>
                     </div>
                     <div class="card-body">
                         <h3>Carpintería Zuñiga</h3>
-                        <p>Sitio web profesional para negocio de carpintería. Muestra servicios, trabajos realizados y facilita el contacto directo con clientes potenciales.</p>
+                        <p>Sitio web para negocio de carpintería. Presenta servicios, galería de trabajos realizados y contacto directo con clientes.</p>
                         <div class="card-tags">
                             <span class="card-tag">Diseño Web</span>
                             <span class="card-tag">HTML / CSS</span>
                             <span class="card-tag">Landing Page</span>
                         </div>
                         <a href="https://mmvcollector.github.io/pages/CarpinteriaZu%C3%B1iga.html" target="_blank" class="card-link">
-                            Ver proyecto
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                            Ver proyecto <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                         </a>
                     </div>
                 </div>
 
-                <!-- Logo placeholder 1 -->
                 <div class="card fade-up" data-category="logo">
-                    <div class="card-thumb" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#151515,#222)">
                         <span class="label">LOGO — CLIENTE</span>
                     </div>
                     <div class="card-body">
                         <h3>Diseño de Logo</h3>
-                        <p>Identidad visual creada para cliente. Concepto minimalista con tipografía personalizada que refleja los valores de la marca.</p>
+                        <p>Identidad visual con concepto minimalista y tipografía personalizada para representar los valores de la marca.</p>
                         <div class="card-tags">
                             <span class="card-tag">Branding</span>
                             <span class="card-tag">Logo</span>
-                            <span class="card-tag">Identidad Visual</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tarjeta placeholder -->
                 <div class="card fade-up" data-category="tarjeta">
-                    <div class="card-thumb" style="background:linear-gradient(135deg,#1c1c1c,#333)">
+                    <div class="card-thumb" style="background:linear-gradient(135deg,#181818,#2a2a2a)">
                         <span class="label">TARJETA — CLIENTE</span>
                     </div>
                     <div class="card-body">
                         <h3>Tarjeta de Presentación</h3>
-                        <p>Diseño profesional de tarjeta de presentación con acabados premium y diseño que refleja la personalidad del negocio.</p>
+                        <p>Diseño profesional con acabados premium que refleja la personalidad del negocio.</p>
                         <div class="card-tags">
                             <span class="card-tag">Diseño Gráfico</span>
-                            <span class="card-tag">Tarjetas</span>
                             <span class="card-tag">Print</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Próximamente 1 -->
                 <div class="card fade-up" data-category="web">
                     <div class="card-thumb">
                         <span class="label">PRÓXIMAMENTE</span>
                     </div>
                     <div class="card-body">
                         <h3>Nuevo Proyecto Web</h3>
-                        <p>Un nuevo proyecto está en desarrollo. Mantente atento para conocer más detalles pronto.</p>
+                        <p>Un nuevo sitio web está en desarrollo. Pronto se revelará aquí.</p>
                         <div class="card-tags">
                             <span class="card-tag">Diseño Web</span>
                             <span class="card-tag">En desarrollo</span>
@@ -554,14 +537,13 @@
                     </div>
                 </div>
 
-                <!-- Próximamente 2 -->
                 <div class="card fade-up" data-category="logo">
                     <div class="card-thumb">
                         <span class="label">PRÓXIMAMENTE</span>
                     </div>
                     <div class="card-body">
                         <h3>Nuevo Logo</h3>
-                        <p>Un proyecto de identidad visual innovador está en camino. Pronto se revelará.</p>
+                        <p>Un proyecto de identidad visual está en camino.</p>
                         <div class="card-tags">
                             <span class="card-tag">Branding</span>
                             <span class="card-tag">En desarrollo</span>
@@ -576,49 +558,69 @@
             <p class="section-label">Conóceme</p>
             <h2 class="section-title">Sobre Mí</h2>
 
-            <div class="about-content">
+            <div class="about-layout">
                 <div class="about-text">
-                    <p>Soy <strong style="color:var(--blanco)">Marco Antonio Marcial Herrera</strong>, Ingeniero en Sistemas Computacionales con pasión por el diseño gráfico y las soluciones tecnológicas.</p>
-                    <p>Mi enfoque combina el conocimiento técnico con la creatividad visual para ofrecer servicios integrales: desde la creación de tu identidad de marca — logos, tarjetas de presentación y páginas web — hasta el mantenimiento y soporte técnico de tus equipos de cómputo.</p>
-                    <p>Cada proyecto es una oportunidad para transformar ideas en realidades visuales y tecnológicas que trascienden. Trabajo con compromiso, detalle y la visión de entregar resultados que superen expectativas.</p>
+                    <p>Soy <strong>Marco Antonio Marcial Herrera</strong>, Ingeniero en Sistemas Computacionales originario de Oaxaca, México.</p>
+                    <p>Mi trabajo se centra en dos áreas principales: el <strong>desarrollo de páginas web</strong> profesionales para negocios y personas, y las <strong>soluciones en sistemas locales</strong> — mantenimiento de equipos de cómputo, instalación de software, activación de Office de forma remota y soporte técnico integral.</p>
+                    <p>Complemento mi perfil técnico con servicios de diseño gráfico: logos, tarjetas de presentación y branding, para ofrecer a mis clientes un paquete completo que impulse su imagen y productividad.</p>
 
-                    <div class="skills-list">
-                        <h3>Habilidades</h3>
-                        <div class="skill-bar">
-                            <span>Diseño Gráfico &amp; Branding</span>
-                            <div class="bar-track"><div class="bar-fill" data-width="92" style="width:0"></div></div>
-                        </div>
-                        <div class="skill-bar">
-                            <span>Desarrollo Web (HTML/CSS/JS)</span>
-                            <div class="bar-track"><div class="bar-fill" data-width="88" style="width:0"></div></div>
-                        </div>
-                        <div class="skill-bar">
-                            <span>Mantenimiento de Hardware</span>
-                            <div class="bar-track"><div class="bar-fill" data-width="90" style="width:0"></div></div>
-                        </div>
-                        <div class="skill-bar">
-                            <span>Soporte Técnico Remoto</span>
-                            <div class="bar-track"><div class="bar-fill" data-width="85" style="width:0"></div></div>
+                    <div class="tech-stack">
+                        <h3>Stack &amp; Herramientas</h3>
+                        <div class="tech-pills">
+                            <span class="pill">HTML5</span>
+                            <span class="pill">CSS3</span>
+                            <span class="pill">JavaScript</span>
+                            <span class="pill">GitHub Pages</span>
+                            <span class="pill">Responsive Design</span>
+                            <span class="pill">Windows</span>
+                            <span class="pill">Office 365</span>
+                            <span class="pill">Hardware</span>
+                            <span class="pill">Redes</span>
+                            <span class="pill">Illustrator</span>
+                            <span class="pill">Photoshop</span>
+                            <span class="pill">Soporte Remoto</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="about-stats">
-                    <div class="stat fade-up">
-                        <div class="stat-num">ISC</div>
-                        <div class="stat-label">Ing. Sistemas</div>
+                <div>
+                    <div class="about-stats">
+                        <div class="stat fade-up">
+                            <div class="stat-num">ISC</div>
+                            <div class="stat-label">Ing. Sistemas</div>
+                        </div>
+                        <div class="stat fade-up">
+                            <div class="stat-num">5+</div>
+                            <div class="stat-label">Sitios Web</div>
+                        </div>
+                        <div class="stat fade-up">
+                            <div class="stat-num">50+</div>
+                            <div class="stat-label">Equipos Atendidos</div>
+                        </div>
+                        <div class="stat fade-up">
+                            <div class="stat-num">100%</div>
+                            <div class="stat-label">Compromiso</div>
+                        </div>
                     </div>
-                    <div class="stat fade-up">
-                        <div class="stat-num">5+</div>
-                        <div class="stat-label">Proyectos Web</div>
-                    </div>
-                    <div class="stat fade-up">
-                        <div class="stat-num">10+</div>
-                        <div class="stat-label">Logos Creados</div>
-                    </div>
-                    <div class="stat fade-up">
-                        <div class="stat-num">100%</div>
-                        <div class="stat-label">Compromiso</div>
+
+                    <div class="skills-list">
+                        <h3>Especialidades</h3>
+                        <div class="skill-bar">
+                            <span>Desarrollo Web</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="92" style="width:0"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Mantenimiento &amp; Reparación de Equipos</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="90" style="width:0"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Instalación &amp; Configuración de Software</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="88" style="width:0"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Diseño Gráfico &amp; Branding</span>
+                            <div class="bar-track"><div class="bar-fill" data-width="85" style="width:0"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -632,31 +634,28 @@
             <div class="contact-grid">
                 <div class="contact-card fade-up">
                     <div class="icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                     <h3>Email</h3>
                     <p><a href="mailto:contacto@mmvdesign.com">contacto@mmvdesign.com</a></p>
                 </div>
-
                 <div class="contact-card fade-up">
                     <div class="icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.11 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
                     </div>
                     <h3>Teléfono</h3>
                     <p><a href="tel:9543125522">954-312-5522</a></p>
                 </div>
-
                 <div class="contact-card fade-up">
                     <div class="icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     </div>
                     <h3>Ubicación</h3>
                     <p>Oaxaca, México</p>
                 </div>
-
                 <div class="contact-card fade-up">
                     <div class="icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                     </div>
                     <h3>Soporte Remoto</h3>
                     <p>Disponible para asistencia técnica a distancia</p>
@@ -664,99 +663,58 @@
             </div>
         </section>
 
-        <!-- FOOTER -->
         <footer class="footer">
             <p>&copy; 2025 MMV Collector Design — Marco Antonio Marcial Herrera</p>
             <p>Ing. en Sistemas Computacionales</p>
         </footer>
-
-    </div><!-- /main -->
-</div><!-- /page -->
+    </div>
+</div>
 
 <script>
-// ══════ Mobile Menu ══════
-const toggle = document.getElementById('menuToggle');
-const sidebar = document.getElementById('sidebar');
-const overlay = document.getElementById('overlay');
+const toggle=document.getElementById('menuToggle'),sidebar=document.getElementById('sidebar'),overlay=document.getElementById('overlay');
+toggle.addEventListener('click',()=>{toggle.classList.toggle('open');sidebar.classList.toggle('open');overlay.classList.toggle('show')});
+overlay.addEventListener('click',()=>{toggle.classList.remove('open');sidebar.classList.remove('open');overlay.classList.remove('show')});
 
-toggle.addEventListener('click', () => {
-    toggle.classList.toggle('open');
-    sidebar.classList.toggle('open');
-    overlay.classList.toggle('show');
-});
-overlay.addEventListener('click', () => {
-    toggle.classList.remove('open');
-    sidebar.classList.remove('open');
-    overlay.classList.remove('show');
-});
-
-// ══════ Smooth Scroll & Active Nav ══════
-document.querySelectorAll('.sidebar nav a').forEach(a => {
-    a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-        // close mobile
-        toggle.classList.remove('open');
-        sidebar.classList.remove('open');
-        overlay.classList.remove('show');
-    });
-});
-
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.sidebar nav a');
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-        if (window.scrollY >= s.offsetTop - 200) current = s.id;
-    });
-    navLinks.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === `#${current}`);
-    });
-});
-
-// ══════ Fade-up on scroll ══════
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.15 });
-document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-// ══════ Skill bars animate ══════
-const barObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) {
-            e.target.style.width = e.target.dataset.width + '%';
+document.querySelectorAll('.sidebar nav a, .btn-primary, .btn-secondary').forEach(a=>{
+    a.addEventListener('click',e=>{
+        const href=a.getAttribute('href');
+        if(href&&href.startsWith('#')){
+            e.preventDefault();
+            document.querySelector(href)?.scrollIntoView({behavior:'smooth'});
+            toggle.classList.remove('open');sidebar.classList.remove('open');overlay.classList.remove('show');
         }
     });
-}, { threshold: 0.5 });
-document.querySelectorAll('.bar-fill').forEach(b => barObserver.observe(b));
+});
 
-// ══════ Portfolio filter ══════
-document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+const sections=document.querySelectorAll('section'),navLinks=document.querySelectorAll('.sidebar nav a');
+window.addEventListener('scroll',()=>{
+    let c='';
+    sections.forEach(s=>{if(window.scrollY>=s.offsetTop-200)c=s.id});
+    navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+c));
+});
+
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+const barObs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.style.width=x.target.dataset.width+'%'}),{threshold:.5});
+document.querySelectorAll('.bar-fill').forEach(b=>barObs.observe(b));
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
         btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        document.querySelectorAll('.card').forEach(card => {
-            if (filter === 'all' || card.dataset.category === filter) {
-                card.style.display = '';
-                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => { card.style.display = 'none'; }, 400);
+        const f=btn.dataset.filter;
+        document.querySelectorAll('.card').forEach(card=>{
+            if(f==='all'||card.dataset.category===f){
+                card.style.display='';
+                setTimeout(()=>{card.style.opacity='1';card.style.transform='translateY(0)'},50);
+            }else{
+                card.style.opacity='0';card.style.transform='translateY(20px)';
+                setTimeout(()=>{card.style.display='none'},400);
             }
         });
     });
 });
-
-// ══════ Hero CTA smooth scroll ══════
-document.querySelector('.hero-cta')?.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector('#portafolio')?.scrollIntoView({ behavior: 'smooth' });
-});
 </script>
-
 </body>
 </html>
-
