@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MMV COLLECTOR DESIGN — Marco Antonio Marcial Herrera</title>
+    <title>MMV COLLECTOR DESIGN — Desarrollo Web &amp; Sistemas</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -130,7 +130,7 @@
             -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
             margin-bottom:24px;
         }
-        .hero p{font-size:1.1rem;color:var(--plata);max-width:580px;line-height:1.85;font-weight:300}
+        .hero p{font-size:1.1rem;color:var(--plata);max-width:600px;line-height:1.85;font-weight:300}
         .hero-btns{display:flex;gap:16px;margin-top:36px;flex-wrap:wrap}
         .btn-primary{
             display:inline-flex;align-items:center;gap:10px;
@@ -192,7 +192,7 @@
         }
         .service-list li::before{content:'›';color:var(--plata);font-weight:700}
 
-        .services-extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+        .services-extras{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
         .service-sm{
             background:var(--negro2);border:1px solid var(--borde);border-radius:14px;
             padding:28px 24px;transition:all .35s ease;
@@ -227,7 +227,7 @@
         }
         .card-thumb .label{
             font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:4px;
-            color:var(--plata);position:relative;z-index:2;
+            color:var(--plata);position:relative;z-index:2;text-align:center;padding:0 20px;
         }
         .card-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,5,5,.55) 100%)}
         .card-body{padding:26px}
@@ -246,10 +246,20 @@
         .card-link svg{transition:transform .3s ease}
         .card-link:hover svg{transform:translateX(3px)}
 
-        /* SOBRE MÍ */
+        /* SOBRE NOSOTROS */
         .about-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
         .about-text p{font-size:1.02rem;color:var(--plata);line-height:1.95;font-weight:300;margin-bottom:18px}
         .about-text strong{color:var(--blanco)}
+
+        .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px}
+        .team-card{
+            background:var(--negro2);border:1px solid var(--borde);border-radius:14px;
+            padding:28px 24px;transition:all .35s ease;
+        }
+        .team-card:hover{border-color:rgba(168,168,168,.25)}
+        .team-card h4{font-size:1rem;color:var(--blanco);margin-bottom:4px;font-weight:600}
+        .team-card .role{font-size:.75rem;color:var(--plata);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+        .team-card p{font-size:.82rem;color:var(--plata);line-height:1.6;font-weight:300}
 
         .tech-stack{margin-top:32px}
         .tech-stack h3{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:2px;color:var(--blanco);margin-bottom:14px}
@@ -306,6 +316,7 @@
             section,.hero{padding:80px 40px}
             .about-layout{grid-template-columns:1fr}
             .services-duo{grid-template-columns:1fr}
+            .team-grid{grid-template-columns:1fr}
             .footer{padding:28px 40px}
         }
         @media(max-width:768px){
@@ -349,7 +360,7 @@
                 <li><a href="#inicio" class="active"><span class="dot"></span>Inicio</a></li>
                 <li><a href="#servicios"><span class="dot"></span>Servicios</a></li>
                 <li><a href="#portafolio"><span class="dot"></span>Portafolio</a></li>
-                <li><a href="#sobre-mi"><span class="dot"></span>Sobre Mí</a></li>
+                <li><a href="#nosotros"><span class="dot"></span>Nosotros</a></li>
                 <li><a href="#contacto"><span class="dot"></span>Contacto</a></li>
             </ul>
         </nav>
@@ -360,16 +371,16 @@
 
         <!-- HERO -->
         <section id="inicio" class="hero">
-            <p class="hero-eyebrow">Ing. en Sistemas Computacionales</p>
+            <p class="hero-eyebrow">Ingenieros en Sistemas Computacionales</p>
             <h1>Desarrollo Web<br>&amp; Soluciones en<br>Sistemas Locales.</h1>
-            <p>Soy Marco Antonio Marcial Herrera. Desarrollo sitios web profesionales y brindo soporte técnico integral — mantenimiento de equipos, instalación de software y soluciones IT para tu negocio.</p>
+            <p>Somos MMV Collector Design. Desarrollamos sitios web profesionales y brindamos soporte técnico integral — mantenimiento de equipos, instalación de software y soluciones IT para tu negocio.</p>
             <div class="hero-btns">
                 <a href="#portafolio" class="btn-primary">
                     Ver Portafolio
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </a>
                 <a href="#servicios" class="btn-secondary">
-                    Mis Servicios
+                    Nuestros Servicios
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                 </a>
             </div>
@@ -377,7 +388,7 @@
 
         <!-- SERVICIOS -->
         <section id="servicios" style="border-bottom:1px solid var(--borde)">
-            <p class="section-label">Lo que hago</p>
+            <p class="section-label">Lo que hacemos</p>
             <h2 class="section-title">Servicios</h2>
 
             <div class="services-duo">
@@ -420,7 +431,7 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12 C8 8, 16 8, 16 12 C16 16, 8 16, 8 12Z"/></svg>
                     </div>
                     <h4>Diseño de Logos</h4>
-                    <p>Identidades visuales únicas que representan la esencia de tu marca.</p>
+                    <p>Identidades visuales únicas que representan la esencia de tu marca o negocio.</p>
                 </div>
                 <div class="service-sm fade-up">
                     <div class="icon-sm">
@@ -428,13 +439,6 @@
                     </div>
                     <h4>Tarjetas de Presentación</h4>
                     <p>Diseños profesionales que refuerzan la primera impresión de tu negocio.</p>
-                </div>
-                <div class="service-sm fade-up">
-                    <div class="icon-sm">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <h4>Branding Integral</h4>
-                    <p>Paquetes completos de identidad visual: logo, paleta, tipografía y aplicaciones.</p>
                 </div>
                 <div class="service-sm fade-up">
                     <div class="icon-sm">
@@ -503,8 +507,8 @@
                         <h3>Diseño de Logo</h3>
                         <p>Identidad visual con concepto minimalista y tipografía personalizada para representar los valores de la marca.</p>
                         <div class="card-tags">
-                            <span class="card-tag">Branding</span>
                             <span class="card-tag">Logo</span>
+                            <span class="card-tag">Diseño Gráfico</span>
                         </div>
                     </div>
                 </div>
@@ -543,9 +547,9 @@
                     </div>
                     <div class="card-body">
                         <h3>Nuevo Logo</h3>
-                        <p>Un proyecto de identidad visual está en camino.</p>
+                        <p>Un proyecto de diseño de logo está en camino.</p>
                         <div class="card-tags">
-                            <span class="card-tag">Branding</span>
+                            <span class="card-tag">Logo</span>
                             <span class="card-tag">En desarrollo</span>
                         </div>
                     </div>
@@ -553,16 +557,29 @@
             </div>
         </section>
 
-        <!-- SOBRE MÍ -->
-        <section id="sobre-mi" style="border-bottom:1px solid var(--borde)">
-            <p class="section-label">Conóceme</p>
-            <h2 class="section-title">Sobre Mí</h2>
+        <!-- NOSOTROS -->
+        <section id="nosotros" style="border-bottom:1px solid var(--borde)">
+            <p class="section-label">Nuestro equipo</p>
+            <h2 class="section-title">Nosotros</h2>
 
             <div class="about-layout">
                 <div class="about-text">
-                    <p>Soy <strong>Marco Antonio Marcial Herrera</strong>, Ingeniero en Sistemas Computacionales originario de Oaxaca, México.</p>
-                    <p>Mi trabajo se centra en dos áreas principales: el <strong>desarrollo de páginas web</strong> profesionales para negocios y personas, y las <strong>soluciones en sistemas locales</strong> — mantenimiento de equipos de cómputo, instalación de software, activación de Office de forma remota y soporte técnico integral.</p>
-                    <p>Complemento mi perfil técnico con servicios de diseño gráfico: logos, tarjetas de presentación y branding, para ofrecer a mis clientes un paquete completo que impulse su imagen y productividad.</p>
+                    <p>Somos <strong>MMV Collector Design</strong>, un equipo de Ingenieros en Sistemas Computacionales con sede en Oaxaca, México.</p>
+                    <p>Nuestro trabajo se centra en el <strong>desarrollo de páginas web</strong> profesionales para negocios y personas, y en <strong>soluciones de sistemas locales</strong> — mantenimiento de equipos de cómputo, instalación de software, activación de Office de forma remota y soporte técnico integral.</p>
+                    <p>Complementamos nuestro perfil técnico con servicios de diseño gráfico: logos y tarjetas de presentación, para ofrecer a nuestros clientes un paquete completo que impulse su imagen y productividad.</p>
+
+                    <div class="team-grid">
+                        <div class="team-card fade-up">
+                            <h4>Marco Antonio Marcial Herrera</h4>
+                            <p class="role">Ing. en Sistemas Computacionales</p>
+                            <p>Desarrollo web, soporte técnico, mantenimiento de equipos y diseño gráfico.</p>
+                        </div>
+                        <div class="team-card fade-up">
+                            <h4>Dulce Yamileth Zuñiga Perez</h4>
+                            <p class="role">Ing. en Sistemas Computacionales</p>
+                            <p>Desarrollo web, soporte técnico, mantenimiento de equipos y diseño gráfico.</p>
+                        </div>
+                    </div>
 
                     <div class="tech-stack">
                         <h3>Stack &amp; Herramientas</h3>
@@ -586,8 +603,8 @@
                 <div>
                     <div class="about-stats">
                         <div class="stat fade-up">
-                            <div class="stat-num">ISC</div>
-                            <div class="stat-label">Ing. Sistemas</div>
+                            <div class="stat-num">2</div>
+                            <div class="stat-label">Ingenieros ISC</div>
                         </div>
                         <div class="stat fade-up">
                             <div class="stat-num">5+</div>
@@ -618,7 +635,7 @@
                             <div class="bar-track"><div class="bar-fill" data-width="88" style="width:0"></div></div>
                         </div>
                         <div class="skill-bar">
-                            <span>Diseño Gráfico &amp; Branding</span>
+                            <span>Diseño Gráfico</span>
                             <div class="bar-track"><div class="bar-fill" data-width="85" style="width:0"></div></div>
                         </div>
                     </div>
@@ -637,7 +654,7 @@
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     </div>
                     <h3>Email</h3>
-                    <p><a href="mailto:contacto@mmvdesign.com">contacto@mmvdesign.com</a></p>
+                    <p><a href="mailto:mmvcollectordesing@outlook.com">mmvcollectordesing@outlook.com</a></p>
                 </div>
                 <div class="contact-card fade-up">
                     <div class="icon">
@@ -664,8 +681,8 @@
         </section>
 
         <footer class="footer">
-            <p>&copy; 2025 MMV Collector Design — Marco Antonio Marcial Herrera</p>
-            <p>Ing. en Sistemas Computacionales</p>
+            <p>&copy; 2025 MMV Collector Design</p>
+            <p>Marco Antonio Marcial Herrera &amp; Dulce Yamileth Zuñiga Perez</p>
         </footer>
     </div>
 </div>
