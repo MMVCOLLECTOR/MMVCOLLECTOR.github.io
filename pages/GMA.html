@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guadalupe Martínez Ayala — Psicóloga</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple: #663390;
+      --purple-light: #8B52B8;
+      --purple-faint: #f3ecfa;
+      --purple-mid: #d9c4ed;
+      --white: #ffffff;
+      --off-white: #faf9fb;
+      --dark: #1a1020;
+      --gray: #7a7a8a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 5vw;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--purple-mid);
+      transition: padding .3s;
+    }
+
+    nav.scrolled { padding: .9rem 5vw; }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-logo-img-ph {
+      height: 38px;
+      width: 38px;
+      background: var(--purple-faint);
+      border: 1.5px dashed var(--purple-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-img-ph svg {
+      width: 18px; height: 18px;
+      stroke: var(--purple);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--purple);
+      letter-spacing: .04em;
+    }
+
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--dark);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--purple); }
+
+    .nav-cta {
+      background: var(--purple);
+      color: var(--white) !important;
+      padding: .55rem 1.4rem;
+      border-radius: 2px;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--purple-light) !important; color: var(--white) !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      padding: 10rem 5vw 6rem 8vw;
+      animation: fadeUp .9s ease both;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--purple);
+      border: 1px solid var(--purple);
+      padding: .3rem .9rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 4.5vw, 5rem);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span { color: var(--purple); }
+
+    .hero-sub {
+      font-size: .95rem;
+      color: var(--gray);
+      line-height: 1.8;
+      max-width: 420px;
+      margin-bottom: 2.8rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--purple);
+      color: var(--white);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .9rem 2.4rem;
+      border-radius: 2px;
+      transition: background .2s, transform .2s;
+      margin-right: 1rem;
+    }
+    .btn-primary:hover { background: var(--purple-light); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-block;
+      color: var(--purple);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .9rem 0;
+      border-bottom: 1.5px solid var(--purple);
+      transition: opacity .2s;
+    }
+    .btn-ghost:hover { opacity: .65; }
+
+    .hero-right {
+      position: relative;
+      height: 100vh;
+      background: var(--purple-faint);
+      overflow: hidden;
+      animation: fadeIn 1.2s ease both;
+    }
+
+    /* Hero image placeholder */
+    .hero-img-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* Placeholder shown when no image */
+    .img-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: var(--purple);
+      gap: 1rem;
+      font-size: .82rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      opacity: .45;
+    }
+
+    .img-placeholder svg { width: 56px; height: 56px; }
+
+    .hero-deco {
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: var(--purple-mid);
+      opacity: .35;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 8vw; }
+
+    .section-label {
+      display: block;
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 600;
+      line-height: 1.12;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .section-body {
+      font-size: .95rem;
+      color: var(--gray);
+      line-height: 1.9;
+      max-width: 600px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      background: var(--off-white);
+    }
+
+    .about-img-box {
+      position: relative;
+      aspect-ratio: 4/5;
+      background: var(--purple-faint);
+      overflow: hidden;
+    }
+
+    .about-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-img-box .img-placeholder { opacity: .35; }
+
+    .about-deco-line {
+      position: absolute;
+      top: 24px; left: 24px; right: -24px; bottom: -24px;
+      border: 1.5px solid var(--purple-mid);
+      pointer-events: none;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .stat-card {
+      border-left: 2px solid var(--purple);
+      padding-left: 1rem;
+    }
+
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--purple);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: .78rem;
+      color: var(--gray);
+      margin-top: .3rem;
+      letter-spacing: .04em;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--white); }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--purple-mid);
+      border: 1.5px solid var(--purple-mid);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.8rem 2.4rem;
+      transition: background .25s;
+      cursor: default;
+    }
+
+    .service-card:hover { background: var(--purple-faint); }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      margin-bottom: 1.6rem;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .service-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .service-icon .icon-ph {
+      width: 100%; height: 100%;
+      background: var(--purple-faint);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .service-icon .icon-ph svg { width: 24px; height: 24px; color: var(--purple); }
+
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: .8rem;
+    }
+
+    .service-desc {
+      font-size: .85rem;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+
+    /* ── QUOTE ── */
+    #quote {
+      background: var(--purple);
+      text-align: center;
+      padding: 6rem 10vw;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #quote::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.06);
+    }
+    #quote::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -60px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.04);
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.4;
+      font-style: italic;
+      position: relative; z-index: 1;
+    }
+
+    .quote-author {
+      margin-top: 2rem;
+      font-size: .8rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      position: relative; z-index: 1;
+    }
+
+    /* ── GALLERY / ESPACIO ── */
+    #galeria { background: var(--off-white); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 12px;
+      margin-top: 3rem;
+    }
+
+    .gallery-grid .g-item:first-child {
+      grid-row: 1 / 3;
+    }
+
+    .g-item {
+      background: var(--purple-faint);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .g-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .g-item:hover img { transform: scale(1.04); }
+
+    .g-item .img-placeholder { position: absolute; inset: 0; }
+
+    /* ── CONTACT ── */
+    #contacto {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-info { padding-top: .5rem; }
+
+    .contact-item {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .contact-icon-box {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      background: var(--purple-faint);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .contact-icon-box svg {
+      width: 20px; height: 20px;
+      stroke: var(--purple);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .contact-detail-label {
+      font-size: .7rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: .3rem;
+    }
+
+    .contact-detail-value {
+      font-size: .95rem;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+    .form-field { display: flex; flex-direction: column; gap: .4rem; }
+
+    .form-field label {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .form-field input,
+    .form-field textarea {
+      border: 1px solid var(--purple-mid);
+      background: transparent;
+      padding: .85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      color: var(--dark);
+      outline: none;
+      transition: border-color .2s;
+      resize: none;
+      border-radius: 2px;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--purple);
+    }
+
+    .form-submit {
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      padding: 1rem 2.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background .2s, transform .2s;
+      align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--purple-light); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,.5);
+      padding: 3rem 8vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .8rem;
+      letter-spacing: .04em;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a { color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { height: 55vw; min-height: 300px; }
+      #about { grid-template-columns: 1fr; gap: 3rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      #contacto { grid-template-columns: 1fr; gap: 3rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-grid .g-item:first-child { grid-row: auto; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 5vw; }
+      .nav-links { display: none; }
+      section { padding: 5rem 6vw; }
+      .services-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">
+      <!-- IMAGEN: logo.png — Logo (mariposa/cabeza, fondo transparente) -->
+      <img src="logo.png" alt="Logo GMA" class="nav-logo-img"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="nav-logo-img-ph" style="display:none;">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <span class="nav-logo-text">GMA Psicología</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">Sobre mí</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#galeria">Espacio</a></li>
+      <li><a href="#contacto" class="nav-cta">Agendar cita</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <span class="hero-tag">Psicóloga · Teposcolula, Oaxaca</span>
+      <h1 class="hero-title">
+        Guadalupe<br>
+        Martínez<br>
+        <span>Ayala</span>
+      </h1>
+      <p class="hero-sub">
+        Espacio para el desarrollo humano, un reencuentro contigo mismo.
+        Un lugar seguro para explorar, sanar y crecer.
+      </p>
+      <a href="#contacto" class="btn-primary">Agendar cita</a>
+      <a href="#services" class="btn-ghost">Ver servicios</a>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <!-- IMAGEN: hero-portrait.png — Foto profesional de Guadalupe (vertical) -->
+        <img src="hero-portrait.png" alt="Guadalupe Martínez Ayala"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-placeholder" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          hero-portrait.png
+        </div>
+      </div>
+      <div class="hero-deco"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-img-box reveal">
+      <!-- IMAGEN: about-photo.png — Foto secundaria/consultorio o retrato diferente -->
+      <img src="about-photo.png" alt="Guadalupe Martínez Ayala"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="img-placeholder" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="48" height="48">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="10" r="3"/>
+          <path d="M6 20c0-3 2.7-5 6-5s6 2 6 5"/>
+        </svg>
+        about-photo.png
+      </div>
+      <div class="about-deco-line"></div>
+    </div>
+    <div class="reveal">
+      <span class="section-label">Sobre mí</span>
+      <h2 class="section-title">Formación, compromiso<br>y presencia.</h2>
+      <p class="section-body">
+        Soy Guadalupe Martínez Ayala, psicóloga comprometida con el bienestar emocional
+        y el desarrollo personal. Mi práctica se centra en crear un espacio seguro, libre
+        de juicio, donde cada persona pueda reconectarse consigo misma y construir
+        herramientas para una vida más plena.
+      </p>
+      <p class="section-body" style="margin-top:1rem;">
+        Atiendo de manera presencial en San Pedro y San Pablo Teposcolula, Oaxaca.
+        Todas las consultas son con cita previa.
+      </p>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Confidencialidad garantizada</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Previa</div>
+          <div class="stat-label">Cita necesaria para consulta</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Presencial</div>
+          <div class="stat-label">Atención en Teposcolula</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">Individual</div>
+          <div class="stat-label">Atención personalizada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header reveal">
+      <div>
+        <span class="section-label">Servicios</span>
+        <h2 class="section-title">Áreas de atención</h2>
+      </div>
+      <a href="#contacto" class="btn-ghost">Consultar disponibilidad</a>
+    </div>
+    <div class="services-grid reveal">
+
+      <div class="service-card">
+        <div class="service-icon">
+          <!-- IMAGEN: icon-individual.png — Icono para terapia individual -->
+          <img src="icon-individual.png" alt=""
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-ph" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="4"/><path d="M6 20c0-4 2.7-6 6-6s6 2 6 6"/>
+            </svg>
+          </div>
+        </div>
+        <div class="service-name">Psicoterapia Individual</div>
+        <p class="service-desc">
+          Acompañamiento personalizado para trabajar emociones, creencias y patrones
+          de comportamiento que afectan tu bienestar.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <!-- IMAGEN: icon-desarrollo.png — Icono para desarrollo humano -->
+          <img src="icon-desarrollo.png" alt=""
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-ph" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="service-name">Desarrollo Humano</div>
+        <p class="service-desc">
+          Herramientas para el autoconocimiento, manejo emocional y crecimiento
+          personal orientado a una vida con sentido y dirección.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <!-- IMAGEN: icon-orientacion.png — Icono para orientación psicológica -->
+          <img src="icon-orientacion.png" alt=""
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-ph" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+              <path d="M12 8v4l3 3"/>
+            </svg>
+          </div>
+        </div>
+        <div class="service-name">Orientación Psicológica</div>
+        <p class="service-desc">
+          Guía profesional para situaciones de crisis, toma de decisiones y
+          manejo del estrés cotidiano con perspectiva clínica.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <!-- IMAGEN: icon-ansiedad.png — Icono para ansiedad/estrés -->
+          <img src="icon-ansiedad.png" alt=""
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-ph" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 12h2l2-8 4 16 3-10 2 2h5"/>
+            </svg>
+          </div>
+        </div>
+        <div class="service-name">Manejo de Ansiedad</div>
+        <p class="service-desc">
+          Estrategias basadas en evidencia para reducir la ansiedad, el estrés
+          y mejorar la regulación emocional en el día a día.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <!-- IMAGEN: icon-duelo.png — Icono para duelo y pérdidas -->
+          <img src="icon-duelo.png" alt=""
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-ph" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="service-name">Duelo y Pérdidas</div>
+        <p class="service-desc">
+          Acompañamiento empático para atravesar procesos de pérdida, duelo y
+          transiciones vitales difíciles con mayor fortaleza.
+        </p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <!-- IMAGEN: icon-autoestima.png — Icono para autoestima -->
+          <img src="icon-autoestima.png" alt=""
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-ph" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          </div>
+        </div>
+        <div class="service-name">Autoestima</div>
+        <p class="service-desc">
+          Trabajo profundo en la imagen propia, el valor personal y la
+          construcción de una relación más sana y compasiva contigo mismo.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <div id="quote">
+    <p class="quote-text">
+      "Espacio para el desarrollo humano,<br>un reencuentro contigo mismo."
+    </p>
+    <p class="quote-author">— Guadalupe Martínez Ayala, Psicóloga</p>
+  </div>
+
+  <!-- ESPACIO / GALLERY -->
+  <section id="galeria">
+    <div class="reveal">
+      <span class="section-label">El espacio</span>
+      <h2 class="section-title">Un lugar para ti</h2>
+      <p class="section-body">
+        Un consultorio pensado para que te sientas seguro, cómodo y en confianza
+        desde el primer momento.
+      </p>
+    </div>
+    <div class="gallery-grid reveal">
+      <!-- IMAGEN: espacio-principal.png — Vista principal del consultorio (vertical) -->
+      <div class="g-item">
+        <img src="espacio-principal.png" alt="Consultorio"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="36" height="36">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          espacio-principal.png
+        </div>
+      </div>
+      <!-- IMAGEN: espacio-detalle1.png — Detalle decorativo del consultorio -->
+      <div class="g-item">
+        <img src="espacio-detalle1.png" alt="Detalle consultorio"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="36" height="36">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          espacio-detalle1.png
+        </div>
+      </div>
+      <!-- IMAGEN: espacio-detalle2.png — Otro ángulo o detalle del espacio -->
+      <div class="g-item">
+        <img src="espacio-detalle2.png" alt="Consultorio ambiente"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="36" height="36">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          espacio-detalle2.png
+        </div>
+      </div>
+      <!-- IMAGEN: espacio-exterior.png — Exterior o fachada del consultorio -->
+      <div class="g-item">
+        <img src="espacio-exterior.png" alt="Exterior consultorio"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="img-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="36" height="36">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          espacio-exterior.png
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contacto">
+    <div class="contact-info reveal">
+      <span class="section-label">Contacto</span>
+      <h2 class="section-title">Agenda tu<br>primera consulta</h2>
+      <p class="section-body" style="margin-bottom:2.5rem;">
+        Todas las consultas son con cita previa. Escríbeme o llama para
+        revisar disponibilidad y comenzar tu proceso.
+      </p>
+
+      <div class="contact-item">
+        <div class="contact-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l.85-.85a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-detail-label">Teléfono</div>
+          <div class="contact-detail-value">953 115 7733</div>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-detail-label">Dirección</div>
+          <div class="contact-detail-value">
+            Calle Mina No. 12, Sección Primera<br>
+            San Pedro y San Pablo Teposcolula<br>
+            Oaxaca, México
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon-box">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-detail-label">Modalidad</div>
+          <div class="contact-detail-value">Presencial · Previa cita</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-field">
+        <label>Nombre completo</label>
+        <input type="text" placeholder="Tu nombre" />
+      </div>
+      <div class="form-field">
+        <label>Teléfono o correo</label>
+        <input type="text" placeholder="Como prefieres que te contacte" />
+      </div>
+      <div class="form-field">
+        <label>Motivo de consulta</label>
+        <textarea rows="5" placeholder="Cuéntame brevemente en qué te gustaría trabajar..."></textarea>
+      </div>
+      <button class="form-submit">Enviar mensaje</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#hero" class="footer-logo">
+      <img src="logo.png" alt="Logo" style="height:32px;width:auto;vertical-align:middle;margin-right:.5rem;opacity:.85;"
+           onerror="this.style.display='none';">
+      GMA Psicología
+    </a>
+    <ul class="footer-links">
+      <li><a href="#about">Sobre mí</a></li>
+      <li><a href="#services">Servicios</a></li>
+      <li><a href="#galeria">Espacio</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <span>Guadalupe Martínez Ayala · Psicóloga · Teposcolula, Oax.</span>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+</body>
+</html>
