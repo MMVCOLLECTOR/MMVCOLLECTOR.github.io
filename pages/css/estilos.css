@@ -121,7 +121,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding-block: 10px;
 }
 
-.cabecera__logo img { width: auto; max-height: 52px; }
+.cabecera__logo img { width: 30; max-height: 52px; }
 
 .cabecera__acciones { display: flex; align-items: center; gap: 22px; }
 
