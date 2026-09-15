@@ -3,376 +3,289 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mototaxis Xatachi Tamazulapan — Tarifario y teléfono de base</title>
-<meta name="description" content="Teléfono de la base de mototaxis Xatachi en Tamazulapan del Progreso y tarifario oficial con todos los cobros adicionales.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --azul:#0B2C86;
-    --azul-hondo:#071E5E;
-    --azul-claro:#B9C6EC;
-    --rojo:#E4121F;
-    --rojo-hondo:#A80D17;
-    --hueso:#F3F5FB;
-    --linea:#D5DCEE;
-    --gris:#5C6680;
-    --radio:14px;
-    --max:760px;
-  }
-  *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{
-    margin:0;
-    background:var(--hueso);
-    color:var(--azul-hondo);
-    font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
-    font-size:17px;
-    line-height:1.5;
-    padding-bottom:84px;
-  }
-  h1,h2,h3{font-family:"Archivo Black","Archivo",Arial,sans-serif;font-weight:400;letter-spacing:-.02em;margin:0}
-  a{color:inherit}
-  .env{max-width:var(--max);margin:0 auto;padding:0 20px}
+<title>Mototaxis Xatachi · Tamazulapan del Progreso — Teléfono de base y tarifario</title>
+<meta name="description" content="Llama a la base de mototaxis Xatachi en Tamazulapan del Progreso al 953 107 0689. Consulta el tarifario completo por destino y calcula tu tarifa con los cobros adicionales.">
+<meta name="theme-color" content="#091b4a">
+<link rel="canonical" href="https://mototaxisxatachi.mx/">
+<link rel="icon" href="LOGOS/logoXatachi.svg" type="image/svg+xml">
 
-  /* ---------- Marca ---------- */
-  .marca{background:#fff;padding:22px 20px 20px;text-align:center}
-  .marca img{width:100%;max-width:400px;height:auto;display:block;margin:0 auto}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_MX">
+<meta property="og:title" content="Mototaxis Xatachi · Tamazulapan del Progreso">
+<meta property="og:description" content="Teléfono de la base: 953 107 0689. Tarifario completo y calculadora de tarifa con cobros adicionales.">
+<meta property="og:image" content="LOGOS/logoXatachi.svg">
 
-  /* ---------- Portada ---------- */
-  .portada{background:var(--azul);color:#fff;padding:30px 0 36px;position:relative;overflow:hidden}
-  .portada::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:8px;
-    background:linear-gradient(90deg,var(--rojo) 0 33.3%,#fff 33.3% 66.6%,var(--azul-hondo) 66.6% 100%);
-  }
-  .portada::after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:8px;
-    background:linear-gradient(90deg,var(--azul-hondo) 0 33.3%,#fff 33.3% 66.6%,var(--rojo) 66.6% 100%);
-  }
-  .sello{
-    display:inline-block;border:2px solid rgba(255,255,255,.5);
-    padding:4px 11px;border-radius:999px;font-size:13px;font-weight:600;
-  }
-  .portada h1{font-size:clamp(32px,8.4vw,50px);line-height:1;margin:16px 0 8px}
-  .portada p.lead{margin:0 0 22px;color:var(--azul-claro);max-width:34em}
-  .llamar{
-    display:flex;align-items:center;gap:16px;
-    background:var(--rojo);color:#fff;
-    text-decoration:none;padding:16px 20px;border-radius:var(--radio);
-    box-shadow:0 6px 0 var(--rojo-hondo);
-  }
-  .llamar:active{transform:translateY(3px);box-shadow:0 3px 0 var(--rojo-hondo)}
-  .llamar .icono{font-size:30px;line-height:1}
-  .llamar .num{font-family:"Archivo Black",Arial,sans-serif;font-size:clamp(26px,7.5vw,38px);line-height:1;letter-spacing:-.01em}
-  .llamar .pie{font-size:13px;font-weight:600;color:#FFD3D6}
-  .wa{
-    display:inline-flex;align-items:center;gap:8px;margin-top:14px;
-    color:#fff;text-decoration:none;font-weight:600;font-size:15px;
-    border-bottom:2px solid rgba(255,255,255,.4);padding-bottom:2px;
-  }
-
-  /* ---------- Cobros adicionales ---------- */
-  .extras{background:#fff;padding:36px 0 40px;border-bottom:1px solid var(--linea)}
-  .extras .titulo{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
-  .extras h2{font-size:clamp(26px,6.5vw,36px);line-height:1;color:var(--azul)}
-  .extras .aviso{color:var(--rojo);font-weight:700;font-size:14px}
-  .extras .intro{color:var(--gris);margin:0 0 22px;max-width:36em}
-  .regla{
-    display:grid;grid-template-columns:104px 1fr;gap:16px;
-    padding:16px 0;border-top:1px solid var(--linea);
-  }
-  .regla:last-of-type{border-bottom:1px solid var(--linea)}
-  .monto{
-    font-family:"Archivo Black",Arial,sans-serif;font-size:26px;color:var(--rojo);
-    line-height:1.1;
-  }
-  .monto.texto{
-    font-family:"Archivo",Arial,sans-serif;font-weight:700;font-size:14px;color:#fff;
-    background:var(--azul);padding:7px 10px;border-radius:8px;text-align:center;align-self:start;
-  }
-  .regla p{margin:0}
-  .regla .sub{color:var(--gris);font-size:15px;margin-top:4px}
-  .doble{background:var(--rojo);color:#fff;border-radius:var(--radio);padding:18px 20px;margin-top:22px}
-  .doble strong{display:block;font-family:"Archivo Black",Arial,sans-serif;font-size:19px;margin-bottom:4px}
-  .doble p{margin:0;color:#FFDADC;font-size:15px}
-
-  /* ---------- Tarifario ---------- */
-  .tarifas{padding:36px 0 40px}
-  .tarifas h2{font-size:clamp(26px,6.5vw,36px);margin-bottom:4px;color:var(--azul)}
-  .tarifas .desde{color:var(--gris);font-size:15px;margin:0 0 20px}
-  .buscador{position:relative;margin-bottom:8px}
-  .buscador input{
-    width:100%;font:inherit;font-size:17px;padding:14px 16px 14px 44px;
-    border:2px solid var(--azul);border-radius:var(--radio);background:#fff;color:var(--azul-hondo);
-  }
-  .buscador input:focus{outline:3px solid var(--rojo);outline-offset:2px}
-  .buscador .lupa{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--gris);font-size:18px}
-  .conteo{font-size:14px;color:var(--gris);margin:0 0 20px;min-height:20px}
-  .grupo{margin-bottom:26px}
-  .grupo h3{
-    font-size:14px;font-weight:700;font-family:"Archivo",Arial,sans-serif;
-    letter-spacing:.06em;text-transform:uppercase;color:var(--azul);
-    padding-bottom:8px;border-bottom:3px solid var(--azul);margin-bottom:2px;
-  }
-  .fila{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid var(--linea)}
-  .fila .lugar{font-weight:600}
-  .fila .nota{display:block;font-weight:400;font-size:14px;color:var(--gris)}
-  .fila .precio{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-  .fila .precio b{font-family:"Archivo Black",Arial,sans-serif;font-weight:400;font-size:18px;color:var(--rojo)}
-  .fila .precio span{display:block;font-size:13.5px;color:var(--gris)}
-  .vacio{padding:28px 0;color:var(--gris)}
-
-  /* ---------- Reportes / pie ---------- */
-  .reportes{background:#fff;border-top:1px solid var(--linea);border-bottom:1px solid var(--linea);padding:32px 0}
-  .reportes h2{font-size:22px;margin-bottom:8px;color:var(--azul)}
-  .reportes p{margin:0 0 18px;color:var(--gris);max-width:36em}
-  .union{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--linea)}
-  .union .quien{font-weight:600}
-  .union .quien span{display:block;font-weight:400;font-size:14px;color:var(--gris)}
-  .union a{font-family:"Archivo Black",Arial,sans-serif;text-decoration:none;font-size:17px;white-space:nowrap;color:var(--rojo)}
-  footer{padding:26px 0 30px;color:var(--gris);font-size:14px}
-  footer p{margin:0 0 6px}
-
-  /* ---------- Barra fija ---------- */
-  .barra{
-    position:fixed;left:0;right:0;bottom:0;z-index:20;
-    background:var(--rojo);border-top:3px solid var(--azul);
-    padding:10px 20px calc(10px + env(safe-area-inset-bottom));
-  }
-  .barra a{
-    display:flex;align-items:center;justify-content:center;gap:10px;
-    max-width:var(--max);margin:0 auto;text-decoration:none;color:#fff;
-    font-family:"Archivo Black",Arial,sans-serif;font-size:19px;padding:8px;
-  }
-  @media (min-width:720px){
-    .llamar{display:inline-flex}
-    .regla{grid-template-columns:128px 1fr}
-  }
-  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
-  :focus-visible{outline:3px solid var(--rojo);outline-offset:3px}
-</style>
+<link rel="preload" href="fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
-<div class="marca">
-  <img src="LOGOS/logoXatachi.svg" alt="Xatachi, Transporte de Mototaxis A.C.">
-</div>
+<a class="oculto-visual" href="#tarifario">Ir al tarifario</a>
 
-<header class="portada">
-  <div class="env">
-    <span class="sello">Base en Tamazulapan del Progreso</span>
-    <h1>Pide tu mototaxi</h1>
-    <p class="lead">Servicio dentro de la zona urbana, colonias, escuelas, agencias y centros recreativos. Llama a la base y te mandamos una unidad.</p>
-
-    <a class="llamar" href="tel:+529531070689">
-      <span class="icono" aria-hidden="true">✆</span>
-      <span>
-        <span class="num">953 107 0689</span>
-        <span class="pie">Toca para llamar a la base</span>
-      </span>
+<header class="cabecera">
+  <div class="env cabecera__env">
+    <a class="cabecera__logo" href="#inicio">
+      <img src="LOGOS/logoXatachi.svg" alt="Xatachi, Transporte de Mototaxis A.C.">
     </a>
-    <br>
-    <a class="wa" href="https://wa.me/529531070689" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <nav class="cabecera__acciones" aria-label="Secciones">
+      <a class="cabecera__enlace" href="#calcular">Calcular tarifa</a>
+      <a class="cabecera__enlace" href="#adicionales">Cobros adicionales</a>
+      <a class="cabecera__enlace" href="#tarifario">Tarifario</a>
+      <a class="cabecera__tel" href="tel:+529531070689">953 107 0689</a>
+    </nav>
   </div>
 </header>
 
-<section class="extras" id="extras">
-  <div class="env">
-    <div class="titulo">
-      <h2>Cobros adicionales</h2>
-      <span class="aviso">Revísalos antes de subir</span>
-    </div>
-    <p class="intro">Estos cargos se suman a la tarifa del destino. Son los que más dudas generan, así que aquí van completos.</p>
+<main id="inicio">
 
-    <div class="regla">
-      <div class="monto">$5</div>
+  <section class="portada">
+    <div class="env portada__env">
       <div>
-        <p>Por cada 5 minutos de espera.</p>
-        <p class="sub">También aplica por cada parada en distintos puntos del recorrido.</p>
+        <p class="portada__lugar">Tamazulapan del Progreso, Oaxaca</p>
+        <h1>Pide tu mototaxi y confirma la tarifa antes de subir</h1>
+        <p class="portada__resumen">Cubrimos la zona urbana, colonias, escuelas, centros recreativos y agencias. Una llamada y te mandamos una unidad.</p>
+      </div>
+      <div>
+        <a class="placa" href="tel:+529531070689">
+          <span class="placa__rotulo">Base de mototaxis</span>
+          <span class="placa__numero">953 107 0689</span>
+          <span class="placa__pie">Toca el número para llamar</span>
+        </a>
+        <a class="portada__wa" href="https://wa.me/529531070689" target="_blank" rel="noopener">Pedir servicio por WhatsApp</a>
       </div>
     </div>
+    <div class="franja" aria-hidden="true"></div>
+  </section>
 
-    <div class="regla">
-      <div class="monto">$5</div>
-      <div>
-        <p>Mandados extras.</p>
-        <p class="sub">Se cobra por cada negocio en el que se busque tu producto. Es un servicio opcional.</p>
+  <section class="seccion seccion--claro" id="calcular">
+    <div class="env">
+      <h2 class="seccion__titulo">Calcula tu tarifa</h2>
+      <p class="seccion__entrada">Elige tu destino y marca lo que aplique en tu viaje. El total incluye los cobros adicionales autorizados.</p>
+
+      <div class="calc">
+        <div>
+          <div class="campo">
+            <label class="campo__etiqueta" for="destino">¿A dónde vas?</label>
+            <select id="destino">
+              <option value="">Elige tu destino</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <span class="campo__etiqueta" id="rotuloPasajeros">¿Cuántos van?</span>
+            <div class="pasajeros" role="group" aria-labelledby="rotuloPasajeros">
+              <input type="radio" name="pasajeros" id="pas1" value="1" checked>
+              <label for="pas1">1 persona</label>
+              <input type="radio" name="pasajeros" id="pas2" value="2">
+              <label for="pas2">2 personas</label>
+              <input type="radio" name="pasajeros" id="pas3" value="3">
+              <label for="pas3">3 personas</label>
+            </div>
+            <p class="campo__ayuda">Los niños cuentan como pasajeros. Los de kínder pagan medio pasaje.</p>
+          </div>
+
+          <div class="campo">
+            <label class="campo__etiqueta" for="espera">Tiempo de espera</label>
+            <select id="espera">
+              <option value="0">Sin espera</option>
+              <option value="5">5 minutos</option>
+              <option value="10">10 minutos</option>
+              <option value="15">15 minutos</option>
+              <option value="20">20 minutos</option>
+              <option value="30">30 minutos</option>
+            </select>
+            <p class="campo__ayuda">Cada 5 minutos se cobran $5.</p>
+          </div>
+
+          <div class="campo">
+            <label class="campo__etiqueta" for="mandados">Mandados extras</label>
+            <select id="mandados">
+              <option value="0">Ninguno</option>
+              <option value="1">1 negocio</option>
+              <option value="2">2 negocios</option>
+              <option value="3">3 negocios</option>
+            </select>
+            <p class="campo__ayuda">$5 por cada negocio en el que se busque tu producto.</p>
+          </div>
+
+          <label class="opcion" for="centro">
+            <input type="checkbox" id="centro">
+            <span class="opcion__texto">El viaje cruza el centro de la población
+              <span class="opcion__nota">La tarifa del viaje se cobra al doble.</span>
+            </span>
+          </label>
+
+          <label class="opcion" for="bultos">
+            <input type="checkbox" id="bultos">
+            <span class="opcion__texto">Llevo bultos que ocupan asiento
+              <span class="opcion__nota">Maíz, carbón u otra carga: se paga el cupo completo de la unidad.</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="calc__resultado">
+          <div class="total" aria-live="polite">
+            <p class="total__rotulo">Total del viaje</p>
+            <p class="total__monto" id="montoTotal">—</p>
+            <ul class="total__detalle" id="detalleTotal"></ul>
+            <p class="total__aviso">El regreso desde cualquier punto se cobra igual que si la unidad saliera de la base.</p>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="regla">
-      <div class="monto">½</div>
-      <div>
-        <p>Niños de kínder pagan medio pasaje.</p>
-        <p class="sub">De 6 años en adelante pagan pasaje completo.</p>
+  <section class="seccion seccion--papel" id="adicionales">
+    <div class="env">
+      <h2 class="seccion__titulo">Cobros adicionales</h2>
+      <p class="seccion__entrada">Se suman a la tarifa del destino y están autorizados por la alianza. Estos son todos: ningún chofer puede cobrar algo distinto.</p>
+
+      <div class="reglas">
+        <div class="regla">
+          <p class="cifra">$5</p>
+          <div>
+            <p class="regla__texto">Por cada 5 minutos de espera</p>
+            <p class="regla__nota">También aplica por cada parada en distintos puntos del recorrido.</p>
+          </div>
+        </div>
+
+        <div class="regla">
+          <p class="cifra">$5</p>
+          <div>
+            <p class="regla__texto">Por cada mandado extra</p>
+            <p class="regla__nota">Se cobra por cada negocio en el que se busque tu producto. Es un servicio opcional.</p>
+          </div>
+        </div>
+
+        <div class="regla">
+          <p class="cifra">½</p>
+          <div>
+            <p class="regla__texto">Medio pasaje para niños de kínder</p>
+            <p class="regla__nota">De 6 años en adelante pagan pasaje completo.</p>
+          </div>
+        </div>
+
+        <div class="regla">
+          <p class="cifra cifra--palabra">Cupo completo</p>
+          <div>
+            <p class="regla__texto">Bultos que ocupan el lugar de los pasajeros</p>
+            <p class="regla__nota">Maíz, carbón u otra carga: se paga el cupo de la unidad y el chofer decide si la lleva.</p>
+          </div>
+        </div>
+
+        <div class="regla">
+          <p class="cifra cifra--palabra">Tarifa de base</p>
+          <div>
+            <p class="regla__texto">El regreso se cobra completo</p>
+            <p class="regla__nota">Desde cualquier punto de la comunidad se paga como si la unidad saliera de la base.</p>
+          </div>
+        </div>
+
+        <div class="regla">
+          <p class="cifra cifra--palabra">Máximo 3</p>
+          <div>
+            <p class="regla__texto">Tres pasajeros por unidad</p>
+            <p class="regla__nota">Los niños cuentan. Si se excede el cupo autorizado, la unión sanciona al chofer.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="aviso-doble">
+        <p class="aviso-doble__factor" aria-hidden="true">×2</p>
+        <div>
+          <h3>Si el viaje cruza el centro de la población, la tarifa es el doble</h3>
+          <p>Aplica a todo servicio que atraviese el centro, sin importar el destino.</p>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="regla">
-      <div class="monto texto">Cupo completo</div>
-      <div>
-        <p>Bultos de maíz, carbón u otros que ocupen el lugar de los pasajeros.</p>
-        <p class="sub">Se paga el cupo de la unidad y queda a decisión del chofer si lo lleva o no.</p>
+  <section class="seccion seccion--claro" id="tarifario">
+    <div class="env">
+      <h2 class="seccion__titulo">Tarifario completo</h2>
+      <p class="seccion__entrada">Vigente desde el 25 de marzo de 2023. Precios en pesos, por viaje.</p>
+
+      <div class="buscador">
+        <span class="buscador__icono" aria-hidden="true">⌕</span>
+        <label class="oculto-visual" for="busqueda">Buscar destino</label>
+        <input type="search" id="busqueda" placeholder="Busca tu colonia, escuela o destino" autocomplete="off">
+      </div>
+      <p class="buscador__conteo" id="conteo" aria-live="polite"></p>
+
+      <table class="tabla">
+        <caption>Tarifa según el número de pasajeros que suben al mototaxi. Los niños cuentan.</caption>
+        <thead>
+          <tr>
+            <th scope="col">Destino</th>
+            <th scope="col" class="col-precio">1<span class="solo-ancho"> persona</span></th>
+            <th scope="col" class="col-precio">2<span class="solo-ancho"> personas</span></th>
+            <th scope="col" class="col-precio">3<span class="solo-ancho"> personas</span></th>
+          </tr>
+        </thead>
+        <tbody id="cuerpoTabla"></tbody>
+      </table>
+      <p class="sin-resultados" id="sinResultados" hidden>No hay coincidencias. Prueba con otra palabra o llama a la base al 953 107 0689.</p>
+
+      <noscript>
+        <p class="sin-resultados">Para ver el tarifario necesitas activar JavaScript. También puedes consultarlo por teléfono al 953 107 0689.</p>
+      </noscript>
+    </div>
+  </section>
+
+  <section class="seccion seccion--claro" id="reportes">
+    <div class="env">
+      <h2 class="seccion__titulo">Reportar un cobro indebido</h2>
+      <p class="seccion__entrada">Si un chofer cobra más de lo que marca este tarifario, repórtalo al teléfono de su unión. Anota el número de la unidad.</p>
+
+      <div class="uniones">
+        <div class="union">
+          <p class="union__nombre">Unión de Mototaxis “Xatachi”
+            <span class="union__cargo">Fredy Reyes Sánchez, presidente</span>
+          </p>
+          <a class="union__tel" href="tel:+529531070689">953 107 0689</a>
+        </div>
+        <div class="union">
+          <p class="union__nombre">Unión de Mototaxis “Tamazolli”
+            <span class="union__cargo">Rigoberto Serra Estrada, presidente</span>
+          </p>
+          <a class="union__tel" href="tel:+529531231303">953 123 1303</a>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="regla">
-      <div class="monto texto">Tarifa de base</div>
-      <div>
-        <p>El regreso desde cualquier punto de la comunidad se cobra igual que si saliera de la base.</p>
-      </div>
-    </div>
-
-    <div class="regla">
-      <div class="monto texto">Máx. 3</div>
-      <div>
-        <p>La unidad es únicamente para tres pasajeros, incluyendo a los niños.</p>
-        <p class="sub">Si se excede lo autorizado, el chofer es sancionado por su unión.</p>
-      </div>
-    </div>
-
-    <div class="doble">
-      <strong>Si el viaje cruza el centro de la población, la tarifa es el doble</strong>
-      <p>Aplica a todo servicio que atraviese el centro, sin importar el destino.</p>
-    </div>
-  </div>
-</section>
-
-<main class="tarifas">
-  <div class="env">
-    <h2>Tarifario</h2>
-    <p class="desde">Vigente desde el 25 de marzo de 2023. Precios en pesos.</p>
-
-    <div class="buscador">
-      <span class="lupa" aria-hidden="true">⌕</span>
-      <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Buscar destino</label>
-      <input id="q" type="search" placeholder="Busca tu colonia, escuela o destino" autocomplete="off">
-    </div>
-    <p class="conteo" id="conteo" aria-live="polite"></p>
-
-    <div id="lista"></div>
-    <p class="vacio" id="vacio" hidden>No encontramos ese destino. Prueba con otra palabra o llama a la base.</p>
-  </div>
 </main>
 
-<section class="reportes">
+<footer class="pie">
   <div class="env">
-    <h2>Reportar un cobro indebido</h2>
-    <p>Si un chofer cobra más de lo establecido en este tarifario, repórtalo al teléfono de su unión.</p>
-    <div class="union">
-      <div class="quien">Unión de Mototaxis "Xatachi"<span>Fredy Reyes Sánchez, presidente</span></div>
-      <a href="tel:+529531070689">953 107 0689</a>
-    </div>
-    <div class="union">
-      <div class="quien">Unión de Mototaxis "Tamazolli"<span>Rigoberto Serra Estrada, presidente</span></div>
-      <a href="tel:+529531231303">953 123 1303</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="env">
-    <p>Xatachi, Transporte de Mototaxis A.C. · Alianza de Mototaxis de Tamazulapan</p>
-    <p>R.F.C. UMT100316UT5 · Tamazulapan del Progreso, Oaxaca.</p>
+    <p class="pie__nombre">Xatachi, Transporte de Mototaxis A.C.</p>
+    <p>Integrante de la Alianza de Mototaxis de Tamazulapan. R.F.C. UMT100316UT5. Tamazulapan del Progreso, Oaxaca.</p>
+    <p>Base: <a href="tel:+529531070689">953 107 0689</a></p>
   </div>
 </footer>
 
-<nav class="barra">
-  <a href="tel:+529531070689">✆ Llamar a la base · 953 107 0689</a>
+<nav class="barra-llamada" aria-label="Llamar a la base">
+  <a href="tel:+529531070689">Llamar a la base · 953 107 0689</a>
 </nav>
 
-<script>
-const TARIFAS = [
-  {g:"Zona urbana", items:[
-    {l:"Zona urbana", p:[["$10","1 persona"],["$15","2 personas"],["$20","3 personas"]]}
-  ]},
-  {g:"Colonias y parajes", items:[
-    {l:"Colonia Guadalupe", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Calvario A", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Calvario B", p:[["$20","1 persona"],["$25","2 o 3 personas"]]},
-    {l:"Calvario C", n:"Prolongación Mina hasta el fondo", p:[["$25","1 a 3 personas"]]},
-    {l:"La Curva A", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"La Curva B", n:"Por arriba", p:[["$20","1 persona"],["$25","2 o 3 personas"]]},
-    {l:"La Curva C", p:[["$25","1 persona"],["$30","2 o 3 personas"]]},
-    {l:"Buena Vista A", n:"Panquecitos", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Buena Vista B", n:"Hacia arriba de los Panquecitos", p:[["$25","1 a 3 personas"]]},
-    {l:"Buena Vista C", n:"Hasta el fondo", p:[["$30","1 a 3 personas"]]},
-    {l:"La Canoa A", n:"Hasta los tanques", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"La Canoa B", n:"Pasando el puente", p:[["$20","1 persona"],["$25","2 o 3 personas"]]},
-    {l:"La Canoa C", n:"Cuetero", p:[["$30","1 a 3 personas"]]},
-    {l:"Subestación", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"El Sabino A", p:[["$15","1 a 3 personas"]]},
-    {l:"El Sabino B", p:[["$20","1 a 3 personas"]]},
-    {l:"El Sabino C", p:[["$25","1 a 3 personas"]]},
-    {l:"Curva salida a Chilapa", n:"Entrada", p:[["$25","1 a 3 personas"]]},
-    {l:"Curva salida a Chilapa", n:"Hasta abajo", p:[["$30","1 a 3 personas"]]},
-    {l:"Yodonduco y Sandaranda", p:[["$25","1 persona"],["$30","2 o 3 personas"]]},
-    {l:"Tierra Colorada", n:"Sobre la calle", p:[["$25","1 a 3 personas"]]},
-    {l:"Tierra Colorada", n:"Parte de arriba", p:[["$30","1 a 3 personas"]]},
-    {l:"Tierra Blanca", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Fraccionamiento Casitas", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Paraje Yuyite", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Atrás del CETIS", p:[["$20","1 a 3 personas"]]},
-    {l:"El Mirador", p:[["$60","1 a 3 personas"]]},
-    {l:"Puente de Fierro", p:[["$30","1 a 3 personas"]]},
-    {l:"Plazuela y basurero", p:[["$40","1 a 3 personas"]]},
-    {l:"Pista de motocross e hipódromo", p:[["$40","1 a 3 personas"]]},
-    {l:"Piedra de Agua, El Carrizal y Magnolias", p:[["$30","1 a 3 personas"]]}
-  ]},
-  {g:"Escuelas e instituciones", items:[
-    {l:"Secundaria General", n:"Solo estudiantes", p:[["$15","1 a 3 personas"]]},
-    {l:"Secundaria General", n:"Público en general", p:[["$15","1 persona"],["$20","2 o 3 personas"]]},
-    {l:"Técnica 266, ISSSTE y DIF", p:[["$10","1 persona"],["$15","2 o 3 personas"]]},
-    {l:"Secundaria 71", n:"Solo estudiantes", p:[["$15","1 persona"],["$15","2 o 3 personas"]]},
-    {l:"CETIS", n:"Solo estudiantes", p:[["$10","1 persona"],["$15","2 o 3 personas"]]},
-    {l:"Parte oriente y sur de la Normal", p:[["$15","1 persona"],["$20","2 o 3 personas"]]}
-  ]},
-  {g:"Centros recreativos", items:[
-    {l:"Atonaltzin", p:[["$20","1 persona"],["$25","2 o 3 personas"]]},
-    {l:"Recreativo Xatachío", p:[["$25","1 persona"],["$30","2 o 3 personas"]]},
-    {l:"Ojo Chico, Ojo Grande y Agua Azurada", p:[["$30","1 a 3 personas"]]},
-    {l:"Vivero Yodoyinde", p:[["$35","1 a 3 personas"]]}
-  ]},
-  {g:"Agencias y comunidades", items:[
-    {l:"El Arco", n:"Sobre carretera", p:[["$25","1 a 3 personas"]]},
-    {l:"El Arco", n:"Dentro", p:[["$30","1 a 3 personas"]]},
-    {l:"Xacahua, Cascada, El Palmar, El Espinal y El Cañón", p:[["$50","1 a 3 personas"]]},
-    {l:"San Jerónimo", p:[["$70","1 a 3 personas"]]},
-    {l:"Tandique", p:[["$80","1 a 3 personas"]]}
-  ]}
-];
-
-const lista = document.getElementById('lista');
-const vacio = document.getElementById('vacio');
-const conteo = document.getElementById('conteo');
-const q = document.getElementById('q');
-
-const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-
-function precioHTML(p){
-  return p.map(([m,d]) => `<b>${m}</b><span>${d}</span>`).join('');
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TaxiService",
+  "name": "Xatachi, Transporte de Mototaxis A.C.",
+  "telephone": "+52-953-107-0689",
+  "areaServed": "Tamazulapan del Progreso, Oaxaca, México",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tamazulapan del Progreso",
+    "addressRegion": "Oaxaca",
+    "addressCountry": "MX"
+  }
 }
-
-function render(filtro){
-  const f = norm(filtro.trim());
-  let total = 0;
-  lista.innerHTML = TARIFAS.map(grupo => {
-    const items = grupo.items.filter(i => !f || norm(i.l + ' ' + (i.n||'') + ' ' + grupo.g).includes(f));
-    if(!items.length) return '';
-    total += items.length;
-    return `<div class="grupo"><h3>${grupo.g}</h3>` + items.map(i => `
-      <div class="fila">
-        <div class="lugar">${i.l}${i.n ? `<span class="nota">${i.n}</span>` : ''}</div>
-        <div class="precio">${precioHTML(i.p)}</div>
-      </div>`).join('') + `</div>`;
-  }).join('');
-  vacio.hidden = total > 0;
-  conteo.textContent = f ? `${total} ${total === 1 ? 'destino' : 'destinos'} con “${filtro.trim()}”` : '';
-}
-
-q.addEventListener('input', e => render(e.target.value));
-render('');
 </script>
+
+<script src="js/datos.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
