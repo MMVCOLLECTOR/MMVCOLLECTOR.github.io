@@ -66,10 +66,10 @@
       <div class="calc">
         <div>
           <div class="campo">
-            <label class="campo__etiqueta" for="destino">¿A dónde vas?</label>
-            <select id="destino">
-              <option value="">Elige tu destino</option>
-            </select>
+            <label class="campo__etiqueta" for="filtroDestino">¿A dónde vas?</label>
+            <input type="search" id="filtroDestino" class="campo__filtro" placeholder="Escribe tu colonia, escuela o destino…" autocomplete="off" aria-describedby="ayudaDestino">
+            <select id="destino" aria-label="Elige tu destino de la lista"></select>
+            <p class="campo__ayuda" id="ayudaDestino">Escribe para filtrar la lista y luego elige tu destino exacto.</p>
           </div>
 
           <div class="campo">
@@ -86,7 +86,10 @@
           </div>
 
           <div class="campo">
-            <label class="campo__etiqueta" for="espera">Tiempo de espera</label>
+            <label class="campo__etiqueta" for="espera">
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+              Tiempo de espera
+            </label>
             <select id="espera">
               <option value="0">Sin espera</option>
               <option value="5">5 minutos</option>
@@ -99,7 +102,10 @@
           </div>
 
           <div class="campo">
-            <label class="campo__etiqueta" for="mandados">Mandados extras</label>
+            <label class="campo__etiqueta" for="mandados">
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5 12 4l8 4.5V16l-8 4.5L4 16Z"/><path d="M4 8.5 12 13l8-4.5"/><path d="M12 13v7.5"/></svg>
+              Mandados extras
+            </label>
             <select id="mandados">
               <option value="0">Ninguno</option>
               <option value="1">1 negocio</option>
@@ -111,14 +117,18 @@
 
           <label class="opcion" for="centro">
             <input type="checkbox" id="centro">
-            <span class="opcion__texto">El viaje cruza el centro de la población
+            <span class="opcion__texto">
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16M20 4v16M4 12h16"/></svg>
+              El viaje cruza el centro de la población
               <span class="opcion__nota">La tarifa del viaje se cobra al doble.</span>
             </span>
           </label>
 
           <label class="opcion" for="bultos">
             <input type="checkbox" id="bultos">
-            <span class="opcion__texto">Llevo bultos que ocupan asiento
+            <span class="opcion__texto">
+              <svg class="icono" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="12" rx="1"/><path d="M4 8 12 4l8 4M9 8v12M15 8v12"/></svg>
+              Llevo bultos que ocupan asiento
               <span class="opcion__nota">Maíz, carbón u otra carga: se paga el cupo completo de la unidad.</span>
             </span>
           </label>
@@ -129,6 +139,7 @@
             <p class="total__rotulo">Total del viaje</p>
             <p class="total__monto" id="montoTotal">—</p>
             <ul class="total__detalle" id="detalleTotal"></ul>
+            <a class="total__whatsapp" id="whatsappTotal" href="#" target="_blank" rel="noopener" hidden>Pedir este viaje por WhatsApp</a>
             <p class="total__aviso">El regreso desde cualquier punto se cobra igual que si la unidad saliera de la base.</p>
           </div>
         </div>
@@ -240,13 +251,13 @@
 
       <div class="uniones">
         <div class="union">
-          <p class="union__nombre">Unión de Mototaxis “Xatachi”
+          <p class="union__nombre">Unión de Mototaxis "Xatachi"
             <span class="union__cargo">Fredy Reyes Sánchez, presidente</span>
           </p>
           <a class="union__tel" href="tel:+529531070689">953 107 0689</a>
         </div>
         <div class="union">
-          <p class="union__nombre">Unión de Mototaxis “Tamazolli”
+          <p class="union__nombre">Unión de Mototaxis "Tamazolli"
             <span class="union__cargo">Rigoberto Serra Estrada, presidente</span>
           </p>
           <a class="union__tel" href="tel:+529531231303">953 123 1303</a>
@@ -256,6 +267,8 @@
   </section>
 
 </main>
+
+<div class="franja franja--pie" aria-hidden="true"></div>
 
 <footer class="pie">
   <div class="env">
