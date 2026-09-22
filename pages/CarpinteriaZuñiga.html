@@ -20,7 +20,6 @@
     --font-text: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
     --radius-cards: 12px;
-    --radius-inputs: 0px;
     --radius-pill: 36px;
     --radius-outlined: 22.5px;
   }
@@ -40,39 +39,79 @@
 
   :focus-visible { outline: 2px solid var(--color-warm-cream); outline-offset: 3px; }
 
-  .upper {
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  .full { width: 100%; padding: 0 24px; }
+  .upper { text-transform: uppercase; font-weight: 500; }
 
   /* ══════════ NAV ══════════ */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 24px;
-    background: linear-gradient(to bottom, rgba(16,9,4,0.75), transparent);
+    padding: 20px 24px;
+    background: linear-gradient(to bottom, rgba(16,9,4,0.8), transparent);
   }
-  .nav-brand { font-size: 14px; letter-spacing: 0.04em; }
+  .nav-brand { display: flex; align-items: center; gap: 10px; }
+  .nav-logo {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--color-cork-border);
+    object-fit: cover; background: var(--color-bark-brown);
+    flex-shrink: 0;
+  }
+  .nav-brand-name { font-size: 13px; letter-spacing: 0.04em; }
   .nav-links { list-style: none; display: flex; gap: 24px; }
   .nav-links a { font-size: 12px; padding-bottom: 4px; }
   .nav-links a.active { border-bottom: 1px dashed var(--color-warm-cream); }
-  .nav-toggle { display: none; background: none; border: none; color: var(--color-warm-cream); font-size: 14px; }
+
+  .nav-toggle {
+    display: none; background: transparent; border: 1px solid var(--color-warm-cream);
+    border-radius: var(--radius-outlined); color: var(--color-warm-cream);
+    font-family: var(--font-text); font-size: 12px; padding: 7.5px 16px; cursor: pointer;
+  }
+
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 300;
+    background: var(--color-walnut-shadow);
+    display: none; flex-direction: column;
+    padding: 24px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; }
+  .mobile-menu-close {
+    background: transparent; border: 1px solid var(--color-warm-cream);
+    border-radius: var(--radius-outlined); color: var(--color-warm-cream);
+    font-family: var(--font-text); font-size: 14px; padding: 7.5px 14px; cursor: pointer;
+  }
+  .mobile-menu-links { list-style: none; display: flex; flex-direction: column; }
+  .mobile-menu-links li { border-top: 1px dashed var(--color-cork-border); }
+  .mobile-menu-links li:last-child { border-bottom: 1px dashed var(--color-cork-border); }
+  .mobile-menu-links a { display: block; padding: 24px 0; font-size: 28px; line-height: 0.9; }
+
+  .sidebar-label {
+    position: fixed; right: 14px; top: 50%; z-index: 50;
+    transform: translateY(-50%) rotate(90deg); transform-origin: right center;
+    font-size: 10px; letter-spacing: 0.15em; white-space: nowrap;
+  }
 
   /* ══════════ HERO ══════════ */
   .hero {
     position: relative;
     min-height: 100vh;
     display: flex; flex-direction: column; justify-content: flex-end;
-    background: linear-gradient(to top, rgba(16,9,4,0.9) 0%, rgba(16,9,4,0.15) 55%, rgba(16,9,4,0.55) 100%),
+    background: linear-gradient(to top, rgba(16,9,4,0.92) 0%, rgba(16,9,4,0.2) 55%, rgba(16,9,4,0.6) 100%),
       url('RECURSOS/CarpinteriaZ/cocina_integral.jpg') center/cover no-repeat;
     padding: 96px 24px 45px;
   }
-  .hero-tag { font-size: 12px; margin-bottom: 18px; }
+  .hero-seal {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+  }
+  .hero-seal img {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 1px solid var(--color-warm-cream);
+    object-fit: cover; background: var(--color-bark-brown);
+  }
+  .hero-seal-text { display: flex; flex-direction: column; gap: 4px; }
+  .hero-seal-text span { font-size: 12px; }
   .hero-wordmark {
     font-size: clamp(38px, 7vw, 51px); line-height: 0.9;
-    margin-bottom: 24px; max-width: 16ch;
+    margin-bottom: 24px; max-width: 18ch;
   }
   .hero-cta-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
 
@@ -103,30 +142,14 @@
   .hero-info-divider { border: none; border-top: 1px dashed var(--color-cork-border); margin: 10px 0; }
   .hero-info-card p { font-size: 14px; font-weight: 400; color: var(--color-driftwood); }
 
-  .sidebar-label {
-    position: fixed; right: 14px; top: 50%; z-index: 50;
-    transform: translateY(-50%) rotate(90deg); transform-origin: right center;
-    font-size: 10px; letter-spacing: 0.15em; white-space: nowrap;
-  }
+  /* ══════════ SECTIONS ══════════ */
+  section { padding: 68px 24px; border-top: 1px dashed var(--color-cork-border); }
+  .sec-label { font-size: 12px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .sec-num { color: var(--color-driftwood); }
+  h2.sec-heading { font-size: clamp(28px, 4vw, 41px); line-height: 0.9; max-width: 16ch; }
+  .sec-body { font-size: 18px; font-weight: 400; line-height: 1.26; color: var(--color-warm-cream); max-width: 60ch; }
 
-  /* ══════════ SECTIONS (void mode) ══════════ */
-  section {
-    padding: 68px 24px;
-    border-top: 1px dashed var(--color-cork-border);
-  }
-  .sec-label { font-size: 12px; margin-bottom: 18px; display: block; }
-  h2.sec-heading {
-    font-size: clamp(28px, 4vw, 41px); line-height: 0.9;
-    max-width: 14ch;
-  }
-  .sec-body {
-    font-size: 18px; font-weight: 400; line-height: 1.26; letter-spacing: normal;
-    color: var(--color-warm-cream); max-width: 60ch;
-  }
-
-  .split {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 41px; align-items: start;
-  }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 41px; align-items: start; }
 
   /* About */
   .about-list { display: flex; flex-direction: column; gap: 24px; }
@@ -135,33 +158,47 @@
   .about-label { font-size: 12px; display: block; margin-bottom: 6px; }
   .about-item p { font-size: 18px; font-weight: 400; line-height: 1.26; color: var(--color-warm-cream); }
 
+  /* Process strip */
+  .process-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 36px; }
+  .process-step { border-top: 1px dashed var(--color-cork-border); padding-top: 14px; }
+  .process-step .about-num { font-size: 24px; display: block; margin-bottom: 8px; }
+  .process-step h4 { font-size: 12px; margin-bottom: 6px; }
+  .process-step p { font-size: 14px; font-weight: 400; color: var(--color-driftwood); }
+
   /* Services */
   .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 24px; }
-  .svc-card {
-    border: 1px solid var(--color-cork-border);
-    border-radius: var(--radius-cards);
-    padding: 24px;
-  }
+  .svc-card { border: 1px solid var(--color-cork-border); border-radius: var(--radius-cards); padding: 24px; }
   .svc-card h3 { font-size: 14px; margin-bottom: 10px; }
   .svc-card p { font-size: 15px; font-weight: 400; line-height: 1.26; color: var(--color-driftwood); }
+
+  /* Signature piece reveal */
+  .reveal { padding: 0; border-top: none; min-height: 100vh; position: relative; display: flex; align-items: center; }
+  .reveal-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(16,9,4,0.55) 0%, rgba(16,9,4,0.1) 40%, rgba(16,9,4,0.1) 60%, rgba(16,9,4,0.55) 100%),
+      var(--reveal-img) center/cover no-repeat;
+  }
+  .reveal-grid {
+    position: relative; z-index: 1; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 41px;
+    padding: 68px 24px;
+  }
+  .reveal-grid h2 { font-size: clamp(28px, 4vw, 41px); line-height: 0.9; }
+  .reveal-grid .sec-body { justify-self: end; text-align: left; }
 
   /* Gallery */
   .gallery-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
   .gtab {
-    padding: 7.5px 18px;
-    background: transparent;
-    border: 1px solid var(--color-warm-cream);
-    border-radius: var(--radius-outlined);
-    color: var(--color-warm-cream);
-    font-family: var(--font-text); font-size: 12px; font-weight: 500;
+    padding: 7.5px 18px; background: transparent;
+    border: 1px solid var(--color-warm-cream); border-radius: var(--radius-outlined);
+    color: var(--color-warm-cream); font-family: var(--font-text); font-size: 12px; font-weight: 500;
     text-transform: uppercase; cursor: pointer;
   }
   .gtab.active { background: var(--color-bark-brown); border-color: var(--color-bark-brown); }
   .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .gallery-item {
     border-radius: var(--radius-cards); overflow: hidden;
-    aspect-ratio: 1; cursor: pointer; position: relative;
-    background: var(--color-bark-brown);
+    aspect-ratio: 1; cursor: pointer; position: relative; background: var(--color-bark-brown);
   }
   .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
   .gallery-item.hidden { display: none; }
@@ -183,40 +220,32 @@
   .lb-close, .lb-prev, .lb-next {
     position: absolute; background: transparent;
     border: 1px solid var(--color-warm-cream); border-radius: var(--radius-outlined);
-    color: var(--color-warm-cream); cursor: pointer;
-    font-family: var(--font-text);
+    color: var(--color-warm-cream); cursor: pointer; font-family: var(--font-text);
   }
   .lb-close { top: 24px; right: 24px; padding: 8px 14px; font-size: 16px; }
   .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); padding: 12px 16px; font-size: 20px; }
   .lb-prev { left: 24px; }
   .lb-next { right: 24px; }
-  .lb-caption {
-    position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-    font-size: 12px;
-  }
+  .lb-caption { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); font-size: 12px; }
 
   /* Contact */
   .contact-list { display: flex; flex-direction: column; gap: 12px; }
-  .contact-item {
-    border-top: 1px dashed var(--color-cork-border);
-    padding: 14px 0;
-  }
+  .contact-item { border-top: 1px dashed var(--color-cork-border); padding: 14px 0; }
   .contact-item h3 { font-size: 12px; margin-bottom: 6px; }
   .contact-item a, .contact-item p { font-size: 15px; font-weight: 400; color: var(--color-warm-cream); }
   .contact-item a { border-bottom: 1px solid var(--color-warm-cream); padding-bottom: 1px; }
 
-  .contact-quote {
-    border-left: 1px dashed var(--color-cork-border);
-    padding-left: 18px; margin-bottom: 24px;
-  }
+  .contact-quote { border-left: 1px dashed var(--color-cork-border); padding-left: 18px; margin-bottom: 24px; }
   .contact-quote p { font-size: 18px; font-weight: 400; line-height: 1.26; }
   .contact-quote cite { display: block; margin-top: 12px; font-size: 12px; font-style: normal; }
 
   /* Footer */
   footer {
     padding: 24px; border-top: 1px dashed var(--color-cork-border);
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
   }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-brand img { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--color-cork-border); object-fit: cover; }
   footer p { font-size: 10px; color: var(--color-driftwood); }
   .footer-credit { font-size: 10px; }
   .footer-credit a { color: var(--color-ember-accent); border-bottom: 1px solid var(--color-ember-accent); padding-bottom: 1px; }
@@ -226,32 +255,63 @@
     .split { grid-template-columns: 1fr; }
     .services-grid { grid-template-columns: repeat(2, 1fr); }
     .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+    .process-strip { grid-template-columns: repeat(2, 1fr); }
     .sidebar-label { display: none; }
     .hero-info-card { display: none; }
+    .reveal-grid { grid-template-columns: 1fr; gap: 24px; }
+    .reveal-grid .sec-body { justify-self: start; }
   }
   @media (max-width: 640px) {
     .nav-links { display: none; }
+    .nav-toggle { display: inline-flex; }
     .services-grid { grid-template-columns: 1fr; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-strip { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <span class="nav-brand upper">Carpintería Zúñiga</span>
+  <a href="#" class="nav-brand">
+    <img src="LOGOS/CZ_logo.png" alt="Carpintería Zúñiga" class="nav-logo" onerror="this.style.display='none'">
+    <span class="nav-brand-name upper">Carpintería Zúñiga</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#nosotros" class="upper active">Nosotros</a></li>
     <li><a href="#servicios" class="upper">Servicios</a></li>
     <li><a href="#galeria" class="upper">Galería</a></li>
     <li><a href="#contacto" class="upper">Contacto</a></li>
   </ul>
+  <button class="nav-toggle upper" id="menuOpen" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">Menú</button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-top">
+    <a href="#" class="nav-brand">
+      <img src="LOGOS/CZ_logo.png" alt="Carpintería Zúñiga" class="nav-logo" onerror="this.style.display='none'">
+      <span class="nav-brand-name upper">Carpintería Zúñiga</span>
+    </a>
+    <button class="mobile-menu-close" id="menuClose" aria-label="Cerrar menú">✕</button>
+  </div>
+  <ul class="mobile-menu-links">
+    <li><a href="#nosotros" class="upper">Nosotros</a></li>
+    <li><a href="#servicios" class="upper">Servicios</a></li>
+    <li><a href="#galeria" class="upper">Galería</a></li>
+    <li><a href="#contacto" class="upper">Contacto</a></li>
+  </ul>
+</div>
 
 <span class="sidebar-label upper">Carpintería Zúñiga — Oaxaca, México</span>
 
 <header class="hero">
-  <span class="hero-tag upper">Artesanos de la madera</span>
+  <div class="hero-seal">
+    <img src="LOGOS/CZ_logo.png" alt="Carpintería Zúñiga" onerror="this.style.display='none'">
+    <div class="hero-seal-text">
+      <span class="upper">Carpintería Zúñiga</span>
+      <span style="color:var(--color-driftwood)">Artesanos de la madera</span>
+    </div>
+  </div>
   <h1 class="hero-wordmark upper">Muebles a medida, hechos para durar</h1>
   <div class="hero-cta-row">
     <a href="https://wa.me/2228053225" class="btn-pill upper" target="_blank" rel="noopener">Cotizar proyecto</a>
@@ -266,7 +326,7 @@
 </header>
 
 <section id="nosotros">
-  <span class="sec-label upper">Quiénes somos</span>
+  <span class="sec-label upper"><span class="sec-num">01</span> Quiénes somos</span>
   <div class="split">
     <h2 class="sec-heading upper">Sobre Carpintería Zúñiga.</h2>
     <div class="about-list">
@@ -286,10 +346,33 @@
       </div>
     </div>
   </div>
+
+  <div class="process-strip">
+    <div class="process-step">
+      <span class="about-num upper">01</span>
+      <h4 class="upper">Diseño</h4>
+      <p>Platicamos tu idea y medidas del espacio.</p>
+    </div>
+    <div class="process-step">
+      <span class="about-num upper">02</span>
+      <h4 class="upper">Selección de madera</h4>
+      <p>Elegimos el material según uso y presupuesto.</p>
+    </div>
+    <div class="process-step">
+      <span class="about-num upper">03</span>
+      <h4 class="upper">Fabricación</h4>
+      <p>Corte, ensamble y acabado, todo hecho a mano.</p>
+    </div>
+    <div class="process-step">
+      <span class="about-num upper">04</span>
+      <h4 class="upper">Entrega e instalación</h4>
+      <p>Colocamos la pieza lista para usarse en tu casa.</p>
+    </div>
+  </div>
 </section>
 
 <section id="servicios">
-  <span class="sec-label upper">Lo que hacemos</span>
+  <span class="sec-label upper"><span class="sec-num">02</span> Lo que hacemos</span>
   <h2 class="sec-heading upper">Nuestros servicios.</h2>
   <div class="services-grid">
     <div class="svc-card">
@@ -319,8 +402,16 @@
   </div>
 </section>
 
+<section class="reveal">
+  <div class="reveal-bg" style="--reveal-img:url('RECURSOS/CarpinteriaZ/mueble_a_medida.jpg')"></div>
+  <div class="reveal-grid">
+    <h2 class="upper">No es solo un mueble.</h2>
+    <p class="sec-body">Cada pieza se diseña para tu espacio exacto: medidas, madera y acabado elegidos contigo, no de catálogo.</p>
+  </div>
+</section>
+
 <section id="galeria">
-  <span class="sec-label upper">Nuestro trabajo</span>
+  <span class="sec-label upper"><span class="sec-num">03</span> Nuestro trabajo</span>
   <h2 class="sec-heading upper">Galería de obras.</h2>
   <p class="sec-body" style="margin-top:18px">Cada pieza que sale de nuestro taller lleva horas de dedicación y el cuidado de un trabajo hecho a mano.</p>
 
@@ -380,7 +471,7 @@
 </section>
 
 <section id="contacto">
-  <span class="sec-label upper">Hablemos</span>
+  <span class="sec-label upper"><span class="sec-num">04</span> Hablemos</span>
   <div class="split">
     <div>
       <h2 class="sec-heading upper" style="margin-bottom:24px">Contáctanos hoy.</h2>
@@ -416,11 +507,35 @@
 </section>
 
 <footer>
-  <p class="upper">Carpintería Zúñiga · San Martín Huamelúlpam, Oaxaca · 222 805 3225</p>
+  <div class="footer-brand">
+    <img src="LOGOS/CZ_logo.png" alt="Carpintería Zúñiga" onerror="this.style.display='none'">
+    <p class="upper">Carpintería Zúñiga · San Martín Huamelúlpam, Oaxaca · 222 805 3225</p>
+  </div>
   <p class="footer-credit upper">Built by <a href="tel:9533125522">MMV Collector</a></p>
 </footer>
 
 <script>
+  /* Mobile menu */
+  const menuOpen = document.getElementById('menuOpen');
+  const menuClose = document.getElementById('menuClose');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function openMenu() {
+    mobileMenu.classList.add('open');
+    menuOpen.setAttribute('aria-expanded', 'true');
+    menuClose.focus();
+  }
+  function closeMenu() {
+    mobileMenu.classList.remove('open');
+    menuOpen.setAttribute('aria-expanded', 'false');
+    menuOpen.focus();
+  }
+  menuOpen.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+  });
+
   /* Gallery filter tabs */
   const tabs = document.querySelectorAll('.gtab');
   const items = document.querySelectorAll('.gallery-item[data-cat]');
