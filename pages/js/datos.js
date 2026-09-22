@@ -68,7 +68,7 @@ const ZONAS = [
     ]
   },
   {
-    zona: "Agencias y comunidades",
+    zona: "Agencias y comunidades", 
     destinos: [
       { destino: "El Arco", nota: "Sobre carretera", tarifa: [25, 25, 25] },
       { destino: "El Arco", nota: "Dentro", tarifa: [30, 30, 30] },
