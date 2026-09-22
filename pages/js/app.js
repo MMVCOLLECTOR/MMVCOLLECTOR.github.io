@@ -1,7 +1,7 @@
 const pesos = monto => "$" + monto.toLocaleString("es-MX");
 
 const sinAcentos = texto =>
-  texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  texto.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
 const TODOS = ZONAS.flatMap((grupo, iZona) =>
   grupo.destinos.map((d, iDestino) => ({
@@ -15,6 +15,29 @@ const TODOS = ZONAS.flatMap((grupo, iZona) =>
 const buscarDestino = id => TODOS.find(d => d.id === id);
 
 const nombreLargo = d => (d.nota ? `${d.destino} (${d.nota})` : d.destino);
+
+/* ------------------------------------------------------------
+   Alto real de la cabecera
+   Mide la cabecera pegajosa y lo publica como variable CSS, para
+   que la tabla y el resultado de la calculadora no queden tapados
+   sin depender de un número fijo escrito a mano.
+   ------------------------------------------------------------ */
+
+function medirCabecera() {
+  const cabecera = document.querySelector(".cabecera");
+  if (!cabecera) return;
+  const alto = Math.round(cabecera.getBoundingClientRect().height);
+  if (alto > 0) {
+    document.documentElement.style.setProperty("--header-h", `${alto}px`);
+  }
+}
+
+medirCabecera();
+window.addEventListener("resize", medirCabecera);
+window.addEventListener("load", medirCabecera);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(medirCabecera);
+}
 
 /* ------------------------------------------------------------
    Tabla de tarifas
@@ -61,6 +84,7 @@ campoBusqueda.addEventListener("input", evento => pintarTabla(evento.target.valu
    Calculadora de tarifa
    ------------------------------------------------------------ */
 
+const filtroDestino = document.getElementById("filtroDestino");
 const selectorDestino = document.getElementById("destino");
 const selectorEspera = document.getElementById("espera");
 const selectorMandados = document.getElementById("mandados");
@@ -68,19 +92,40 @@ const casillaCentro = document.getElementById("centro");
 const casillaBultos = document.getElementById("bultos");
 const montoTotal = document.getElementById("montoTotal");
 const detalleTotal = document.getElementById("detalleTotal");
+const whatsappTotal = document.getElementById("whatsappTotal");
 
-function llenarSelectorDestino() {
-  selectorDestino.innerHTML =
-    `<option value="">Elige tu destino</option>` +
-    ZONAS.map((grupo, iZona) => {
-      const opciones = grupo.destinos
-        .map((d, iDestino) => {
-          const extra = d.etiqueta ? ` — ${d.etiqueta.toLowerCase()}` : "";
-          return `<option value="${iZona}-${iDestino}">${nombreLargo(d)}${extra}</option>`;
-        })
-        .join("");
-      return `<optgroup label="${grupo.zona}">${opciones}</optgroup>`;
-    }).join("");
+function opcionDestino(d) {
+  const extra = d.etiqueta ? ` — ${d.etiqueta.toLowerCase()}` : "";
+  return `<option value="${d.id}">${nombreLargo(d)}${extra}</option>`;
+}
+
+function llenarSelectorDestino(texto = "") {
+  const seleccionActual = selectorDestino.value;
+  const filtro = sinAcentos(texto.trim());
+
+  const grupos = ZONAS.map((grupo, iZona) => {
+    const destinos = TODOS.filter(
+      d => d.id.startsWith(`${iZona}-`) && (!filtro || d.busqueda.includes(filtro))
+    );
+    if (!destinos.length) return "";
+    return `<optgroup label="${grupo.zona}">${destinos.map(opcionDestino).join("")}</optgroup>`;
+  }).join("");
+
+  selectorDestino.innerHTML = `<option value="">Elige tu destino</option>${grupos}`;
+
+  // Conserva la selección si sigue disponible tras filtrar.
+  if (seleccionActual && buscarDestino(seleccionActual) && filtro && buscarDestino(seleccionActual).busqueda.includes(filtro)) {
+    selectorDestino.value = seleccionActual;
+  } else if (seleccionActual && !filtro) {
+    selectorDestino.value = seleccionActual;
+  }
+}
+
+if (filtroDestino) {
+  filtroDestino.addEventListener("input", evento => {
+    llenarSelectorDestino(evento.target.value);
+    pintarCalculadora();
+  });
 }
 
 function pasajerosElegidos() {
@@ -124,6 +169,20 @@ function calcularTarifa(destino, pasajeros, opciones) {
   return { conceptos, total };
 }
 
+function mensajeWhatsapp(destino, pasajeros, opciones, total) {
+  const lineas = [
+    "Hola, quiero pedir un mototaxi.",
+    `Destino: ${nombreLargo(destino)}`,
+    `Pasajeros: ${pasajeros}`
+  ];
+  if (opciones.cruzaCentro) lineas.push("El viaje cruza el centro.");
+  if (opciones.bultos) lineas.push("Llevo bultos que ocupan asiento.");
+  if (opciones.minutosEspera > 0) lineas.push(`Espera aproximada: ${opciones.minutosEspera} minutos.`);
+  if (opciones.mandados > 0) lineas.push(`Mandados extras: ${opciones.mandados}.`);
+  lineas.push(`Total calculado: ${pesos(total)}.`);
+  return lineas.join("\n");
+}
+
 function pintarCalculadora() {
   const destino = buscarDestino(selectorDestino.value);
 
@@ -131,15 +190,22 @@ function pintarCalculadora() {
     montoTotal.textContent = "—";
     detalleTotal.innerHTML =
       `<li><span>Elige tu destino para ver el total</span><span></span></li>`;
+    if (whatsappTotal) {
+      whatsappTotal.hidden = true;
+      whatsappTotal.href = "#";
+    }
     return;
   }
 
-  const { conceptos, total } = calcularTarifa(destino, pasajerosElegidos(), {
+  const pasajeros = pasajerosElegidos();
+  const opciones = {
     cruzaCentro: casillaCentro.checked,
     bultos: casillaBultos.checked,
     minutosEspera: Number(selectorEspera.value),
     mandados: Number(selectorMandados.value)
-  });
+  };
+
+  const { conceptos, total } = calcularTarifa(destino, pasajeros, opciones);
 
   montoTotal.textContent = pesos(total);
   detalleTotal.innerHTML = conceptos
@@ -149,6 +215,12 @@ function pintarCalculadora() {
         </li>`
     )
     .join("");
+
+  if (whatsappTotal) {
+    const mensaje = mensajeWhatsapp(destino, pasajeros, opciones, total);
+    whatsappTotal.href = `https://wa.me/${BASE_TELEFONO}?text=${encodeURIComponent(mensaje)}`;
+    whatsappTotal.hidden = false;
+  }
 }
 
 document
